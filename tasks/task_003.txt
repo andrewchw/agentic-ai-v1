@@ -1,0 +1,11 @@
+# Task ID: 3
+# Title: CSV File Upload Component
+# Status: done
+# Dependencies: 2
+# Priority: high
+# Description: Implement the file upload functionality for customer and purchase history CSV files.
+# Details:
+Create Streamlit file upload widgets for both customer profile and purchase history CSV files. Add file type validation, size limits, and user feedback. Implement preview functionality to show first few rows of uploaded data.
+
+# Test Strategy:
+Test with sample CSV files, invalid file types, and large files to ensure proper validation and error handling.

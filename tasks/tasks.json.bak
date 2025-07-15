@@ -1,0 +1,203 @@
+{
+  "metadata": {
+    "projectName": "Agentic AI Revenue Assistant",
+    "version": "1.0.0",
+    "lastModified": "2025-01-27T00:00:00.000Z",
+    "totalTasks": 15
+  },
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Project Setup and Environment Configuration",
+      "description": "Set up the foundational development environment and project structure for the Agentic AI Revenue Assistant.",
+      "status": "in-progress",
+      "priority": "high",
+      "dependencies": [],
+      "details": "Initialize the project with proper directory structure, virtual environment, and basic configuration files. Install core dependencies including Streamlit, pandas, and other essential packages. Set up environment variables template and configuration management.",
+      "testStrategy": "Verify that the development environment can be reproduced on different machines and all dependencies install correctly.",
+      "subtasks": []
+    },
+    {
+      "id": 2,
+      "title": "Basic Streamlit UI Setup",
+      "description": "Create the initial Streamlit application with basic navigation and layout structure.",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [
+        1
+      ],
+      "details": "Build the foundational Streamlit app with main page layout, navigation structure, and placeholder components. Implement Three HK color scheme and basic styling. Create the home screen with welcome message and overview of the tool's capabilities.",
+      "testStrategy": "Run the Streamlit app locally and verify all pages load correctly with proper styling and navigation.",
+      "subtasks": []
+    },
+    {
+      "id": 3,
+      "title": "CSV File Upload Component",
+      "description": "Implement the file upload functionality for customer and purchase history CSV files.",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [
+        2
+      ],
+      "details": "Create Streamlit file upload widgets for both customer profile and purchase history CSV files. Add file type validation, size limits, and user feedback. Implement preview functionality to show first few rows of uploaded data.",
+      "testStrategy": "Test with sample CSV files, invalid file types, and large files to ensure proper validation and error handling.",
+      "subtasks": []
+    },
+    {
+      "id": 4,
+      "title": "Data Validation and Parsing Engine",
+      "description": "Build robust CSV validation and parsing functionality with comprehensive error handling.",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [
+        3
+      ],
+      "details": "Implement data validation logic to check CSV structure, required columns, data types, and format consistency. Create error reporting system that provides clear feedback to users about data issues. Handle common CSV problems like encoding issues, missing headers, and malformed data.",
+      "testStrategy": "Test with various CSV formats, corrupted files, and edge cases to ensure robust error handling and clear user feedback.",
+      "subtasks": []
+    },
+    {
+      "id": 5,
+      "title": "Pseudonymization Engine",
+      "description": "Develop the core privacy layer that pseudonymizes sensitive customer data immediately after upload.",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [
+        4
+      ],
+      "details": "Create pseudonymization utilities to mask or hash sensitive fields like names, emails, HKID numbers, and phone numbers. Implement reversible pseudonymization where needed for display purposes while maintaining privacy. Ensure no raw PII is ever stored or transmitted to external APIs.",
+      "testStrategy": "Verify that all sensitive data is properly pseudonymized and original data cannot be reconstructed without proper authorization.",
+      "subtasks": []
+    },
+    {
+      "id": 6,
+      "title": "Data Merging and Alignment Logic",
+      "description": "Implement logic to merge customer profile and purchase history data by Account ID.",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [
+        5
+      ],
+      "details": "Build data alignment functionality that matches customer records with their purchase history using Account ID as the primary key. Handle cases where IDs don't match, missing records, and duplicate entries. Create unified data structure for analysis.",
+      "testStrategy": "Test with sample datasets containing mismatched IDs, duplicates, and missing records to ensure proper data alignment.",
+      "subtasks": []
+    },
+    {
+      "id": 7,
+      "title": "Local Data Storage System",
+      "description": "Create secure local storage system for processed and pseudonymized data.",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [
+        6
+      ],
+      "details": "Implement encrypted local JSON storage for demonstration data and analysis results. Ensure data is encrypted at rest and properly managed during the session. Create data cleanup procedures for session end.",
+      "testStrategy": "Verify data is properly encrypted when stored and securely cleaned up after processing.",
+      "subtasks": []
+    },
+    {
+      "id": 8,
+      "title": "OpenRouter API Integration",
+      "description": "Set up integration with OpenRouter API for accessing DeepSeek LLM capabilities.",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [
+        7
+      ],
+      "details": "Configure OpenRouter API client with proper authentication and error handling. Implement rate limiting, request logging, and response validation. Set up DeepSeek model configuration and prompt formatting for business analysis tasks.",
+      "testStrategy": "Test API connectivity, error handling, and response parsing with sample prompts.",
+      "subtasks": []
+    },
+    {
+      "id": 9,
+      "title": "AI Agent Core Logic",
+      "description": "Develop the central AI agent logic for analyzing customer data and generating lead recommendations.",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [
+        8
+      ],
+      "details": "Create the core agent reasoning system that analyzes pseudonymized customer and purchase data to identify patterns, score leads, and generate actionable recommendations. Implement business logic for telecom industry best practices and Three HK specific offers.",
+      "testStrategy": "Test with sample datasets and verify the quality and relevance of generated recommendations.",
+      "subtasks": []
+    },
+    {
+      "id": 10,
+      "title": "Lead Scoring and Prioritization Algorithm",
+      "description": "Implement sophisticated lead scoring system that prioritizes customers based on analysis results.",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [
+        9
+      ],
+      "details": "Develop scoring algorithms that consider purchase history, engagement patterns, and customer profile data to generate priority scores. Create ranking system and threshold definitions for high, medium, and low priority leads.",
+      "testStrategy": "Validate scoring accuracy with known customer scenarios and business stakeholder review.",
+      "subtasks": []
+    },
+    {
+      "id": 11,
+      "title": "Three HK Offers Integration",
+      "description": "Integrate Three HK specific offers and telecom industry standard recommendations into the agent's output.",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [
+        10
+      ],
+      "details": "Implement offer templates for device upgrades, 5G plans, data add-ons, family plans, streaming bundles, insurance, roaming packs, loyalty programs, and retention campaigns. Create matching logic to suggest appropriate offers based on customer analysis.",
+      "testStrategy": "Review generated offers with telecom industry experts and validate relevance to customer profiles.",
+      "subtasks": []
+    },
+    {
+      "id": 12,
+      "title": "Results Dashboard Implementation",
+      "description": "Build the interactive dashboard to display analysis results with anonymized customer data.",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [
+        11
+      ],
+      "details": "Create comprehensive results display with tables showing anonymized IDs, last purchase data, engagement summaries, suggested actions, and priority scores. Implement sorting, filtering, and search functionality. Add Three HK branding and styling.",
+      "testStrategy": "Test dashboard functionality with various data sets and validate user experience with non-technical stakeholders.",
+      "subtasks": []
+    },
+    {
+      "id": 13,
+      "title": "Export and Reporting Features",
+      "description": "Implement functionality to export analysis results in various formats for sales team use.",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [
+        12
+      ],
+      "details": "Create export functionality for CSV, PDF, and other formats. Ensure exported data maintains pseudonymization and includes all relevant analysis results. Add report generation with summary statistics and key insights.",
+      "testStrategy": "Test export functionality with different data sizes and formats, verify data integrity in exported files.",
+      "subtasks": []
+    },
+    {
+      "id": 14,
+      "title": "Security and Compliance Features",
+      "description": "Implement comprehensive security measures and ensure GDPR/Hong Kong PDPO compliance.",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [
+        13
+      ],
+      "details": "Add data encryption in transit and at rest, audit logging, session management, and compliance validation. Implement privacy notices, consent mechanisms, and data retention policies. Create security documentation and compliance reports.",
+      "testStrategy": "Conduct security audit and compliance review with privacy experts and legal team.",
+      "subtasks": []
+    },
+    {
+      "id": 15,
+      "title": "Performance Optimization and Production Readiness",
+      "description": "Optimize application performance and prepare for production deployment.",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [
+        14
+      ],
+      "details": "Optimize data processing performance, implement caching strategies, and ensure response times under 30 seconds for analysis. Add error handling, logging, monitoring, and deployment documentation. Prepare for handling up to 10,000 customer records.",
+      "testStrategy": "Performance testing with large datasets, load testing, and end-to-end validation of complete user workflows.",
+      "subtasks": []
+    }
+  ]
+}

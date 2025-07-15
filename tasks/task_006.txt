@@ -1,0 +1,11 @@
+# Task ID: 6
+# Title: Data Merging and Alignment Logic
+# Status: pending
+# Dependencies: 5
+# Priority: high
+# Description: Implement logic to merge customer profile and purchase history data by Account ID.
+# Details:
+Build data alignment functionality that matches customer records with their purchase history using Account ID as the primary key. Handle cases where IDs don't match, missing records, and duplicate entries. Create unified data structure for analysis.
+
+# Test Strategy:
+Test with sample datasets containing mismatched IDs, duplicates, and missing records to ensure proper data alignment.

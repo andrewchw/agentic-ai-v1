@@ -1,0 +1,11 @@
+# Task ID: 11
+# Title: Three HK Offers Integration
+# Status: pending
+# Dependencies: 10
+# Priority: medium
+# Description: Integrate Three HK specific offers and telecom industry standard recommendations into the agent's output.
+# Details:
+Implement offer templates for device upgrades, 5G plans, data add-ons, family plans, streaming bundles, insurance, roaming packs, loyalty programs, and retention campaigns. Create matching logic to suggest appropriate offers based on customer analysis.
+
+# Test Strategy:
+Review generated offers with telecom industry experts and validate relevance to customer profiles.

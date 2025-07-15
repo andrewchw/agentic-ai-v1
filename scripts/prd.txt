@@ -1,0 +1,124 @@
+# Agentic AI Revenue Assistant - Lead Generation Tool
+
+## Overview
+Agentic AI Revenue Assistant is a privacy-first, autonomous lead prioritization and sales suggestion tool for Hong Kong telecom companies. It enables business teams to securely upload customer and purchase data, automatically pseudonymizes sensitive information, analyzes purchase and engagement patterns, and outputs actionable, prioritized sales recommendations—all within an intuitive Streamlit dashboard styled in the Three HK color scheme.
+
+## Core Features
+
+### Data Upload & Privacy
+- CSV file upload for customer profiles and purchase history  
+- Automatic data validation and error feedback
+- Immediate pseudonymization of sensitive data (names, emails, HKID)
+- Data encryption at rest and in transit
+- GDPR and Hong Kong PDPO compliance
+
+### AI-Powered Analysis  
+- Integration with OpenRouter using DeepSeek LLM
+- Customer purchase pattern analysis
+- Engagement data processing
+- Lead prioritization scoring
+- Actionable sales recommendations based on Three HK offers
+
+### Dashboard & Results
+- Interactive Streamlit dashboard with Three HK branding
+- Prioritized lead display with anonymized data
+- Export functionality for results
+- Progress indicators during processing
+- Privacy notice and data protection information
+
+## User Experience
+
+### Primary Users
+- CTOs and IT Department Heads at telecom companies
+- Sales and Marketing Managers seeking data-driven insights  
+- Business Analysts evaluating AI-driven revenue tools
+- Demo audiences for practical Agentic AI applications
+
+### Key User Flow
+1. Upload customer profile and purchase history CSV files
+2. System validates and pseudonymizes data automatically
+3. AI agent analyzes patterns and generates recommendations
+4. View prioritized leads with suggested actions in dashboard
+5. Export anonymized results for sales team use
+
+## Technical Architecture
+
+### System Components
+- **Data Input Layer**: CSV upload and validation
+- **Privacy Layer**: Pseudonymization and encryption utilities
+- **Data Storage**: Local encrypted JSON for demo data
+- **AI Agent Layer**: Custom Python logic with OpenRouter/DeepSeek integration
+- **Presentation Layer**: Streamlit web interface
+- **Security Layer**: End-to-end data protection
+
+### Technology Stack
+- **LLM**: DeepSeek via OpenRouter API
+- **Frontend**: Streamlit with Three HK styling
+- **Backend**: Python with custom agent logic
+- **Data Processing**: Pandas for CSV handling
+- **Privacy**: Custom pseudonymization utilities
+- **Storage**: Local encrypted JSON files
+
+## Development Roadmap
+
+### Phase 1: Foundation (MVP)
+- Basic Streamlit UI setup
+- CSV upload functionality
+- Data validation and error handling
+- Sample data integration for testing
+
+### Phase 2: Privacy & Security
+- Pseudonymization engine implementation
+- Data encryption at rest and in transit
+- Privacy compliance validation
+- Secure data transformation pipeline
+
+### Phase 3: AI Integration
+- OpenRouter API integration
+- DeepSeek LLM configuration
+- Agent reasoning logic development
+- Lead analysis and prioritization algorithms
+
+### Phase 4: Results & Dashboard
+- Interactive results display
+- Three HK branding implementation
+- Export functionality
+- Progress indicators and user feedback
+
+### Phase 5: Polish & Production Ready
+- Error handling and edge cases
+- Performance optimization
+- Security audit and testing
+- Documentation and deployment prep
+
+## Logical Dependency Chain
+
+1. **Infrastructure First**: Streamlit setup and basic file handling
+2. **Data Security**: Privacy layer must be implemented before any LLM integration
+3. **AI Core**: LLM integration only after privacy layer is complete
+4. **User Interface**: Dashboard development follows data processing capabilities
+5. **Integration**: All components integrated and tested together
+
+## Suggested Actions Reference
+Telecom offer templates including device upgrades, 5G plan upsells, data add-ons, family plans, streaming bundles, mobile insurance, roaming packs, loyalty discounts, retention campaigns, and personalized re-engagement offers.
+
+## Risks and Mitigations
+
+### Technical Challenges
+- **Data Privacy**: Implement robust pseudonymization before any LLM processing
+- **LLM Performance**: Use optimized open-source models for business context
+- **Demo Scope**: Focus strictly on highest priority features
+
+### Resource Constraints  
+- **MVP Focus**: Prioritize core functionality over advanced features
+- **Quick Value**: Get to working frontend quickly for demonstration
+- **Iterative Development**: Build atomic features that can be improved incrementally
+
+## Appendix
+
+### Demo Requirements
+- Support up to 10,000 customer records
+- Response time under 30 seconds for lead analysis
+- All LLM interactions logged for audit
+- No raw PII ever sent to external APIs
+- Ready for future multi-agent expansion 

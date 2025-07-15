@@ -1,0 +1,11 @@
+# Task ID: 8
+# Title: OpenRouter API Integration
+# Status: pending
+# Dependencies: 7
+# Priority: high
+# Description: Set up integration with OpenRouter API for accessing DeepSeek LLM capabilities.
+# Details:
+Configure OpenRouter API client with proper authentication and error handling. Implement rate limiting, request logging, and response validation. Set up DeepSeek model configuration and prompt formatting for business analysis tasks.
+
+# Test Strategy:
+Test API connectivity, error handling, and response parsing with sample prompts.

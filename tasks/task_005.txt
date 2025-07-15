@@ -1,0 +1,11 @@
+# Task ID: 5
+# Title: Pseudonymization Engine
+# Status: pending
+# Dependencies: 4
+# Priority: high
+# Description: Develop the core privacy layer that pseudonymizes sensitive customer data immediately after upload.
+# Details:
+Create pseudonymization utilities to mask or hash sensitive fields like names, emails, HKID numbers, and phone numbers. Implement reversible pseudonymization where needed for display purposes while maintaining privacy. Ensure no raw PII is ever stored or transmitted to external APIs.
+
+# Test Strategy:
+Verify that all sensitive data is properly pseudonymized and original data cannot be reconstructed without proper authorization.

@@ -1,0 +1,49 @@
+# Core Web Framework
+streamlit>=1.32.0
+
+# Data Processing
+pandas>=2.2.0
+numpy>=1.26.0
+
+# AI/ML and API Integration
+openai>=1.12.0  # For OpenRouter API compatibility
+anthropic>=0.22.0  # Alternative AI provider
+requests>=2.31.0
+
+# Privacy and Security
+cryptography>=42.0.0
+python-decouple>=3.8  # Environment variable management
+
+# Data Validation and Processing
+pydantic>=2.6.0
+marshmallow>=3.21.0
+jsonschema>=4.21.0
+
+# File Processing
+openpyxl>=3.1.0  # Excel file support
+xlsxwriter>=3.2.0  # Excel export
+python-dateutil>=2.9.0
+chardet>=5.2.0  # Automatic encoding detection
+
+# Visualization and UI Components
+plotly>=5.19.0
+altair>=5.2.0
+
+# Development and Testing
+pytest>=8.1.0
+pytest-cov>=4.0.0
+pytest-asyncio>=0.23.0
+playwright>=1.40.0
+pytest-playwright>=0.4.0
+black>=24.2.0
+flake8>=7.0.0
+
+# Environment and Configuration
+python-dotenv>=1.0.0
+pyyaml>=6.0.1
+
+# Logging and Monitoring
+loguru>=0.7.2
+
+# Performance
+aiohttp>=3.9.0 

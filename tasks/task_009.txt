@@ -1,0 +1,11 @@
+# Task ID: 9
+# Title: AI Agent Core Logic
+# Status: pending
+# Dependencies: 8
+# Priority: high
+# Description: Develop the central AI agent logic for analyzing customer data and generating lead recommendations.
+# Details:
+Create the core agent reasoning system that analyzes pseudonymized customer and purchase data to identify patterns, score leads, and generate actionable recommendations. Implement business logic for telecom industry best practices and Three HK specific offers.
+
+# Test Strategy:
+Test with sample datasets and verify the quality and relevance of generated recommendations.
