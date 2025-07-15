@@ -1,1 +1,1 @@
-# Test suite for Agentic AI Revenue Assistant 
+# Test suite for Agentic AI Revenue Assistant

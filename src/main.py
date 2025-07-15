@@ -15,50 +15,56 @@ from config.app_config import config
 from src.components.layout import setup_page_config, render_header, render_sidebar
 from src.utils.logger import setup_logging
 
+
 def main():
     """Main application function"""
-    
+
     # Setup logging
     setup_logging()
-    
+
     # Setup page configuration
     setup_page_config()
-    
+
     # Create necessary directories
     config.setup_directories()
-    
+
     # Validate configuration
     missing_config = config.validate_config()
     if missing_config:
         st.error(f"Missing required configuration: {', '.join(missing_config)}")
         st.info("Please check your .env file and ensure all required variables are set.")
         st.stop()
-    
+
     # Render main layout
     render_header()
-    
+
     # Sidebar navigation
     render_sidebar()
-    
+
     # Get current page from session state
-    if 'current_page' not in st.session_state:
+    if "current_page" not in st.session_state:
         st.session_state.current_page = "Home"
-    
+
     page = st.session_state.current_page
 
     # Main content area
     if page == "Home":
         from src.components.home import render_home_page
+
         render_home_page()
     elif page == "Upload Data":
         from src.components.upload import render_upload_page
+
         render_upload_page()
     elif page == "Analysis Results":
         from src.components.results import render_results_page
+
         render_results_page()
     elif page == "Privacy & Security":
         from src.components.privacy import render_privacy_page
+
         render_privacy_page()
 
+
 if __name__ == "__main__":
-    main() 
+    main()
