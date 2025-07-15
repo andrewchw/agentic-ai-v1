@@ -4,7 +4,9 @@ Shows data protection measures and compliance information
 """
 
 import streamlit as st
+import pandas as pd
 from config.app_config import config
+from src.utils.display_masking import display_masker, FieldType
 
 def render_privacy_page():
     """Render the privacy and security information page"""
@@ -136,6 +138,62 @@ def render_privacy_page():
         - Compliance documentation
         - Technical specifications
         """)
+    
+    # Live masking demonstration
+    st.markdown("---")
+    st.markdown("### 🎭 Live Masking Demonstration")
+    
+    st.markdown("**Try the privacy controls with sample data:**")
+    
+    # Create sample data for demonstration
+    sample_data = pd.DataFrame({
+        'Customer Name': ['John Doe', 'Jane Smith', 'Michael Chen', 'Sarah Wong'],
+        'Email': ['john.doe@example.com', 'jane.smith@company.hk', 'michael.chen@email.com', 'sarah.wong@business.hk'],
+        'Phone': ['+852 2345 6789', '+852 9876 5432', '+852 1234 5678', '+852 8765 4321'],
+        'HKID': ['A123456(7)', 'B987654(3)', 'C456789(1)', 'D321654(9)'],
+        'Account ID': ['ACC123456', 'ACC987654', 'ACC456789', 'ACC321654'],
+        'Purchase Amount': [1200.50, 850.75, 2100.00, 675.25]
+    })
+    
+    # Privacy toggle for demonstration
+    col1, col2 = st.columns([3, 1])
+    
+    with col1:
+        st.markdown("**Sample Customer Data Preview:**")
+    
+    with col2:
+        demo_show_sensitive = st.toggle(
+            "Show Sensitive Data", 
+            value=False,
+            help="Toggle to see the masking in action",
+            key="demo_privacy_toggle"
+        )
+    
+    # Process and display sample data
+    display_masker.set_visibility(demo_show_sensitive)
+    processed_demo = display_masker.process_dataframe(sample_data)
+    
+    # Display privacy status
+    if processed_demo['masked']:
+        st.info(f"🔒 {processed_demo['message']}")
+    else:
+        st.success(f"👁️ {processed_demo['message']}")
+    
+    # Show the data
+    st.dataframe(processed_demo['dataframe'], use_container_width=True)
+    
+    # Show masking patterns
+    st.markdown("**Masking Patterns Applied:**")
+    masking_examples = [
+        "**Names**: 'John Doe' → 'J*** D***'",
+        "**Emails**: 'john@example.com' → 'j***@*****.com'",
+        "**Phone**: '+852 2345 6789' → '+852 ****6789'",
+        "**HKID**: 'A123456(7)' → 'A******(*)'",
+        "**Account ID**: 'ACC123456' → 'ACC***56'"
+    ]
+    
+    for example in masking_examples:
+        st.markdown(f"- {example}")
     
     # Configuration status
     st.markdown("---")

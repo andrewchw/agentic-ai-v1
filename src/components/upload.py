@@ -12,6 +12,7 @@ import shutil
 from io import StringIO
 from typing import Tuple, Dict, Any
 from config.app_config import config
+from src.utils.display_masking import display_masker
 
 # File size limits (in bytes)
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
@@ -246,17 +247,36 @@ def load_sample_data(file_path, auto_detect_encoding=True):
         return False, f"Error loading sample data: {str(e)}", None
 
 def display_data_preview(df, title, max_rows=MAX_PREVIEW_ROWS):
-    """Display a preview of the dataframe"""
+    """Display a preview of the dataframe with privacy controls"""
     st.markdown(f"#### 📊 {title}")
     
-    # Show basic info
-    col1, col2, col3 = st.columns(3)
+    # Show basic info with privacy toggle
+    col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.metric("Rows", len(df))
     with col2:
         st.metric("Columns", len(df.columns))
     with col3:
         st.metric("Size", f"{df.memory_usage(deep=True).sum() / 1024:.1f} KB")
+    with col4:
+        # Privacy toggle control
+        show_sensitive = st.toggle(
+            "Show Sensitive Data", 
+            value=False,
+            help="Toggle to show/hide sensitive information",
+            key=f"privacy_toggle_{title}"
+        )
+    
+    # Process dataframe based on privacy setting
+    display_masker.set_visibility(show_sensitive)
+    processed_data = display_masker.process_dataframe(df)
+    display_df = processed_data['dataframe']
+    
+    # Display privacy status
+    if processed_data['masked']:
+        st.info(f"🔒 {processed_data['message']}")
+    else:
+        st.success(f"👁️ {processed_data['message']}")
     
     # Show column info
     st.markdown("**Columns:**")
@@ -264,7 +284,7 @@ def display_data_preview(df, title, max_rows=MAX_PREVIEW_ROWS):
     
     # Show preview
     st.markdown(f"**First {min(max_rows, len(df))} rows:**")
-    st.dataframe(df.head(max_rows), use_container_width=True)
+    st.dataframe(display_df.head(max_rows), use_container_width=True)
     
     # Show data types
     with st.expander("📋 Column Details"):
