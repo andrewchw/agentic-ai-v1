@@ -1,11 +1,37 @@
 # Task ID: 5
 # Title: Pseudonymization Engine
-# Status: pending
+# Status: in-progress
 # Dependencies: 4
 # Priority: high
-# Description: Develop the core privacy layer that pseudonymizes sensitive customer data immediately after upload.
+# Description: Develop the core privacy layer that pseudonymizes sensitive customer data immediately after upload. Ensure compliance with GDPR and Hong Kong PDPO requirements, including documentation of privacy principles, technical implementation, and security measures.
 # Details:
-Create pseudonymization utilities to mask or hash sensitive fields like names, emails, HKID numbers, and phone numbers. Implement reversible pseudonymization where needed for display purposes while maintaining privacy. Ensure no raw PII is ever stored or transmitted to external APIs.
+The privacy.py component currently includes comprehensive privacy framework documentation, outlines for GDPR and Hong Kong PDPO compliance, privacy principles, technical implementation, security measures, and configuration status checking. The actual pseudonymization engine implementation is pending. The next steps are to implement data masking algorithms, SHA-256 hashing with salt, sensitive field identification, and a reversible pseudonymization system. All sensitive fields (names, emails, HKID numbers, phone numbers, etc.) must be pseudonymized immediately after upload. No raw PII should be stored or transmitted to external APIs. The system must support reversible pseudonymization for display purposes where required, while maintaining privacy and security.
 
 # Test Strategy:
-Verify that all sensitive data is properly pseudonymized and original data cannot be reconstructed without proper authorization.
+Verify that all sensitive data is properly pseudonymized using masking or salted SHA-256 hashing. Confirm that original data cannot be reconstructed without proper authorization. Test field identification logic to ensure all relevant PII is covered. Validate that reversible pseudonymization works only for authorized use cases and that no raw PII is stored or transmitted externally.
+
+# Subtasks:
+## 5.1. Implement Data Masking Algorithms [todo]
+### Dependencies: None
+### Description: Develop and integrate masking algorithms for sensitive fields such as names, emails, HKID numbers, and phone numbers.
+### Details:
+
+
+## 5.2. Integrate SHA-256 Hashing with Salt [todo]
+### Dependencies: None
+### Description: Implement SHA-256 hashing with a configurable salt for irreversible pseudonymization of sensitive data fields.
+### Details:
+
+
+## 5.3. Sensitive Field Identification [todo]
+### Dependencies: None
+### Description: Develop logic to automatically identify and extract sensitive fields from incoming data for pseudonymization.
+### Details:
+
+
+## 5.4. Reversible Pseudonymization System [todo]
+### Dependencies: None
+### Description: Implement a secure, reversible pseudonymization mechanism for fields that require display or authorized retrieval, ensuring compliance with privacy and security requirements.
+### Details:
+
+
