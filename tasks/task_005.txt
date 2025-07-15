@@ -3,48 +3,51 @@
 # Status: in-progress
 # Dependencies: 4
 # Priority: high
-# Description: Develop the core privacy layer that pseudonymizes sensitive customer data immediately after upload, implementing two distinct privacy layers: (1) Security Pseudonymization for irreversible anonymization before external LLM processing, and (2) Display Masking for reversible, toggle-controlled UI masking. Ensure compliance with GDPR and Hong Kong PDPO requirements, including documentation of privacy principles, technical implementation, and security measures.
+# Description: Develop the core privacy layer that pseudonymizes sensitive customer data immediately after upload, implementing two distinct privacy layers: (1) Security Pseudonymization for irreversible anonymization before external LLM processing, and (2) Display Masking for reversible, toggle-controlled UI masking. Ensure compliance with GDPR and Hong Kong PDPO requirements, including documentation of privacy principles, technical implementation, and security measures. The Security Pseudonymization module is now fully implemented and ready for integration with the data processing pipeline.
 # Details:
-The privacy.py component now requires two privacy layers: 
+The privacy.py component now requires two privacy layers:
 
-1. SECURITY PSEUDONYMIZATION (Permanent, for LLM protection):
-   - Irreversible anonymization of data before sending to external LLMs
-   - Use SHA-256 hashing with salt for customer identifiers
-   - Remove all PII from the AI processing pipeline
-   - This data is never reversed back to original form
+1. **SECURITY PSEUDONYMIZATION (Permanent, for LLM protection)**:
+   - Irreversible anonymization of data before sending to external LLMs using SHA-256 hashing with a configurable salt (minimum 32 bytes) for customer identifiers.
+   - Implemented as a dedicated module (`src/utils/security_pseudonymization.py`) with a `SecurityPseudonymizer` class.
+   - Provides `anonymize_field()` for individual fields and `anonymize_dataframe()` for DataFrame-wide processing.
+   - Handles comprehensive field types (Account ID, HKID, emails, etc.) with automatic sensitive field detection.
+   - Ensures consistent, irreversible hashing (same input → same output).
+   - No original PII can be recovered from hashed values.
+   - Integrated with the upload component and used before any external API calls.
 
-2. DISPLAY MASKING (Reversible, for UI):
-   - Toggle-controlled masking for webpage display
-   - Users can turn masking on/off for viewing purposes
-   - Original data remains accessible locally for authorized display
-   - Masking patterns like "J*** D***" for names, "j***@*****.com" for emails
+2. **DISPLAY MASKING (Reversible, for UI)**:
+   - Toggle-controlled masking for webpage display.
+   - Users can turn masking on/off for viewing purposes.
+   - Original data remains accessible locally for authorized display.
+   - Masking patterns like "J*** D***" for names, "j***@*****.com" for emails.
 
 Architecture:
-- Store original data locally in encrypted form
-- Generate anonymized version for LLM processing (never send original PII externally)
-- Apply display masking as a UI layer with toggle control
+- Store original data locally in encrypted form.
+- Generate anonymized version for LLM processing (never send original PII externally).
+- Apply display masking as a UI layer with toggle control.
 
 This dual-layer approach ensures both security (LLM protection) and usability (display flexibility), while maintaining compliance with GDPR and Hong Kong PDPO requirements.
 
 # Test Strategy:
-Verify that all sensitive data is irreversibly pseudonymized (anonymized) using salted SHA-256 hashing before any external LLM processing, and that no original PII is sent externally. Confirm that display masking is reversible only for authorized users and can be toggled on/off in the UI. Test field identification logic to ensure all relevant PII is covered. Validate that original data is stored locally in encrypted form and is never transmitted to external services. Ensure compliance with GDPR and Hong Kong PDPO documentation and technical requirements.
+Verify that all sensitive data is irreversibly pseudonymized (anonymized) using salted SHA-256 hashing (minimum 32-byte salt) before any external LLM processing, and that no original PII is sent externally. Confirm that display masking is reversible only for authorized users and can be toggled on/off in the UI. Test field identification logic to ensure all relevant PII is covered. Validate that original data is stored locally in encrypted form and is never transmitted to external services. Ensure compliance with GDPR and Hong Kong PDPO documentation and technical requirements.
 
 # Subtasks:
-## 5.1. Implement Data Masking Algorithms [todo]
+## 5.1. Implement Data Masking Algorithms [done]
 ### Dependencies: None
 ### Description: Develop and integrate reversible masking algorithms for sensitive fields (names, emails, HKID numbers, phone numbers) to support UI display masking with toggle control. Ensure masking patterns like "J*** D***" for names and "j***@*****.com" for emails.
 ### Details:
 
 
-## 5.2. Integrate SHA-256 Hashing with Salt for Security Pseudonymization [todo]
+## 5.2. Integrate SHA-256 Hashing with Salt for Security Pseudonymization [done]
 ### Dependencies: None
-### Description: Implement irreversible SHA-256 hashing with a configurable salt for anonymizing sensitive data fields before external LLM processing. Ensure that no original PII or reversible pseudonyms are sent to external services.
+### Description: Implement a Security Pseudonymization module (`src/utils/security_pseudonymization.py`) with a `SecurityPseudonymizer` class using SHA-256 hashing and a configurable salt (minimum 32 bytes) for irreversible anonymization of sensitive data fields before external LLM processing. Provide `anonymize_field()` for individual fields and `anonymize_dataframe()` for DataFrame-wide processing. Ensure consistent, irreversible hashing, comprehensive field type handling (Account ID, HKID, emails, etc.), and robust salt management. No original PII or reversible pseudonyms are sent to external services.
 ### Details:
 
 
 ## 5.3. Sensitive Field Identification [todo]
 ### Dependencies: None
-### Description: Develop logic to automatically identify and extract all sensitive fields from incoming data for both security pseudonymization (LLM protection) and display masking (UI). Ensure comprehensive PII coverage.
+### Description: Enhance logic to automatically identify and extract all sensitive fields from incoming data for both security pseudonymization (LLM protection) and display masking (UI). Ensure comprehensive PII coverage and integration with the existing Security Pseudonymization module.
 ### Details:
 
 
@@ -57,6 +60,12 @@ Verify that all sensitive data is irreversibly pseudonymized (anonymized) using 
 ## 5.5. Local Encrypted Storage of Original Data [todo]
 ### Dependencies: None
 ### Description: Ensure that all original PII is stored locally in encrypted form and is never transmitted to external APIs or services. Document encryption and access control measures.
+### Details:
+
+
+## 5.6. Integration with Data Processing Pipeline [todo]
+### Dependencies: None
+### Description: Integrate the Security Pseudonymization module with the data processing pipeline to ensure that all sensitive data is anonymized before external LLM processing. Validate the integration with comprehensive tests.
 ### Details:
 
 
