@@ -1,0 +1,353 @@
+name: Integration Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      test_scope:
+        description: 'Test scope to run'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+        - all
+        - end-to-end-only
+        - performance-only
+        - compliance-only
+
+env:
+  PYTHON_VERSION: '3.12'
+  NODE_VERSION: '18'
+
+jobs:
+  integration-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    strategy:
+      matrix:
+        test-scope: 
+          - end-to-end
+          - performance
+          - compliance
+      fail-fast: false
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'pip'
+    
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          build-essential \
+          libssl-dev \
+          libffi-dev \
+          python3-dev
+    
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pytest-cov pytest-html pytest-json-report
+    
+    - name: Install Playwright browsers
+      run: |
+        pip install playwright
+        playwright install chromium firefox webkit
+        playwright install-deps
+    
+    - name: Create necessary directories
+      run: |
+        mkdir -p data/demo
+        mkdir -p tests/integration_reports
+        mkdir -p logs
+    
+    - name: Set up environment variables
+      run: |
+        echo "ANTHROPIC_API_KEY=test_key" >> $GITHUB_ENV
+        echo "PERPLEXITY_API_KEY=test_key" >> $GITHUB_ENV
+        echo "OPENROUTER_API_KEY=test_key" >> $GITHUB_ENV
+        echo "DEBUG=false" >> $GITHUB_ENV
+        echo "LOG_LEVEL=info" >> $GITHUB_ENV
+    
+    - name: Validate demo data
+      run: |
+        python -c "
+        import pandas as pd
+        from pathlib import Path
+        
+        # Verify demo data files exist
+        customer_path = 'data/demo/demo_customer_data_comprehensive.csv'
+        purchase_path = 'data/demo/demo_purchase_data_comprehensive.csv'
+        
+        if not Path(customer_path).exists():
+            print(f'Demo customer data not found at {customer_path}')
+            exit(1)
+            
+        if not Path(purchase_path).exists():
+            print(f'Demo purchase data not found at {purchase_path}')
+            exit(1)
+            
+        # Validate data structure
+        customer_df = pd.read_csv(customer_path)
+        purchase_df = pd.read_csv(purchase_path)
+        
+        print(f'Customer data: {len(customer_df)} records')
+        print(f'Purchase data: {len(purchase_df)} records')
+        
+        # Basic validation
+        assert len(customer_df) > 0, 'Customer data is empty'
+        assert len(purchase_df) > 0, 'Purchase data is empty'
+        assert 'Account ID' in customer_df.columns, 'Customer data missing Account ID'
+        assert 'Account ID' in purchase_df.columns, 'Purchase data missing Account ID'
+        
+        print('Demo data validation passed')
+        "
+    
+    - name: Run unit tests first
+      run: |
+        python -m pytest tests/ -v \
+          --ignore=tests/test_comprehensive_integration.py \
+          --ignore=tests/test_integration_runner.py \
+          --ignore=tests/test_playwright.py \
+          --cov=src \
+          --cov-report=html:reports/coverage \
+          --cov-report=xml:reports/coverage.xml \
+          --html=reports/unit-tests.html \
+          --json-report --json-report-file=reports/unit-tests.json
+    
+    - name: Run integration tests - End-to-End
+      if: matrix.test-scope == 'end-to-end' || github.event.inputs.test_scope == 'all'
+      run: |
+        python -m pytest tests/test_comprehensive_integration.py::TestEndToEndWorkflow -v \
+          --html=reports/integration-end-to-end.html \
+          --json-report --json-report-file=reports/integration-end-to-end.json \
+          --tb=short
+    
+    - name: Run integration tests - Performance
+      if: matrix.test-scope == 'performance' || github.event.inputs.test_scope == 'all'
+      run: |
+        python -m pytest tests/test_comprehensive_integration.py::TestPerformanceIntegration -v \
+          --html=reports/integration-performance.html \
+          --json-report --json-report-file=reports/integration-performance.json \
+          --tb=short
+    
+    - name: Run integration tests - Compliance
+      if: matrix.test-scope == 'compliance' || github.event.inputs.test_scope == 'all'
+      run: |
+        python -m pytest tests/test_comprehensive_integration.py::TestComplianceIntegration -v \
+          --html=reports/integration-compliance.html \
+          --json-report --json-report-file=reports/integration-compliance.json \
+          --tb=short
+    
+    - name: Run Playwright UI tests
+      if: matrix.test-scope == 'end-to-end' || github.event.inputs.test_scope == 'all'
+      run: |
+        # Start Streamlit in background for UI testing
+        python -m streamlit run src/main.py --server.headless true --server.port 8501 &
+        STREAMLIT_PID=$!
+        
+        # Wait for Streamlit to start
+        sleep 10
+        
+        # Check if Streamlit is running
+        curl -f http://localhost:8501 || (echo "Streamlit failed to start" && exit 1)
+        
+        # Run Playwright tests
+        python -m pytest tests/test_playwright.py -v \
+          --html=reports/playwright-tests.html \
+          --json-report --json-report-file=reports/playwright-tests.json \
+          --tb=short
+        
+        # Stop Streamlit
+        kill $STREAMLIT_PID || true
+    
+    - name: Run comprehensive integration test runner
+      if: github.event.inputs.test_scope == 'all' || github.event.inputs.test_scope == ''
+      run: |
+        python tests/test_integration_runner.py \
+          --output-dir tests/integration_reports
+    
+    - name: Generate test summary
+      if: always()
+      run: |
+        python -c "
+        import json
+        import os
+        from pathlib import Path
+        from datetime import datetime
+        
+        # Collect all test results
+        reports_dir = Path('reports')
+        results = {
+            'timestamp': datetime.now().isoformat(),
+            'matrix_scope': '${{ matrix.test-scope }}',
+            'workflow_input': '${{ github.event.inputs.test_scope }}',
+            'tests': {}
+        }
+        
+        # Process JSON reports
+        for report_file in reports_dir.glob('*.json'):
+            try:
+                with open(report_file) as f:
+                    data = json.load(f)
+                    results['tests'][report_file.stem] = {
+                        'passed': data.get('summary', {}).get('passed', 0),
+                        'failed': data.get('summary', {}).get('failed', 0),
+                        'total': data.get('summary', {}).get('total', 0),
+                        'duration': data.get('duration', 0)
+                    }
+            except Exception as e:
+                print(f'Error processing {report_file}: {e}')
+        
+        # Calculate totals
+        total_passed = sum(test.get('passed', 0) for test in results['tests'].values())
+        total_failed = sum(test.get('failed', 0) for test in results['tests'].values())
+        total_tests = sum(test.get('total', 0) for test in results['tests'].values())
+        
+        results['summary'] = {
+            'total_tests': total_tests,
+            'total_passed': total_passed,
+            'total_failed': total_failed,
+            'success_rate': (total_passed / total_tests * 100) if total_tests > 0 else 0
+        }
+        
+        # Save summary
+        with open('reports/test-summary.json', 'w') as f:
+            json.dump(results, f, indent=2)
+        
+        # Print summary
+        print(f'Test Summary for {results[\"matrix_scope\"]}:')
+        print(f'  Total Tests: {total_tests}')
+        print(f'  Passed: {total_passed}')
+        print(f'  Failed: {total_failed}')
+        print(f'  Success Rate: {results[\"summary\"][\"success_rate\"]:.1f}%')
+        "
+    
+    - name: Upload test reports
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-reports-${{ matrix.test-scope }}
+        path: |
+          reports/
+          tests/integration_reports/
+          logs/
+        retention-days: 30
+    
+    - name: Upload coverage to Codecov
+      if: matrix.test-scope == 'end-to-end'
+      uses: codecov/codecov-action@v3
+      with:
+        file: reports/coverage.xml
+        flags: integration
+        name: codecov-integration
+    
+    - name: Comment PR with test results
+      if: github.event_name == 'pull_request' && matrix.test-scope == 'end-to-end'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          
+          try {
+            const summary = JSON.parse(fs.readFileSync('reports/test-summary.json', 'utf8'));
+            
+            const comment = `## 🧪 Integration Test Results
+            
+            **Test Scope:** ${summary.matrix_scope}
+            
+            | Metric | Value |
+            |--------|-------|
+            | Total Tests | ${summary.summary.total_tests} |
+            | Passed | ${summary.summary.total_passed} ✅ |
+            | Failed | ${summary.summary.total_failed} ❌ |
+            | Success Rate | ${summary.summary.success_rate.toFixed(1)}% |
+            
+            **Detailed Results:**
+            ${Object.entries(summary.tests).map(([name, results]) => 
+              `- **${name}**: ${results.passed}/${results.total} passed (${(results.passed/results.total*100).toFixed(1)}%)`
+            ).join('\n')}
+            
+            *Timestamp: ${summary.timestamp}*
+            `;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+          } catch (error) {
+            console.log('Could not post test results comment:', error);
+          }
+
+  security-scan:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Install security tools
+      run: |
+        pip install bandit safety
+    
+    - name: Run Bandit security scan
+      run: |
+        bandit -r src/ -f json -o reports/bandit-security.json || true
+        bandit -r src/ -f txt
+    
+    - name: Run Safety vulnerability scan
+      run: |
+        safety check --json --output reports/safety-vulnerabilities.json || true
+        safety check
+    
+    - name: Upload security reports
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: security-reports
+        path: reports/
+        retention-days: 30
+
+  build-status:
+    runs-on: ubuntu-latest
+    needs: [integration-tests, security-scan]
+    if: always()
+    
+    steps:
+    - name: Check integration test results
+      run: |
+        echo "Integration tests result: ${{ needs.integration-tests.result }}"
+        echo "Security scan result: ${{ needs.security-scan.result }}"
+        
+        if [[ "${{ needs.integration-tests.result }}" == "failure" ]]; then
+          echo "❌ Integration tests failed"
+          exit 1
+        elif [[ "${{ needs.security-scan.result }}" == "failure" ]]; then
+          echo "⚠️ Security scan found issues, but continuing"
+        else
+          echo "✅ All checks passed"
+        fi 

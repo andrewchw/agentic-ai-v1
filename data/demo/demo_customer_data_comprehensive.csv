@@ -1,0 +1,21 @@
+Account ID,Family Name,Given Name,Chinese Given Name,Gender,Date of Birth,Email,ID Number,Phone Number,District,Customer Type,Customer Class,Company Name
+3HK000001,Wong,Wai Ming,偉明,M,1985-03-15,wai.ming.wong@gmail.com,A123456(7),+852 9123 4567,Central,Individual,Premium,
+3HK000002,Chan,Mei Ling,美玲,F,1990-07-22,mei.ling@netvigator.com,B789012(3),+852 9876 5432,TST,Individual,Standard,
+3HK000003,Li,Chi Keung,志強,M,1978-11-08,chi.keung.li@yahoo.com.hk,C456789(1),+852 8765 4321,Mong Kok,Business,VIP,Li Holdings Ltd
+3HK000004,Cheung,Ka Man,嘉文,F,1992-05-14,ka.man@hotmail.com,D321654(9),+852 2345 6789,Causeway Bay,Individual,Basic,
+3HK000005,Lau,Pak Ho,柏豪,M,1987-09-30,pak.ho.lau@pccw.com,E654321(2),+852 3456 7890,Wan Chai,Corporate,Premium,
+3HK000006,Ng,Wing Yi,詠儀,F,1995-01-18,wing.yi@gmail.com,F987654(5),+852 4567 8901,Sha Tin,Individual,Standard,
+3HK000007,Ma,Kin Chung,建忠,M,1983-12-03,kin.chung.ma@business.hk,G147258(4),+852 5678 9012,Tuen Mun,Business,Premium,Ma Enterprise
+3HK000008,Tang,Siu Fung,小鳳,F,1989-08-27,siu.fung@outlook.com,H369147(8),+852 6789 0123,Tai Po,Individual,Basic,
+3HK000009,Leung,Ming Ho,明豪,M,1975-04-11,ming.ho@netvigator.com,K258369(6),+852 7890 1234,Yuen Long,Individual,VIP,
+3HK000010,Ho,Lai Wan,麗雲,F,1993-10-05,lai.wan.ho@gmail.com,L741852(0),+852 8901 2345,Kwun Tong,Individual,Standard,
+3HK000011,黃,志華,志華,M,1980-06-20,chi.wah@chinese.com.hk,M963741(7),+852 9012 3456,Sham Shui Po,Individual,Premium,
+3HK000012,O'Connor,James,詹姆士,M,1988-02-14,james.oconnor@international.com,N852741(3),+852 2222 3333,Central,Business,VIP,O'Connor Trading
+3HK000013,Smith-Jones,Sarah,莎拉,F,1991-09-12,sarah.smith-jones@compound.name,P741963(1),+852 3333 4444,Mid-Levels,Individual,Premium,
+3HK000014,中山,美子,美子,F,1986-12-25,miko.nakayama@jp.com,R159753(9),+852 4444 5555,Admiralty,Individual,Standard,
+3HK000015,Müller,Hans,漢斯,M,1979-07-08,hans.mueller@german.de,S357159(4),+852 5555 6666,Tsing Yi,Business,Basic,Müller GmbH
+3HK000016,Van Der Berg,Emma,艾瑪,F,1994-03-01,emma.van.der.berg@dutch.nl,T951357(2),+852 6666 7777,Discovery Bay,Individual,VIP,
+3HK000017,Al-Rahman,Ahmed,阿默德,M,1985-11-30,ahmed.al.rahman@arabic.ae,U753951(8),+852 7777 8888,Ma On Shan,Individual,Premium,
+3HK000018,Test'User,John,約翰,M,1990-01-01,john.test@special.chars,V159357(5),+852 8888 9999,Test District,Individual,Standard,
+3HK000019,,Anonymous,匿名,U,1900-01-01,anonymous@unknown.com,,+852 0000 0000,,Unknown,Basic,
+3HK000020,VeryLongFamilyNameThatExceedsNormalLength,VeryLongGivenNameThatIsUnusuallyLong,非常長的中文名字,O,2000-12-31,very.long.email.address@extremely.long.domain.name.com,Z999999(9),+852 9999 0000,Very Long District Name,Corporate,Premium,Very Long Company Name That Exceeds Normal Business Name Length Standards 

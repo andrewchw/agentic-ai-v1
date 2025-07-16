@@ -1,0 +1,52 @@
+Account ID,Product Name,Category,Amount,Purchase Date,Quantity,Payment Method
+3HK000001,5G Infinite Plan,Mobile Plans,588.00,2024-01-15,1,Credit Card
+3HK000001,iPhone 15 Pro,Device & Accessories,12999.00,2024-01-15,1,Credit Card
+3HK000001,IDD Service,Value Added Services,88.00,2024-02-01,1,Auto-Pay
+3HK000002,4G Unlimited,Mobile Plans,388.00,2024-01-20,1,Bank Transfer
+3HK000002,Samsung Galaxy S24,Device & Accessories,8999.00,2024-01-20,1,Bank Transfer
+3HK000003,5G Business Pro,Business Solutions,1288.00,2024-01-10,1,Corporate Account
+3HK000003,iPad Pro 12.9,Device & Accessories,9999.00,2024-01-10,1,Corporate Account
+3HK000003,Fleet Management,Business Solutions,2500.00,2024-01-10,5,Corporate Account
+3HK000004,5G Basic,Mobile Plans,288.00,2024-02-05,1,Credit Card
+3HK000005,5G Enterprise,Business Solutions,1888.00,2024-01-12,1,Bank Transfer
+3HK000005,Roaming Package - Asia,Roaming Services,299.00,2024-03-01,1,Auto-Pay
+3HK000006,4G Standard,Mobile Plans,188.00,2024-02-10,1,Credit Card
+3HK000007,5G Business Standard,Business Solutions,888.00,2024-01-18,1,Corporate Account
+3HK000007,Collaboration Suite,Business Solutions,1500.00,2024-01-18,10,Corporate Account
+3HK000008,Prepaid Card 100,Mobile Plans,100.00,2024-02-15,1,Cash
+3HK000008,Prepaid Card 200,Mobile Plans,200.00,2024-03-15,1,Cash
+3HK000009,5G Premium,Mobile Plans,688.00,2024-01-25,1,Auto-Pay
+3HK000009,Apple Watch Series 9,Device & Accessories,3199.00,2024-01-25,1,Auto-Pay
+3HK000009,Device Insurance,Value Added Services,299.00,2024-01-25,1,Auto-Pay
+3HK000010,4G Premium,Mobile Plans,288.00,2024-02-08,1,Credit Card
+3HK000011,5G Infinite Plan,Mobile Plans,588.00,2024-01-30,1,Bank Transfer
+3HK000012,5G Business Pro,Business Solutions,1588.00,2024-01-08,1,Corporate Account
+3HK000012,International Roaming,Roaming Services,888.00,2024-02-15,1,Corporate Account
+3HK000013,5G Premium,Mobile Plans,588.00,2024-02-01,1,Credit Card
+3HK000014,4G Unlimited,Mobile Plans,388.00,2024-02-12,1,Auto-Pay
+3HK000015,5G Business Basic,Business Solutions,688.00,2024-01-22,1,Bank Transfer
+3HK000016,5G Infinite Plan,Mobile Plans,688.00,2024-01-28,1,Credit Card
+3HK000017,5G Standard,Mobile Plans,488.00,2024-02-03,1,Bank Transfer
+3HK000018,Test Plan,Mobile Plans,0.01,2024-01-01,999,Test Payment
+3HK000019,Unknown Product,Unknown Category,0.00,2024-01-01,0,Unknown
+3HK000020,Very Expensive Enterprise Solution,Business Solutions,99999.99,2024-01-01,1,Corporate Account
+3HK999001,5G Standard,Mobile Plans,488.00,2024-02-20,1,Credit Card
+3HK999002,4G Basic,Mobile Plans,188.00,2024-02-22,1,Bank Transfer
+3HK999003,Roaming Package - Europe,Roaming Services,499.00,2024-03-01,1,Credit Card
+3HK999004,IoT SIM Card,IoT Services,50.00,2024-02-18,10,Corporate Account
+3HK999005,Mobile Broadband,Mobile Plans,299.00,2024-02-25,1,Auto-Pay
+3HK000001,Monthly Bill,Mobile Plans,588.00,2024-03-15,1,Auto-Pay
+3HK000002,Monthly Bill,Mobile Plans,388.00,2024-03-20,1,Bank Transfer
+3HK000003,Monthly Bill,Business Solutions,1288.00,2024-03-10,1,Corporate Account
+3HK000004,Monthly Bill,Mobile Plans,288.00,2024-04-05,1,Credit Card
+3HK000005,Monthly Bill,Business Solutions,1888.00,2024-04-12,1,Bank Transfer
+3HK000006,Data Add-On 20GB,Value Added Services,128.00,2024-03-10,1,Credit Card
+3HK000007,VPN Service,Business Solutions,399.00,2024-03-18,1,Corporate Account
+3HK000008,Prepaid Card 50,Mobile Plans,50.00,2024-04-15,1,Cash
+3HK000009,Apple Care+,Value Added Services,999.00,2024-02-25,1,Auto-Pay
+3HK000010,Data Add-On 10GB,Value Added Services,88.00,2024-03-08,1,Credit Card
+3HK000001,Roaming Package - Japan,Roaming Services,199.00,2024-05-01,1,Credit Card
+3HK000002,Samsung Care+,Value Added Services,699.00,2024-04-20,1,Bank Transfer
+3HK000003,Cloud Storage 1TB,Business Solutions,299.00,2024-04-10,1,Corporate Account
+3HK000004,Data Add-On 5GB,Value Added Services,58.00,2024-05-05,1,Credit Card
+3HK000005,Security Suite Enterprise,Business Solutions,1999.00,2024-05-12,1,Bank Transfer 
