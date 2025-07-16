@@ -1,0 +1,13 @@
+{
+  "encrypted_data": "t1c5YwjmfqRk8w5WZbo7DMC0HaekoWfRQFrKwfge+2KrIm799s1TapiTxVUzO32hwXsX8VOBhiNcZX0ST14l1bWk4goj8BasOwE3LgDlUGzO3J7Ql81TusY4PiJZu1a70qXRagniie6Vu/lqVYW5H1LSwidHJvFZ+pzR2N5tL88OLtG0vGzMzdAbKTXz+KrC9Ua51k0Ed5x0VEGgOHqPvmkMZ8yyCvvMyYe3TTNMFc6oLeurCEMMgXCBBMH1z63t3ROcZK/3uqibYI7kG/GatiBmdMdyWpJ8TTIfn/fSmBQxoKSCA7gHcloShnv2lByPClHJr2ax4n8xcdVPHh4kVkaVin8N/q7Jtv5j6qqDcQX0zKANYfUhZ77HRTKT4iLiL/ktR5MMcE749s2ChdtGB7gUJ2zpsrqMXyV/pgFYwqel4iBcqz/dOe7YjmWukxhimJG+5kNsSich1Ei5hXrM9VeNUDjh2lapnPsR3jBf7SIeu6NqxNG4LCS1o7GrS+FICZbF1X+ndlGFeAY28wC0nwUqK7WIiKB0h2vG4+bqyM5GvHfKgdQ2UUPhNX8cUpwiBiXtq+vYOySCA2u3uJ91MD6GSCSczHXV1dXm",
+  "metadata": {
+    "encrypted_at": "2025-07-16T12:16:09.121350",
+    "key_derivation": "PBKDF2-SHA256",
+    "encryption_algorithm": "AES-256-GCM",
+    "data_hash": "73d6438985fef3efd8fffc293dad3353ab65936f6f122a2d7296b6d1906ce0e2",
+    "access_count": 0,
+    "last_accessed": null
+  },
+  "nonce": "8agalVqAIN8Ciw61",
+  "salt": "XLMxflR5lGvp0KdvMzzlLg=="
+}

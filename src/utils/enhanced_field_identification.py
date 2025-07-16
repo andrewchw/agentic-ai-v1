@@ -136,20 +136,27 @@ class EnhancedFieldIdentifier:
                 column_keywords=[
                     "name",
                     "customer",
-                    "person",
+                    "person", 
                     "contact",
                     "first_name",
                     "last_name",
                     "full_name",
+                    "given",
+                    "family",
+                    "first",
+                    "last",
+                    "surname",
+                    "forename",
                 ],
                 value_patterns=[
+                    r"^[A-Z][a-z]+$",  # Single name (Given or Family)
                     r"^[A-Z][a-z]+\s[A-Z][a-z]+$",  # First Last
                     r"^[A-Z][a-z]+\s[A-Z][a-z]+\s[A-Z][a-z]+$",  # First Middle Last
                     r"^[A-Z][a-z]+,\s[A-Z][a-z]+$",  # Last, First
                     r"^[\u4e00-\u9fff]{2,4}$",  # Chinese characters
                     r"^[A-Z][a-z]+\s[\u4e00-\u9fff]{2,4}$",  # Mixed English/Chinese
                 ],
-                confidence_weight=0.7,
+                confidence_weight=0.8,
                 description="Personal names including Chinese characters",
             ),
             # Addresses

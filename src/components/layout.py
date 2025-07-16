@@ -24,7 +24,7 @@ def setup_page_config():
 
     # Apply Three HK color scheme
     st.markdown(
-        """
+        f"""
     <style>
         .stApp {{
             background-color: {config.ACCENT_COLOR};
@@ -56,7 +56,7 @@ def setup_page_config():
 def render_header():
     """Render the main application header"""
     st.markdown(
-        """
+        f"""
     <div class="main-header">
         <h1>🤖 {config.APP_NAME}</h1>
         <p style="font-size: 18px; margin-bottom: 0;">

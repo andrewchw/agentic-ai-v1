@@ -91,7 +91,7 @@ class PrivacyPipeline:
         self.encrypted_storage = EncryptedStorage(storage_path, master_password)
         self.field_identifier = EnhancedFieldIdentifier(custom_patterns_file)
         self.security_pseudonymizer = SecurityPseudonymizer()
-        self.display_masker = IntegratedDisplayMasking(custom_patterns_file)
+        self.display_masker = IntegratedDisplayMasking(config_path=custom_patterns_file)
 
         # Pipeline state
         self.current_session = {}
@@ -173,7 +173,7 @@ class PrivacyPipeline:
             masking_start = datetime.now()
 
             masking_result = self.display_masker.process_dataframe(df.copy())
-            display_df = masking_result.get("masked_dataframe", df.copy())
+            display_df = masking_result.get("dataframe", df.copy())
             masking_time = (datetime.now() - masking_start).total_seconds()
 
             # Calculate statistics
@@ -186,7 +186,7 @@ class PrivacyPipeline:
                 pii_fields_pseudonymized=len(
                     [col for col in pii_fields if col in pseudonymized_df.columns]
                 ),
-                pii_fields_masked=masking_result.get("fields_masked", 0),
+                pii_fields_masked=masking_result.get("total_masked_fields", 0),
                 processing_time_seconds=total_time,
                 encryption_time_seconds=encryption_time,
                 identification_time_seconds=identification_time,
@@ -261,15 +261,13 @@ class PrivacyPipeline:
 
             if privacy_enabled:
                 # Apply display masking
-                masking_result = self.display_masker.mask_dataframe(
-                    original_df, privacy_enabled=True, confidence_threshold=confidence_threshold
-                )
-                display_df = masking_result.masked_dataframe
+                masking_result = self.display_masker.process_dataframe(original_df)
+                display_df = masking_result.get("dataframe", original_df)
 
                 result_metadata = {
                     "privacy_enabled": True,
-                    "fields_masked": masking_result.fields_masked,
-                    "masking_metadata": masking_result.metadata,
+                    "fields_masked": masking_result.get("total_masked_fields", 0),
+                    "masking_metadata": masking_result.get("masking_metadata", {}),
                     "original_metadata": metadata,
                 }
             else:
@@ -358,7 +356,8 @@ class PrivacyPipeline:
         # Check 1: No identical sensitive values
         pii_columns = []
         for column in original_df.columns:
-            result = self.field_identifier.identify_field(column, original_df[column])
+            sample_values = original_df[column].dropna().head(10).astype(str).tolist()
+            result = self.field_identifier.identify_field(column, sample_values)
             if result.is_sensitive:
                 pii_columns.append(column)
 
