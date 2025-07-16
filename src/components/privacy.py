@@ -18,7 +18,8 @@ def render_privacy_page():
         """
     ### Our Privacy-First Commitment
 
-    The Agentic AI Revenue Assistant is designed with **privacy as the foundation**, not an afterthought.
+    The Agentic AI Revenue Assistant is designed with **privacy as the foundation**,
+    not an afterthought.
     Every aspect of data handling prioritizes your customers' privacy and regulatory compliance.
     """
     )

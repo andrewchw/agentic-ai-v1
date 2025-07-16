@@ -12,7 +12,8 @@ def render_results_page():
     st.markdown("## 📊 Analysis Results")
 
     st.info(
-        "📋 **Note:** This page will be fully implemented in Task 12 - Results Dashboard Implementation"
+        "📋 **Note:** This page will be fully implemented in Task 12 - "
+        "Results Dashboard Implementation"
     )
 
     # Mock results structure

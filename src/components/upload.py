@@ -292,7 +292,10 @@ def load_sample_data(file_path, auto_detect_encoding=True):
             if detected_encoding:
                 try:
                     df = pd.read_csv(file_path, encoding=detected_encoding)
-                    message = f"Sample data loaded successfully (detected: {detected_encoding}, confidence: {confidence:.2f})"
+                    message = (
+                        f"Sample data loaded successfully (detected: {detected_encoding}, "
+                        f"confidence: {confidence:.2f})"
+                    )
                     return True, message, df
                 except Exception:
                     pass  # Fall back to manual detection
@@ -405,7 +408,9 @@ def display_data_preview(processed_data_dict, title, max_rows=MAX_PREVIEW_ROWS):
             st.markdown("**Processing Performance:**")
             st.caption(f"Total processing time: {stats['processing_time_seconds']:.3f}s")
             st.caption(
-                f"PII fields processed: {stats['pii_fields_identified']} identified, {stats['pii_fields_pseudonymized']} pseudonymized, {stats['pii_fields_masked']} masked"
+                f"PII fields processed: {stats['pii_fields_identified']} identified, "
+                f"{stats['pii_fields_pseudonymized']} pseudonymized, "
+                f"{stats['pii_fields_masked']} masked"
             )
 
 
@@ -447,12 +452,14 @@ def render_upload_page():
             auto_correct_encoding = st.checkbox(
                 "Automatic encoding detection and correction",
                 value=True,
-                help="Automatically detect file encoding (UTF-8, GBK, etc.) and convert to UTF-8 for proper Chinese character display",
+                help="Automatically detect file encoding (UTF-8, GBK, etc.) and convert to UTF-8 "
+                "for proper Chinese character display",
             )
 
             if auto_correct_encoding:
                 st.info(
-                    "✨ **Smart Encoding Detection**: Files will be automatically analyzed and converted to UTF-8 for optimal Chinese character support."
+                    "✨ **Smart Encoding Detection**: Files will be automatically analyzed "
+                    "and converted to UTF-8 for optimal Chinese character support."
                 )
             else:
                 st.warning(
@@ -494,7 +501,9 @@ def render_upload_page():
 
                         # Show privacy compliance information
                         st.info(
-                            "✅ Data successfully processed with full privacy protection - original PII encrypted, display data masked, pseudonymized data ready for AI processing"
+                            "✅ Data successfully processed with full privacy protection - "
+                            "original PII encrypted, display data masked, "
+                            "pseudonymized data ready for AI processing"
                         )
 
                         # Show processing summary
@@ -524,13 +533,15 @@ def render_upload_page():
             auto_correct_encoding_purchase = st.checkbox(
                 "Automatic encoding detection and correction",
                 value=True,
-                help="Automatically detect file encoding (UTF-8, GBK, etc.) and convert to UTF-8 for proper Chinese character display",
+                help="Automatically detect file encoding (UTF-8, GBK, etc.) and convert to UTF-8 "
+                "for proper Chinese character display",
                 key="purchase_encoding_option",
             )
 
             if auto_correct_encoding_purchase:
                 st.info(
-                    "✨ **Smart Encoding Detection**: Files will be automatically analyzed and converted to UTF-8 for optimal Chinese character support."
+                    "✨ **Smart Encoding Detection**: Files will be automatically analyzed "
+                    "and converted to UTF-8 for optimal Chinese character support."
                 )
             else:
                 st.warning(
@@ -572,7 +583,9 @@ def render_upload_page():
 
                         # Show privacy compliance information
                         st.info(
-                            "✅ Data successfully processed with full privacy protection - original PII encrypted, display data masked, pseudonymized data ready for AI processing"
+                            "✅ Data successfully processed with full privacy protection - "
+                            "original PII encrypted, display data masked, "
+                            "pseudonymized data ready for AI processing"
                         )
 
                         # Show processing summary
@@ -743,7 +756,8 @@ def render_upload_page():
             total_pii_fields = customer_pii_count + purchase_pii_count
 
             st.info(
-                f"🔒 Privacy Protection Summary: {total_pii_fields} total PII fields identified and protected across both datasets"
+                f"🔒 Privacy Protection Summary: {total_pii_fields} total PII fields "
+                f"identified and protected across both datasets"
             )
 
             if st.button("🚀 Proceed to Secure Analysis", type="primary"):
@@ -759,7 +773,8 @@ def render_upload_page():
                 # This will link to the next page/component in future tasks
         else:
             st.warning(
-                "⚠️ Both datasets are uploaded but need privacy processing. Please re-upload files to ensure privacy protection."
+                "⚠️ Both datasets are uploaded but need privacy processing. "
+                "Please re-upload files to ensure privacy protection."
             )
     else:
         st.info("📋 Upload both customer and purchase data files to continue with the analysis.")
