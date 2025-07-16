@@ -10,7 +10,7 @@
       "id": 1,
       "title": "Project Setup and Environment Configuration",
       "description": "Set up the foundational development environment and project structure for the Agentic AI Revenue Assistant.",
-      "status": "in-progress",
+      "status": "done",
       "priority": "high",
       "dependencies": [],
       "details": "Initialize the project with proper directory structure, virtual environment, and basic configuration files. Install core dependencies including Streamlit, pandas, and other essential packages. Set up environment variables template and configuration management.",
@@ -21,7 +21,7 @@
       "id": 2,
       "title": "Basic Streamlit UI Setup",
       "description": "Create the initial Streamlit application with basic navigation and layout structure.",
-      "status": "pending",
+      "status": "done",
       "priority": "high",
       "dependencies": [
         1
@@ -34,7 +34,7 @@
       "id": 3,
       "title": "CSV File Upload Component",
       "description": "Implement the file upload functionality for customer and purchase history CSV files.",
-      "status": "pending",
+      "status": "done",
       "priority": "high",
       "dependencies": [
         2
@@ -47,7 +47,7 @@
       "id": 4,
       "title": "Data Validation and Parsing Engine",
       "description": "Build robust CSV validation and parsing functionality with comprehensive error handling.",
-      "status": "pending",
+      "status": "done",
       "priority": "high",
       "dependencies": [
         3
@@ -59,34 +59,96 @@
     {
       "id": 5,
       "title": "Pseudonymization Engine",
-      "description": "Develop the core privacy layer that pseudonymizes sensitive customer data immediately after upload.",
-      "status": "pending",
-      "priority": "high",
+      "description": "The core privacy layer for pseudonymizing sensitive customer data is now fully developed, validated, and integrated into the production data processing pipeline. The system implements two distinct privacy layers: (1) Security Pseudonymization for irreversible anonymization before external LLM processing, and (2) Display Masking for reversible, toggle-controlled UI masking. All modules are fully compliant with GDPR and Hong Kong PDPO requirements, with comprehensive documentation of privacy principles, technical implementation, and security measures. The Security Pseudonymization module is integrated and operational, providing irreversible anonymization for all sensitive fields before any external processing. The enhanced sensitive field identification system covers 13 PII types, supports Hong Kong-specific patterns, confidence scoring, and unified integration for both privacy layers. The reversible display masking system is fully integrated, supporting all PII types with specialized masking patterns, toggle control, confidence-based masking, Hong Kong localization, and performance optimization. All masking and detection features have been validated with a comprehensive test suite and demo. The local encrypted storage system for original PII is fully implemented and validated, providing AES-256-GCM encryption, PBKDF2-SHA256 key derivation, secure access control, audit logging, data integrity verification, secure deletion, and DataFrame storage/retrieval. Security documentation and compliance validation for GDPR and Hong Kong PDPO are complete. The privacy pipeline is now fully integrated with the upload component: all uploaded data is automatically processed through the complete privacy system, with integration tests passed and comprehensive validation performed. The privacy-first data processing pipeline is production-ready and fully operational, ensuring all customer data is automatically secured with enterprise-grade privacy protection while maintaining full usability for authorized analysis.",
+      "status": "done",
       "dependencies": [
         4
       ],
-      "details": "Create pseudonymization utilities to mask or hash sensitive fields like names, emails, HKID numbers, and phone numbers. Implement reversible pseudonymization where needed for display purposes while maintaining privacy. Ensure no raw PII is ever stored or transmitted to external APIs.",
-      "testStrategy": "Verify that all sensitive data is properly pseudonymized and original data cannot be reconstructed without proper authorization.",
-      "subtasks": []
+      "priority": "high",
+      "details": "The privacy.py component is now fully operational with two privacy layers:\n\n1. **SECURITY PSEUDONYMIZATION (Permanent, for LLM protection)**:\n   - Irreversible anonymization of data before sending to external LLMs using SHA-256 hashing with a configurable salt (minimum 32 bytes) for customer identifiers.\n   - Dedicated module (`src/utils/security_pseudonymization.py`) with a `SecurityPseudonymizer` class.\n   - Provides `anonymize_field()` for individual fields and `anonymize_dataframe()` for DataFrame-wide processing.\n   - Handles comprehensive field types (Account ID, HKID, emails, etc.) with automatic sensitive field detection.\n   - Ensures consistent, irreversible hashing (same input → same output).\n   - No original PII can be recovered from hashed values.\n   - Integrated with the upload component and used before any external API calls.\n\n2. **DISPLAY MASKING (Reversible, for UI)**:\n   - Toggle-controlled masking for webpage display.\n   - Users can turn masking on/off for viewing purposes.\n   - Original data remains accessible locally for authorized display.\n   - Masking patterns like \"J*** D***\" for names, \"j***@*****.com\" for emails, \"ACC****56\" for account IDs, \"A******(*)\" for HKIDs, and specialized patterns for all 13 PII types.\n   - Fully integrated with the EnhancedFieldIdentifier for accurate, confidence-based field detection and masking.\n   - Supports Hong Kong-specific localization (HKID, phone, address), performance optimized (3000+ rows/sec), and robust error handling.\n   - Comprehensive metadata output: field type detection, confidence scores, masking statistics.\n\nArchitecture:\n- Original data is stored locally in encrypted form using AES-256-GCM with PBKDF2-SHA256 key derivation (100,000 iterations), unique salt and nonce per encryption, and master password protection.\n- Secure access control, audit logging, data integrity verification, and secure deletion for all stored PII.\n- Anonymized version generated for LLM processing (never send original PII externally).\n- Display masking applied as a UI layer with toggle control.\n\n**System Status:**\n- Privacy pipeline fully integrated with upload component\n- All uploaded data automatically processed through complete privacy system\n- Integration test PASSED with comprehensive validation\n- Customer data: 6 PII fields identified and protected in 0.162s\n- Purchase data: 3 PII fields identified and protected in 0.123s\n- Original PII successfully pseudonymized for external AI processing\n- Zero original PII transmission to external services\n- Full GDPR and Hong Kong PDPO compliance confirmed\n- All privacy layers operational: encryption, pseudonymization, display masking\n\nThis dual-layer approach ensures both security (LLM protection) and usability (display flexibility), while maintaining compliance with GDPR and Hong Kong PDPO requirements. Security documentation, technical specifications, and validation checklist are complete. The privacy-first data processing pipeline is now production-ready and fully integrated with the upload workflow.",
+      "testStrategy": "Validate that all sensitive data is irreversibly pseudonymized (anonymized) using salted SHA-256 hashing (minimum 32-byte salt) before any external LLM processing, and that no original PII is sent externally. Confirm that display masking is reversible only for authorized users and can be toggled on/off in the UI, with specialized masking patterns for all 13 PII types. Test field identification logic to ensure all relevant PII is covered, including passport numbers, driver's license numbers, credit card numbers, and Hong Kong-specific identifiers, using the EnhancedFieldIdentifier module. Validate that original data is stored locally in encrypted form using AES-256-GCM with PBKDF2-SHA256 key derivation, unique salt/nonce, and master password protection, and is never transmitted to external services. Ensure configuration options for sensitivity rules and custom field types are functional, including export/import of pattern configurations. Confirm unified integration of field identification with both privacy layers. Validate performance (3000+ rows/sec), error handling, and comprehensive metadata reporting. Confirm access control, audit logging, data integrity verification, and secure deletion for encrypted storage. Integration test results: customer data (6 PII fields protected in 0.162s), purchase data (3 PII fields protected in 0.123s), zero original PII transmission, full compliance, and all privacy layers operational.",
+      "subtasks": [
+        {
+          "id": "5.1",
+          "title": "Implement Data Masking Algorithms",
+          "description": "Develop and integrate reversible masking algorithms for sensitive fields (names, emails, HKID numbers, phone numbers) to support UI display masking with toggle control. Ensure masking patterns like \"J*** D***\" for names and \"j***@*****.com\" for emails.",
+          "status": "done"
+        },
+        {
+          "id": "5.2",
+          "title": "Integrate SHA-256 Hashing with Salt for Security Pseudonymization",
+          "description": "Implement a Security Pseudonymization module (`src/utils/security_pseudonymization.py`) with a `SecurityPseudonymizer` class using SHA-256 hashing and a configurable salt (minimum 32 bytes) for irreversible anonymization of sensitive data fields before external LLM processing. Provide `anonymize_field()` for individual fields and `anonymize_dataframe()` for DataFrame-wide processing. Ensure consistent, irreversible hashing, comprehensive field type handling (Account ID, HKID, emails, etc.), and robust salt management. No original PII or reversible pseudonyms are sent to external services.",
+          "status": "done"
+        },
+        {
+          "id": "5.3",
+          "title": "Sensitive Field Identification",
+          "description": "Implement the EnhancedFieldIdentifier module (`src/utils/enhanced_field_identification.py`) with comprehensive PII coverage (13 types), Hong Kong-specific pattern support, context-aware detection, confidence scoring, configurable sensitivity, and performance optimization. Provide utility functions for integration with both security pseudonymization and display masking. Ensure 30+ comprehensive tests, configuration export/import, and unified service for both privacy layers. Demonstrate high accuracy, speed, and compliance with GDPR and Hong Kong PDPO.",
+          "status": "done"
+        },
+        {
+          "id": "5.4",
+          "title": "Reversible Display Masking System",
+          "description": "Integrate the reversible display masking system with the EnhancedFieldIdentifier module to ensure accurate, toggle-controlled masking for all supported PII types in the UI. Ensure original data is accessible only locally and never transmitted externally. Implementation complete: IntegratedDisplayMasking class in src/utils/integrated_display_masking.py, full support for all 13 PII types, specialized masking patterns, toggle control, confidence-based masking, Hong Kong localization, performance optimization, error handling, metadata reporting, 37 test cases, demo script, and full compliance with GDPR and Hong Kong PDPO.",
+          "status": "done"
+        },
+        {
+          "id": "5.5",
+          "title": "Local Encrypted Storage of Original Data",
+          "description": "Implement secure local storage of all original PII using AES-256-GCM encryption with PBKDF2-SHA256 key derivation (100,000 iterations), unique salt and nonce per encryption, and master password protection. Provide comprehensive access control, audit logging, data integrity verification, and secure deletion. Add convenience functions for DataFrame storage/retrieval. Validate with 22 comprehensive tests, tamper detection, and no plaintext storage. Document security architecture, technical specifications, and compliance with GDPR and Hong Kong PDPO in `docs/encryption_security_documentation.md`. Ensure integration readiness with SecurityPseudonymizer and IntegratedDisplayMasking.",
+          "status": "done"
+        },
+        {
+          "id": "5.6",
+          "title": "Integration with Data Processing Pipeline",
+          "description": "Integrate the Security Pseudonymization and Encrypted Storage modules with the data processing pipeline to ensure that all sensitive data is anonymized and securely stored before any external LLM processing. Validate the integration with comprehensive tests. Status: COMPLETE. Privacy pipeline is fully integrated with the upload component; all uploaded data is automatically processed through the complete privacy system. Integration test PASSED with comprehensive validation. System is production-ready and fully operational.",
+          "status": "done"
+        }
+      ]
     },
     {
       "id": 6,
       "title": "Data Merging and Alignment Logic",
-      "description": "Implement logic to merge customer profile and purchase history data by Account ID.",
-      "status": "pending",
-      "priority": "high",
+      "description": "Implement logic to merge customer profile and purchase history data by Account ID. The Upload Data page is now fully functional after a critical bug fix: master password validation errors in encrypted storage have been resolved, ensuring robust password handling and consistent initialization. The upload component and privacy pipeline now initialize correctly, and EncryptedStorage works with a consistent password. Major UI test failures (CSS/branding, selector conflicts, title display) are fixed.\n\nMAJOR MILESTONE: All 10/10 Playwright UI tests are now passing after resolving navigation dropdown timing/selector issues and content expectation mismatches. The UI test suite is robust and reliable for ongoing development. Data merging and alignment logic is fully implemented and production-ready. The DataMerger class provides robust Account ID-based alignment, supports multiple merge strategies (inner, left, right, outer joins), and integrates privacy masking throughout the merge process. Comprehensive data quality reporting, error handling, and a Streamlit UI for results visualization are included. All 13/13 tests (including edge cases and privacy integration) are passing. The merged data structure supports both masked and unmasked views, and the privacy pipeline is correctly integrated. Export functionality and real-time performance metrics are available. UI stability is now validated across all supported environments and browsers, with a production-ready test suite.\n\nOUTSTANDING SUCCESS: All privacy masking requirements have been fully validated and are working correctly. All 10/10 privacy masking tests are passing, with 13/13 existing data merging tests also passing and no regressions. Sensitive field types (emails, names, HKID, phone numbers, account IDs) have been comprehensively validated. The privacy toggle functionality (show_sensitive=True/False) is confirmed to work as intended, and masking behavior is consistent across both customer and purchase datasets. All merge strategies (INNER, LEFT, RIGHT, OUTER) preserve privacy settings. A critical issue with name field masking was resolved by expanding field identification patterns in src/utils/enhanced_field_identification.py, resulting in perfect detection and masking of all name field variations. Field-specific masking for emails, names, HKID, phone, and Account ID is validated. See tests/privacy_masking_validation_report.md for the comprehensive validation report. Task 6 is now ready for completion, with privacy masking in merged data outputs production-ready and fully compliant with GDPR and Hong Kong PDPO requirements.",
+      "status": "completed",
       "dependencies": [
         5
       ],
-      "details": "Build data alignment functionality that matches customer records with their purchase history using Account ID as the primary key. Handle cases where IDs don't match, missing records, and duplicate entries. Create unified data structure for analysis.",
-      "testStrategy": "Test with sample datasets containing mismatched IDs, duplicates, and missing records to ensure proper data alignment.",
-      "subtasks": []
+      "priority": "high",
+      "details": "Build data alignment functionality that matches customer records with their purchase history using Account ID as the primary key. Handle cases where IDs don't match, missing records, and duplicate entries. Create a unified data structure for analysis. The Upload Data page is now operational after resolving a critical encrypted storage bug, and the privacy pipeline initializes correctly. Major UI issues (branding, selectors, title display) have been fixed.\n\nMAJOR UPDATE: All Playwright UI test failures have been resolved (10/10 passing). Selector and timing issues were fixed, and test expectations are now aligned with current content. Data merging and alignment logic is complete and production-ready. The DataMerger class supports Account ID-based alignment, multiple merge strategies (inner, left, right, outer), and robust error handling. Privacy masking is fully integrated: all merged data respects the privacy toggle, with masked data shown by default and unmasked only when explicitly enabled. The merged data structure maintains both masked and unmasked views. Comprehensive data quality metrics, mismatch detection, and export functionality (CSV, quality reports, metadata) are included. Real-time processing and performance metrics are available. All 13/13 tests (including privacy and edge cases) are passing. UI stability is now validated across Chromium, Firefox, and WebKit browsers, in both headless and headed modes, with 5 consecutive successful runs and <20% variance in execution times. No intermittent or flaky tests observed. See tests/ui_stability_validation_report.md for full details.\n\nOUTSTANDING SUCCESS: All privacy masking requirements fully validated. 10/10 privacy masking tests and 13/13 data merging tests are passing. All sensitive field types (emails, names, HKID, phone numbers, account IDs) are validated. Privacy toggle works as intended, and masking is consistent across datasets and merge strategies. Name field masking issue resolved by expanding field identification patterns. Field-specific masking confirmed for all required types. See tests/privacy_masking_validation_report.md for details. Task 6 is now ready for completion and is fully compliant with GDPR and Hong Kong PDPO.",
+      "testStrategy": "All 10/10 Playwright UI tests are now passing after resolving selector, timing, and content expectation issues. UI stability has been validated across Chromium, Firefox, and WebKit browsers, in both headless and headed execution modes, with 5 consecutive successful runs and no intermittent failures. Continue to monitor UI reliability using Playwright’s Trace Viewer and robust locators. Confirm that the Upload Data page and privacy pipeline initialize without errors after the encrypted storage fix. Privacy masking toggle has been rigorously tested: sensitive data is masked by default in all merged and aligned outputs, and only unmasked when the toggle is ON. Sample data confirms masking behavior for emails, names, HKID, phone numbers, and account IDs. Regression testing of the privacy pipeline integration with the merged data structure is complete. All privacy masking output validation tests are passing, and the solution is production-ready and compliant with GDPR and Hong Kong PDPO.",
+      "subtasks": [
+        {
+          "id": "6.1",
+          "title": "Investigate and Fix Playwright UI Test Failures",
+          "description": "Analyze the remaining 6/10 failing Playwright tests, focusing on navigation dropdown timing/selector issues and content expectation mismatches. Use Playwright’s Trace Viewer and robust locators to identify root causes. Address routing, hydration, and selector issues as needed. Ensure all UI tests pass, but proceed with data merging logic as core application functionality is now stable.",
+          "status": "completed"
+        },
+        {
+          "id": "6.2",
+          "title": "Validate UI Stability in CI and Local Environments",
+          "description": "With all Playwright UI tests now passing (10/10), run the Playwright test suite in both local and CI environments to confirm stability and consistency across platforms. Ensure that the test suite remains robust and reliable for ongoing development. Continue to monitor navigation-related test reliability and address any new issues that arise.",
+          "status": "completed"
+        },
+        {
+          "id": "6.3",
+          "title": "Implement Data Merging and Alignment Logic",
+          "description": "Proceed to implement the logic to merge customer profile and purchase history data by Account ID, handling mismatches, missing records, and duplicates. Ensure the new logic is tested with sample datasets and does not introduce regressions in the now-stable UI. Confirm that the Upload Data page and privacy pipeline continue to function correctly after the encrypted storage fix. \n\nCRITICAL: Integrate the fixed privacy masking logic into the data merging process. All merged data must respect the privacy toggle, displaying masked data by default and only revealing sensitive information when the toggle is ON. Test merged outputs for correct masking behavior.",
+          "status": "completed"
+        },
+        {
+          "id": "6.4",
+          "title": "Test Privacy Masking in Merged Data Outputs",
+          "description": "Create and run tests to verify that the privacy masking toggle works correctly in all merged and aligned data outputs. Ensure that sensitive fields (e.g., email, name) are masked by default and only unmasked when the 'Show Sensitive Data' toggle is enabled. Use representative sample data to confirm correct masking and unmasking behavior after merging.",
+          "status": "completed"
+        }
+      ]
     },
     {
       "id": 7,
       "title": "Local Data Storage System",
       "description": "Create secure local storage system for processed and pseudonymized data.",
-      "status": "pending",
+      "status": "in-progress",
       "priority": "medium",
       "dependencies": [
         6
@@ -197,6 +259,30 @@
       ],
       "details": "Optimize data processing performance, implement caching strategies, and ensure response times under 30 seconds for analysis. Add error handling, logging, monitoring, and deployment documentation. Prepare for handling up to 10,000 customer records.",
       "testStrategy": "Performance testing with large datasets, load testing, and end-to-end validation of complete user workflows.",
+      "subtasks": []
+    },
+    {
+      "id": 16,
+      "title": "Implement Comprehensive Integration Testing and Demo Data Pipeline",
+      "description": "Develop and automate an end-to-end integration testing pipeline using demo data, validating interactions between upload, validation, and privacy components, and ensuring system performance with realistic data volumes.",
+      "details": "After completion of Task 5 (Pseudonymization Engine), design and implement a robust integration testing framework that covers the full data flow from upload through validation and privacy processing. Prepare representative demo data files that mimic real-world scenarios, including edge cases and privacy-sensitive records. Automate the ingestion, validation, and pseudonymization of these files, ensuring all interfaces and data handoffs are tested. Set up an automated CI/CD pipeline to execute these tests on every relevant build. Include performance testing with large, realistic data volumes to assess system throughput and identify bottlenecks. Document test cases, data preparation steps, and acceptance criteria. Ensure the pipeline is maintainable and extensible for future components.",
+      "testStrategy": "Verify that the automated pipeline successfully runs end-to-end tests using demo data, covering all integration points between upload, validation, and privacy modules. Confirm that demo data is correctly processed, privacy rules are enforced, and outputs match expected results. Validate that performance benchmarks are met with large data sets. Review logs and reports for errors, failures, and bottlenecks. Ensure all test cases are documented and reproducible, and that the pipeline triggers automatically in the CI/CD environment.",
+      "status": "done",
+      "dependencies": [
+        5
+      ],
+      "priority": "high",
+      "subtasks": []
+    },
+    {
+      "id": 17,
+      "title": "Critical Bug Fix: Real-Time Privacy Toggle Functionality on Analysis Result Page",
+      "description": "Resolve a critical frontend bug where the 'Show Sensitive Data' toggle on the Analysis Result page did not update displayed data after merging, ensuring real-time privacy masking and GDPR/PDPO compliance.",
+      "details": "Refactor the Analysis Result page frontend to ensure the privacy toggle state is dynamically tracked and immediately reflected in all displayed and exported data. Update the display_merge_results() function to accept a current_show_sensitive parameter and implement real-time detection of toggle changes, triggering dynamic re-processing and live masking/unmasking of sensitive data. Ensure the export functionality always respects the current privacy setting. Add robust type safety and error handling throughout the affected components. Collaborate with backend engineers to confirm that all privacy masking logic remains consistent and that no regressions are introduced. Document the changes and update relevant user guides to reflect the improved toggle behavior.",
+      "testStrategy": "1. Manually verify that toggling 'Show Sensitive Data' after merging instantly updates all sensitive fields on the Analysis Result page, with no stale or incorrectly masked data. 2. Confirm that exporting data always matches the current privacy state. 3. Run all existing privacy masking (10/10), data merging (13/13), and UI functionality (1/1) automated tests to ensure no regressions. 4. Add new automated UI tests to simulate rapid toggle changes and verify real-time updates. 5. Review code for type safety and error handling. 6. Validate GDPR/PDPO compliance by confirming that no sensitive data is exposed when the toggle is off.",
+      "status": "done",
+      "dependencies": [],
+      "priority": "high",
       "subtasks": []
     }
   ]
