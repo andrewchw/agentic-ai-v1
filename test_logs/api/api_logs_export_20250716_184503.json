@@ -1,0 +1,136 @@
+{
+  "export_timestamp": "2025-07-16T18:45:03.869257",
+  "session_start": "2025-07-16T18:45:03.860259",
+  "metrics": {
+    "total_requests": 3,
+    "successful_requests": 1,
+    "failed_requests": 2,
+    "total_tokens": 15,
+    "total_response_time_ms": 7.996082305908203,
+    "average_response_time_ms": 2.665360768636068,
+    "requests_per_minute": 20004.44543231829,
+    "error_rate": 0.6666666666666666,
+    "rate_limit_blocks": 1,
+    "models_used": {
+      "deepseek/deepseek-chat": 1
+    },
+    "error_types": {
+      "rate_limit": 1,
+      "timeout": 1
+    },
+    "hourly_requests": {
+      "2025-07-16-18": 3
+    }
+  },
+  "request_logs": [
+    {
+      "timestamp": "2025-07-16T18:45:03.861257",
+      "request_id": "req_1752662703861_2024",
+      "method": "POST",
+      "url": "https://openrouter.ai/api/v1/chat/completions",
+      "model": "deepseek/deepseek-chat",
+      "prompt_hash": "bb0406af92d86a2a",
+      "prompt_length": 23,
+      "max_tokens": 100,
+      "temperature": 0.7,
+      "headers_hash": "d5bbad1988750c75",
+      "user_agent": "TestAgent/1.0"
+    },
+    {
+      "timestamp": "2025-07-16T18:45:03.862262",
+      "request_id": "req_1752662703862_2024",
+      "method": "POST",
+      "url": "https://openrouter.ai/api/v1/chat/completions",
+      "model": "deepseek/deepseek-chat",
+      "prompt_hash": "bb0406af92d86a2a",
+      "prompt_length": 23,
+      "max_tokens": 100,
+      "temperature": 0.7,
+      "headers_hash": "d5bbad1988750c75",
+      "user_agent": "TestAgent/1.0"
+    },
+    {
+      "timestamp": "2025-07-16T18:45:03.863262",
+      "request_id": "req_1752662703863_2024",
+      "method": "POST",
+      "url": "https://openrouter.ai/api/v1/chat/completions",
+      "model": "deepseek/deepseek-chat",
+      "prompt_hash": "bb0406af92d86a2a",
+      "prompt_length": 23,
+      "max_tokens": 100,
+      "temperature": 0.7,
+      "headers_hash": "d5bbad1988750c75",
+      "user_agent": "TestAgent/1.0"
+    }
+  ],
+  "response_logs": [
+    {
+      "timestamp": "2025-07-16T18:45:03.864261",
+      "request_id": "req_1752662703861_2024",
+      "status_code": 200,
+      "success": true,
+      "response_time_ms": 3.0040740966796875,
+      "model_used": "deepseek/deepseek-chat",
+      "tokens_used": 15,
+      "completion_tokens": 5,
+      "prompt_tokens": 10,
+      "error_type": null,
+      "error_message": null,
+      "content_length": 167
+    },
+    {
+      "timestamp": "2025-07-16T18:45:03.865258",
+      "request_id": "req_1752662703862_2024",
+      "status_code": 429,
+      "success": false,
+      "response_time_ms": 2.996206283569336,
+      "model_used": null,
+      "tokens_used": null,
+      "completion_tokens": null,
+      "prompt_tokens": null,
+      "error_type": "rate_limit",
+      "error_message": "Rate limit exceeded",
+      "content_length": null
+    },
+    {
+      "timestamp": "2025-07-16T18:45:03.865258",
+      "request_id": "req_1752662703863_2024",
+      "status_code": 408,
+      "success": false,
+      "response_time_ms": 1.9958019256591797,
+      "model_used": null,
+      "tokens_used": null,
+      "completion_tokens": null,
+      "prompt_tokens": null,
+      "error_type": "timeout",
+      "error_message": "Request timeout",
+      "content_length": null
+    }
+  ],
+  "rate_limit_logs": [
+    {
+      "timestamp": "2025-07-16T18:45:03.866259",
+      "event_type": "allowed",
+      "identifier": "test_user",
+      "requests_in_window": 5,
+      "max_requests": 10,
+      "wait_time_seconds": 0.0
+    },
+    {
+      "timestamp": "2025-07-16T18:45:03.866259",
+      "event_type": "blocked",
+      "identifier": "test_user",
+      "requests_in_window": 10,
+      "max_requests": 10,
+      "wait_time_seconds": 2.5
+    },
+    {
+      "timestamp": "2025-07-16T18:45:03.867259",
+      "event_type": "wait",
+      "identifier": "test_user",
+      "requests_in_window": 10,
+      "max_requests": 10,
+      "wait_time_seconds": 1.2
+    }
+  ]
+}
