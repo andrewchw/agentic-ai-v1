@@ -123,9 +123,7 @@ class PrivacyPipeline:
         errors = []
 
         try:
-            logger.info(
-                f"Processing upload: {identifier} ({df.shape[0]} rows, {df.shape[1]} columns)"
-            )
+            logger.info(f"Processing upload: {identifier} ({df.shape[0]} rows, {df.shape[1]} columns)")
 
             # Step 1: Encrypt and store original data
             logger.info("Step 1: Encrypting and storing original data...")
@@ -183,9 +181,7 @@ class PrivacyPipeline:
                 total_rows=df.shape[0],
                 total_columns=df.shape[1],
                 pii_fields_identified=len(pii_fields),
-                pii_fields_pseudonymized=len(
-                    [col for col in pii_fields if col in pseudonymized_df.columns]
-                ),
+                pii_fields_pseudonymized=len([col for col in pii_fields if col in pseudonymized_df.columns]),
                 pii_fields_masked=masking_result.get("total_masked_fields", 0),
                 processing_time_seconds=total_time,
                 encryption_time_seconds=encryption_time,
@@ -334,9 +330,7 @@ class PrivacyPipeline:
 
             return PipelineResult(success=False, message=error_msg, errors=[error_msg])
 
-    def _verify_no_original_pii(
-        self, original_df: pd.DataFrame, pseudonymized_df: pd.DataFrame
-    ) -> Dict[str, Any]:
+    def _verify_no_original_pii(self, original_df: pd.DataFrame, pseudonymized_df: pd.DataFrame) -> Dict[str, Any]:
         """
         Verify that pseudonymized data contains no original PII.
 
@@ -387,9 +381,7 @@ class PrivacyPipeline:
                 total_values = len(pseudo_values.dropna())
 
                 if pattern_matches < total_values * 0.8:  # At least 80% should be pseudonymized
-                    verification["potential_issues"].append(
-                        f"Column '{column}' may contain non-pseudonymized values"
-                    )
+                    verification["potential_issues"].append(f"Column '{column}' may contain non-pseudonymized values")
 
         verification["checks_performed"].append("Pseudonymization pattern verification")
 
@@ -433,8 +425,7 @@ class PrivacyPipeline:
             "current_sessions": len(self.current_session),
             "total_processed_datasets": len(self.processing_stats),
             "average_processing_time": (
-                sum(stats.processing_time_seconds for stats in self.processing_stats)
-                / len(self.processing_stats)
+                sum(stats.processing_time_seconds for stats in self.processing_stats) / len(self.processing_stats)
                 if self.processing_stats
                 else 0
             ),
@@ -465,9 +456,7 @@ class PrivacyPipeline:
                 **item,
                 "pii_fields": session_info.get("pii_fields", []) if session_info else [],
                 "processing_stats": (
-                    asdict(session_info["stats"])
-                    if session_info and "stats" in session_info
-                    else None
+                    asdict(session_info["stats"]) if session_info and "stats" in session_info else None
                 ),
             }
             enriched_data.append(enriched_item)

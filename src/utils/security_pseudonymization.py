@@ -129,9 +129,7 @@ class SecurityPseudonymizer:
         # Value pattern detection
         if re.match(r"^[A-Z]\d{6}\(\d\)$", sample_value):  # HKID pattern
             return "hkid"
-        elif re.match(
-            r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", sample_value
-        ):  # Email pattern
+        elif re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", sample_value):  # Email pattern
             return "email"
         elif re.match(r"^[+]?[\d\s()\-]{7,}$", sample_value):  # Phone pattern (minimum 7 digits)
             return "phone"
@@ -140,9 +138,7 @@ class SecurityPseudonymizer:
 
         return "general"
 
-    def anonymize_dataframe(
-        self, df: pd.DataFrame, sensitive_columns: Optional[List[str]] = None
-    ) -> pd.DataFrame:
+    def anonymize_dataframe(self, df: pd.DataFrame, sensitive_columns: Optional[List[str]] = None) -> pd.DataFrame:
         """
         Anonymize all sensitive fields in a DataFrame.
 
@@ -171,9 +167,7 @@ class SecurityPseudonymizer:
                 field_type = self.identify_field_type(column, sample_value)
 
                 # Apply anonymization
-                anonymized_df[column] = df[column].apply(
-                    lambda x: self.anonymize_field(x, field_type)
-                )
+                anonymized_df[column] = df[column].apply(lambda x: self.anonymize_field(x, field_type))
 
                 logger.info(f"Anonymized column '{column}' (type: {field_type})")
 
@@ -256,9 +250,7 @@ class SecurityPseudonymizer:
 
         return summary
 
-    def validate_anonymization(
-        self, original_df: pd.DataFrame, anonymized_df: pd.DataFrame
-    ) -> Dict[str, bool]:
+    def validate_anonymization(self, original_df: pd.DataFrame, anonymized_df: pd.DataFrame) -> Dict[str, bool]:
         """
         Validate that anonymization was successful.
 
@@ -339,8 +331,6 @@ def get_salt_from_config() -> str:
     if not salt:
         # Generate and store a salt (in production, store this securely)
         salt = secrets.token_hex(32)
-        logger.warning(
-            "No salt found in environment. Generated new salt. In production, store this securely."
-        )
+        logger.warning("No salt found in environment. Generated new salt. In production, store this securely.")
 
     return salt

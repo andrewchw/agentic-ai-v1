@@ -175,9 +175,7 @@ def save_corrected_file(content: str, original_filename: str) -> tuple[bool, str
         corrected_filename = f"{name}_utf8_corrected{ext}"
 
         # Save to temporary location (in practice, you might want to save to a specific directory)
-        with tempfile.NamedTemporaryFile(
-            mode="w", encoding="utf-8", suffix=ext, delete=False
-        ) as tmp_file:
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", suffix=ext, delete=False) as tmp_file:
             tmp_file.write(content)
             tmp_file.name
 
@@ -218,8 +216,8 @@ def validate_csv_file(uploaded_file, expected_columns=None, auto_correct_encodin
     try:
         if auto_correct_encoding:
             # Use automatic encoding detection and correction
-            success, encoding_message, corrected_content, encoding_info = (
-                auto_detect_and_correct_encoding(uploaded_file)
+            success, encoding_message, corrected_content, encoding_info = auto_detect_and_correct_encoding(
+                uploaded_file
             )
 
             if success:
@@ -358,9 +356,7 @@ def display_data_preview(processed_data_dict, title, max_rows=MAX_PREVIEW_ROWS):
     # Show privacy pipeline information
     if metadata.get("pii_fields_identified"):
         pii_fields = metadata["pii_fields_identified"]
-        st.info(
-            f"🔍 Privacy Analysis: {len(pii_fields)} PII fields identified: {', '.join(pii_fields[:5])}"
-        )
+        st.info(f"🔍 Privacy Analysis: {len(pii_fields)} PII fields identified: {', '.join(pii_fields[:5])}")
         if len(pii_fields) > 5:
             st.caption(f"... and {len(pii_fields) - 5} more fields")
 
@@ -391,9 +387,7 @@ def display_data_preview(processed_data_dict, title, max_rows=MAX_PREVIEW_ROWS):
                 if col in identification_results:
                     result = identification_results[col]
                     if result["is_sensitive"]:
-                        pii_info.append(
-                            f"{result['field_type']} (conf: {result['confidence']:.2f})"
-                        )
+                        pii_info.append(f"{result['field_type']} (conf: {result['confidence']:.2f})")
                     else:
                         pii_info.append("Non-PII")
                 else:
@@ -462,9 +456,7 @@ def render_upload_page():
                     "and converted to UTF-8 for optimal Chinese character support."
                 )
             else:
-                st.warning(
-                    "⚠️ **Manual Mode**: Files must be UTF-8 encoded. GBK fallback available."
-                )
+                st.warning("⚠️ **Manual Mode**: Files must be UTF-8 encoded. GBK fallback available.")
 
         uploaded_customer_file = st.file_uploader(
             "Choose customer data CSV file",
@@ -485,10 +477,8 @@ def render_upload_page():
                     st.success(f"✅ {message}")
 
                     # Process through privacy pipeline
-                    pipeline_success, pipeline_message, processed_data = (
-                        process_data_through_privacy_pipeline(
-                            df, "customer_data", uploaded_customer_file.name
-                        )
+                    pipeline_success, pipeline_message, processed_data = process_data_through_privacy_pipeline(
+                        df, "customer_data", uploaded_customer_file.name
                     )
 
                     if pipeline_success:
@@ -510,9 +500,7 @@ def render_upload_page():
                         metadata = processed_data.get("metadata", {})
                         if metadata.get("pii_fields_identified"):
                             pii_count = len(metadata["pii_fields_identified"])
-                            st.caption(
-                                f"🔍 Privacy Analysis: {pii_count} PII fields identified and protected"
-                            )
+                            st.caption(f"🔍 Privacy Analysis: {pii_count} PII fields identified and protected")
                     else:
                         st.error(f"❌ Privacy pipeline processing failed: {pipeline_message}")
                         # Clean up session state on failure
@@ -544,9 +532,7 @@ def render_upload_page():
                     "and converted to UTF-8 for optimal Chinese character support."
                 )
             else:
-                st.warning(
-                    "⚠️ **Manual Mode**: Files must be UTF-8 encoded. GBK fallback available."
-                )
+                st.warning("⚠️ **Manual Mode**: Files must be UTF-8 encoded. GBK fallback available.")
 
         uploaded_purchase_file = st.file_uploader(
             "Choose purchase history CSV file",
@@ -567,10 +553,8 @@ def render_upload_page():
                     st.success(f"✅ {message}")
 
                     # Process through privacy pipeline
-                    pipeline_success, pipeline_message, processed_data = (
-                        process_data_through_privacy_pipeline(
-                            df, "purchase_data", uploaded_purchase_file.name
-                        )
+                    pipeline_success, pipeline_message, processed_data = process_data_through_privacy_pipeline(
+                        df, "purchase_data", uploaded_purchase_file.name
                     )
 
                     if pipeline_success:
@@ -592,9 +576,7 @@ def render_upload_page():
                         metadata = processed_data.get("metadata", {})
                         if metadata.get("pii_fields_identified"):
                             pii_count = len(metadata["pii_fields_identified"])
-                            st.caption(
-                                f"🔍 Privacy Analysis: {pii_count} PII fields identified and protected"
-                            )
+                            st.caption(f"🔍 Privacy Analysis: {pii_count} PII fields identified and protected")
                     else:
                         st.error(f"❌ Privacy pipeline processing failed: {pipeline_message}")
                         # Clean up session state on failure
@@ -621,10 +603,8 @@ def render_upload_page():
                         st.success(f"✅ {message}")
 
                         # Process through privacy pipeline
-                        pipeline_success, pipeline_message, processed_data = (
-                            process_data_through_privacy_pipeline(
-                                df, "sample_customer_data", "sample-customer-data-20250715.csv"
-                            )
+                        pipeline_success, pipeline_message, processed_data = process_data_through_privacy_pipeline(
+                            df, "sample_customer_data", "sample-customer-data-20250715.csv"
                         )
 
                         if pipeline_success:
@@ -634,9 +614,7 @@ def render_upload_page():
                             # Option to use this data
                             if st.button("Use This Sample Data", key="use_customer_sample"):
                                 st.session_state["customer_data"] = processed_data
-                                st.session_state["customer_filename"] = (
-                                    "sample-customer-data-20250715.csv"
-                                )
+                                st.session_state["customer_filename"] = "sample-customer-data-20250715.csv"
                                 st.success("Sample customer data loaded for analysis!")
                                 st.rerun()
                         else:
@@ -653,10 +631,8 @@ def render_upload_page():
                         st.success(f"✅ {message}")
 
                         # Process through privacy pipeline
-                        pipeline_success, pipeline_message, processed_data = (
-                            process_data_through_privacy_pipeline(
-                                df, "sample_purchase_data", "sample_purchase_history.csv"
-                            )
+                        pipeline_success, pipeline_message, processed_data = process_data_through_privacy_pipeline(
+                            df, "sample_purchase_data", "sample_purchase_history.csv"
                         )
 
                         if pipeline_success:
@@ -666,9 +642,7 @@ def render_upload_page():
                             # Option to use this data
                             if st.button("Use This Sample Data", key="use_purchase_sample"):
                                 st.session_state["purchase_data"] = processed_data
-                                st.session_state["purchase_filename"] = (
-                                    "sample_purchase_history.csv"
-                                )
+                                st.session_state["purchase_filename"] = "sample_purchase_history.csv"
                                 st.success("Sample purchase data loaded for analysis!")
                                 st.rerun()
                         else:
@@ -734,25 +708,15 @@ def render_upload_page():
         purchase_data = st.session_state["purchase_data"]
 
         # Check if data is properly processed through privacy pipeline
-        customer_processed = (
-            isinstance(customer_data, dict) and "pseudonymized_data" in customer_data
-        )
-        purchase_processed = (
-            isinstance(purchase_data, dict) and "pseudonymized_data" in purchase_data
-        )
+        customer_processed = isinstance(customer_data, dict) and "pseudonymized_data" in customer_data
+        purchase_processed = isinstance(purchase_data, dict) and "pseudonymized_data" in purchase_data
 
         if customer_processed and purchase_processed:
-            st.success(
-                "🎉 Both datasets uploaded and privacy-processed! Ready to proceed to secure data analysis."
-            )
+            st.success("🎉 Both datasets uploaded and privacy-processed! Ready to proceed to secure data analysis.")
 
             # Show privacy summary
-            customer_pii_count = len(
-                customer_data.get("metadata", {}).get("pii_fields_identified", [])
-            )
-            purchase_pii_count = len(
-                purchase_data.get("metadata", {}).get("pii_fields_identified", [])
-            )
+            customer_pii_count = len(customer_data.get("metadata", {}).get("pii_fields_identified", []))
+            purchase_pii_count = len(purchase_data.get("metadata", {}).get("pii_fields_identified", []))
             total_pii_fields = customer_pii_count + purchase_pii_count
 
             st.info(

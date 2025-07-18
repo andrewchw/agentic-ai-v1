@@ -136,7 +136,7 @@ class EnhancedFieldIdentifier:
                 column_keywords=[
                     "name",
                     "customer",
-                    "person", 
+                    "person",
                     "contact",
                     "first_name",
                     "last_name",
@@ -149,7 +149,7 @@ class EnhancedFieldIdentifier:
                     "forename",
                 ],
                 value_patterns=[
-                    r"^[A-Z][a-z]+$",  # Single name (Given or Family)
+                    r"^[A-Z][a-z]{2,15}$",  # Single name (Given or Family) - more restrictive length
                     r"^[A-Z][a-z]+\s[A-Z][a-z]+$",  # First Last
                     r"^[A-Z][a-z]+\s[A-Z][a-z]+\s[A-Z][a-z]+$",  # First Middle Last
                     r"^[A-Z][a-z]+,\s[A-Z][a-z]+$",  # Last, First
@@ -166,7 +166,11 @@ class EnhancedFieldIdentifier:
                 value_patterns=[
                     r"^\d+\s[A-Z][a-z]+\s(St|Ave|Rd|Dr|Blvd|Lane)",  # Western format
                     r"^.+,\s(Hong Kong|Kowloon|New Territories)$",  # Hong Kong format
-                    r"^Flat\s\d+[A-Z]?,\s\d+[A-Z]?\s.+$",  # Hong Kong flat format
+                    r"^Flat\s\d+[A-Z]?,\s\d+.*",  # Hong Kong flat format (more flexible)
+                    r"^Unit\s\d+[A-Z]?,\s\d+.*",  # Hong Kong unit format
+                    r"^.+Road.+",  # Any address with "Road"
+                    r"^.+樓.*室.*",  # Chinese address format (floor/room)
+                    r"^.+道.*",  # Chinese road format (dao)
                     r"^.+\s\d{5}$",  # With postal code
                 ],
                 confidence_weight=0.8,
@@ -272,9 +276,7 @@ class EnhancedFieldIdentifier:
         except Exception as e:
             logger.warning(f"Failed to load custom patterns from {config_path}: {e}")
 
-    def identify_field(
-        self, column_name: str, sample_values: List[str]
-    ) -> FieldIdentificationResult:
+    def identify_field(self, column_name: str, sample_values: List[str]) -> FieldIdentificationResult:
         """
         Identify field type using enhanced logic with confidence scoring.
 
@@ -329,6 +331,50 @@ class EnhancedFieldIdentifier:
             total_values = len(cleaned_values[:5])  # Check first 5 values
 
             for value in cleaned_values[:5]:
+                # Skip common technical terms that aren't names
+                if pattern.field_type == FieldType.NAME:
+                    technical_terms = {
+                        "premium",
+                        "basic",
+                        "standard",
+                        "enterprise",
+                        "business",
+                        "personal",
+                        "family",
+                        "individual",
+                        "group",
+                        "corporate",
+                        "unlimited",
+                        "limited",
+                        "pro",
+                        "plus",
+                        "lite",
+                        "starter",
+                        "advanced",
+                        "deluxe",
+                        "low",
+                        "medium",
+                        "high",
+                        "electronics",
+                        "software",
+                        "hardware",
+                        "new",
+                        "old",
+                        "active",
+                        "inactive",
+                        "enabled",
+                        "disabled",
+                        "available",
+                        "unavailable",
+                        "mobile",
+                        "desktop",
+                        "web",
+                        "online",
+                        "offline",
+                    }
+                    if value.lower() in technical_terms:
+                        continue
+
                 for value_pattern in pattern.value_patterns:
                     if re.match(value_pattern, value):
                         value_matches += 1
@@ -388,9 +434,7 @@ class EnhancedFieldIdentifier:
             result = self.identify_field(column, sample_values)
             results[column] = result
 
-            logger.debug(
-                f"Column '{column}': {result.field_type.value} (confidence: {result.confidence:.2f})"
-            )
+            logger.debug(f"Column '{column}': {result.field_type.value} (confidence: {result.confidence:.2f})")
 
         return results
 
@@ -502,9 +546,7 @@ def analyze_dataframe_fields(
     return identifier.analyze_dataframe(df)
 
 
-def get_sensitive_columns_enhanced(
-    df: pd.DataFrame, config_path: Optional[str] = None
-) -> List[str]:
+def get_sensitive_columns_enhanced(df: pd.DataFrame, config_path: Optional[str] = None) -> List[str]:
     """Convenience function to get sensitive columns with enhanced identification"""
     identifier = EnhancedFieldIdentifier(config_path)
     return identifier.get_sensitive_columns(df)

@@ -231,10 +231,7 @@ def render_privacy_page():
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        if (
-            config.ENCRYPTION_KEY
-            and config.ENCRYPTION_KEY != "your_encryption_key_here_please_change_this"
-        ):
+        if config.ENCRYPTION_KEY and config.ENCRYPTION_KEY != "your_encryption_key_here_please_change_this":
             st.success("✅ Encryption Configured")
         else:
             st.warning("⚠️ Default Encryption Key")

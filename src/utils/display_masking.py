@@ -115,7 +115,11 @@ class DisplayMasking:
         for part in parts:
             if len(part) <= 1:
                 masked_parts.append(part)
+            elif len(part) <= 4:
+                # Short names get 3 asterisks
+                masked_parts.append(part[0] + "***")
             else:
+                # Longer names get asterisks equal to (length - 1)
                 masked_parts.append(part[0] + "*" * (len(part) - 1))
 
         return " ".join(masked_parts)
@@ -160,7 +164,7 @@ class DisplayMasking:
 
     def mask_hkid(self, hkid: str) -> str:
         """
-        Mask HKID with pattern: "A123456(7)" → "A******(*)"
+        Mask HKID with pattern: "AB123456(7)" → "A******(*)"
 
         Args:
             hkid: Original HKID
@@ -169,14 +173,12 @@ class DisplayMasking:
             str: Masked HKID
         """
         if not hkid or len(hkid) < 3:
-            return hkid
+            return hkid[0] + "*" * (len(hkid) - 1) if len(hkid) >= 2 else hkid
 
-        # Pattern: A123456(7) → A******(*)
+        # Pattern: AB123456(7) → A******(*)
         if "(" in hkid and ")" in hkid:
-            prefix = hkid[0]  # Keep first letter
-            suffix_start = hkid.find("(")
-            masked = prefix + "*" * (suffix_start - 1) + "(*)"
-            return masked
+            prefix = hkid[0]  # Keep first letter only
+            return prefix + "******(*)"
 
         return hkid[0] + "*" * (len(hkid) - 1)
 
@@ -228,7 +230,7 @@ class DisplayMasking:
 
     def mask_account_id(self, account_id: str) -> str:
         """
-        Mask account ID with pattern: "ACC123456" → "ACC****56"
+        Mask account ID with pattern: "ACC123456" → "ACC***56"
 
         Args:
             account_id: Original account ID
@@ -237,13 +239,16 @@ class DisplayMasking:
             str: Masked account ID
         """
         if not account_id or len(account_id) < 4:
-            return account_id
+            if len(account_id) <= 2:
+                return account_id[:-1] + "*" if len(account_id) >= 2 else account_id
+            else:  # length is 3
+                return account_id[:2] + "*"
 
-        # Keep first 3 and last 2 characters
+        # Keep first 3 and last 2 characters for longer IDs
         if len(account_id) <= 5:
-            return account_id[:2] + "*" * (len(account_id) - 2)
+            return account_id[:2] + "*" * (len(account_id) - 3) + account_id[-1]
 
-        return account_id[:3] + "*" * (len(account_id) - 5) + account_id[-2:]
+        return account_id[:3] + "***" + account_id[-2:]
 
     def mask_value(self, value: str, field_type: FieldType) -> str:
         """
@@ -275,9 +280,7 @@ class DisplayMasking:
         # Default masking for unknown types
         return value[:2] + "*" * (len(value) - 2) if len(value) > 2 else value
 
-    def process_value(
-        self, value: str, field_type: Optional[FieldType] = None, column_name: str = ""
-    ) -> str:
+    def process_value(self, value: str, field_type: Optional[FieldType] = None, column_name: str = "") -> str:
         """
         Process value based on visibility setting
 
@@ -308,9 +311,7 @@ class DisplayMasking:
 
         return value
 
-    def process_dataframe(
-        self, df, sensitive_columns: Optional[List[str]] = None
-    ) -> Dict[str, Any]:
+    def process_dataframe(self, df, sensitive_columns: Optional[List[str]] = None) -> Dict[str, Any]:
         """
         Process entire dataframe with masking
 
@@ -332,9 +333,15 @@ class DisplayMasking:
                 continue
 
             # Process each value in the column
-            masked_df[column] = df[column].apply(
-                lambda x: self.process_value(str(x), column_name=column) if x is not None else x
-            )
+            def process_cell(x):
+                if x is None:
+                    return x
+                # Only process string values for masking, keep numbers as-is
+                if isinstance(x, (int, float)):
+                    return x
+                return self.process_value(str(x), column_name=column)
+
+            masked_df[column] = df[column].apply(process_cell)
 
         return {
             "dataframe": masked_df,

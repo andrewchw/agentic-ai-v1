@@ -212,15 +212,11 @@ class IntegratedDisplayMasking:
             # Restore original formatting if present
             if "-" in value:
                 # Format as ****-****-****-1234
-                formatted = "-".join(
-                    [masked_digits[i : i + 4] for i in range(0, len(masked_digits), 4)]
-                )
+                formatted = "-".join([masked_digits[i : i + 4] for i in range(0, len(masked_digits), 4)])
                 return formatted
             elif " " in value:
                 # Format with spaces
-                formatted = " ".join(
-                    [masked_digits[i : i + 4] for i in range(0, len(masked_digits), 4)]
-                )
+                formatted = " ".join([masked_digits[i : i + 4] for i in range(0, len(masked_digits), 4)])
                 return formatted
 
             return masked_digits
@@ -339,9 +335,7 @@ class IntegratedDisplayMasking:
 
         # Determine if masking should be applied
         should_mask = (
-            not self.show_sensitive
-            and confidence >= self.confidence_threshold
-            and field_type != FieldType.GENERAL
+            not self.show_sensitive and confidence >= self.confidence_threshold and field_type != FieldType.GENERAL
         )
 
         # Apply masking if needed
@@ -402,9 +396,7 @@ class IntegratedDisplayMasking:
                     column_results.append(value)
                     continue
 
-                result = self.process_value(
-                    str(value), column_name=column, force_field_type=force_field_type
-                )
+                result = self.process_value(str(value), column_name=column, force_field_type=force_field_type)
 
                 column_results.append(result.masked_value)
                 if result.is_masked:
@@ -428,9 +420,7 @@ class IntegratedDisplayMasking:
                         "masking_percentage": (masked_count / len(df[column].dropna())) * 100,
                     }
 
-        logger.info(
-            f"Masking complete: {total_masked_fields} fields masked across {len(masking_metadata)} columns"
-        )
+        logger.info(f"Masking complete: {total_masked_fields} fields masked across {len(masking_metadata)} columns")
 
         return {
             "dataframe": result_df,

@@ -17,8 +17,7 @@ def setup_page_config():
         menu_items={
             "Get Help": None,
             "Report a bug": None,
-            "About": f"{config.APP_NAME} v{config.APP_VERSION} - "
-            f"Privacy-first AI lead generation tool",
+            "About": f"{config.APP_NAME} v{config.APP_VERSION} - " f"Privacy-first AI lead generation tool",
         },
     )
 

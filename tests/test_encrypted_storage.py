@@ -267,7 +267,7 @@ class TestEncryptedStorage:
         assert status["key_derivation"] == "PBKDF2-SHA256"
         assert status["storage_path"] == self.temp_dir
         assert status["total_stored_items"] == 2
-        assert "d" in status["storage_types"]
+        assert "df" in status["storage_types"]
         assert "json" in status["storage_types"]
         assert status["total_storage_size"] > 0
 
@@ -340,8 +340,9 @@ class TestConvenienceFunctions:
         self.temp_dir = tempfile.mkdtemp()
         # Use a temporary storage for testing
         global encrypted_storage
-        from src.utils.encrypted_storage import encrypted_storage
-
+        from src.utils.encrypted_storage import _get_global_storage
+        
+        encrypted_storage = _get_global_storage()
         encrypted_storage.storage_path = self.temp_dir
 
         self.sample_df = pd.DataFrame({"pii_data": ["sensitive1", "sensitive2", "sensitive3"]})

@@ -65,9 +65,7 @@ class EncryptedStorage:
     original PII data is stored securely locally and never transmitted externally.
     """
 
-    def __init__(
-        self, storage_path: str = "data/encrypted_storage", master_password: Optional[str] = None
-    ):
+    def __init__(self, storage_path: str = "data/encrypted_storage", master_password: Optional[str] = None):
         """
         Initialize encrypted storage system.
 
@@ -92,7 +90,7 @@ class EncryptedStorage:
     def _initialize_master_password(self, provided_password: Optional[str]) -> str:
         """Initialize or load master password securely."""
         password_file = os.path.join(self.storage_path, ".master_key_hash")
-        
+
         if provided_password:
             # Use provided password and save hash for verification
             password = provided_password
@@ -105,7 +103,7 @@ class EncryptedStorage:
             default_password = "default_encryption_password_change_in_production"
             with open(password_file, "r") as f:
                 stored_hash = f.read().strip()
-                
+
             # Check if the stored hash matches our default password
             if hashlib.sha256(default_password.encode()).hexdigest() == stored_hash:
                 password = default_password
@@ -192,9 +190,7 @@ class EncryptedStorage:
         decrypted_bytes = decryptor.update(ciphertext) + decryptor.finalize()
         return decrypted_bytes.decode("utf-8")
 
-    def store_dataframe(
-        self, df: pd.DataFrame, identifier: str, metadata: Optional[Dict[str, Any]] = None
-    ) -> str:
+    def store_dataframe(self, df: pd.DataFrame, identifier: str, metadata: Optional[Dict[str, Any]] = None) -> str:
         """
         Store DataFrame with encryption.
 
@@ -265,7 +261,9 @@ class EncryptedStorage:
         data_dict = json.loads(data_json)
 
         # Reconstruct DataFrame
-        df = pd.read_json(data_dict["dataframe"], orient="records")
+        from io import StringIO
+
+        df = pd.read_json(StringIO(data_dict["dataframe"]), orient="records")
 
         # Restore column order and types
         df = df[data_dict["columns"]]
@@ -465,9 +463,7 @@ def _get_global_storage():
     return encrypted_storage
 
 
-def store_pii_dataframe(
-    df: pd.DataFrame, identifier: str, metadata: Optional[Dict[str, Any]] = None
-) -> str:
+def store_pii_dataframe(df: pd.DataFrame, identifier: str, metadata: Optional[Dict[str, Any]] = None) -> str:
     """
     Convenience function to store PII DataFrame securely.
 

@@ -1,0 +1,13 @@
+{
+  "encrypted_data": "TJAF0WQWY1dJrj7mKEBMfWSCnPz9o6F7efgOE3fRjVBi9TBI8d/F3S09221gAQaVyBkpm3BLNUMI4C/fElD6YfZExqmDHJnN1OWP/XhSPWx8k7hDlRDcdrIKa6hzcfpqIMPz95jB0UnHRqdAmYUyhLRi4UiY2ENz2mNHwV46tXu0Y54SH7IYw2IweN/JmmhXQL+5eJpqjriIZ+F9OMUtfYl5i0Y3F2qCX187NYQS1CUtlauBi5cEt/KhQENEwL8c3zW7llqs+Pu9klgY6OWrXb4rLvBFtiucJCiyN3fY6+HUq0sIU2gYfSdNoXCe+d8c46KJSYhKxQIivm5tGSAs0i6lvZPTPKxZnG5i+YajsXIybmHBd/zrGbZajUUl4nugDidND16FFJbx0GqbYef0YgrzERwGcuufAPS3N/VyfgotBHm2g+IQEJPmzFbCvrzXn/0ofqXVNNwey9mZfLLNyoKa78K2rFjl62LV4J/KpoOMylJQM40tEJ7d8TWdsGfLlSzrI//kK6k/s2grFZfuyhMSwagwHb3qamXnzPfdmXixLHw+Y3vRgSxZfIGMP3/6KpIcHiF1dIyyCpvlYLNGPOmWQn9vMaLPSL27CYtU2L4nl4Nq4360NfvLiImiNiVB2DiuIeg5mFqQyek29ncZVIJX/Q5/MCMH//AspABnhGo5AhdmELyNBSg68DkG1ppKZu5P1iOpNjTxtiz47KqQ4slGyi3TyVgyLmkMz0NXT3uQ4vk/1oR9XObomPDNzJugrDBZbhRGqtrwPuZSgPNCEO3CjxtV5jSyTJlM2RKIooSOMbZhNqTs7pEtvnwzzoUP6CB12pPuogFJEwnAuWKjCRCIywOojrgrNuovYED+dIlk9Wuqe6m1HVGqWpwZVQ9ER3Klyi5fHcKwGs1f5AKU5yzV3jwY8yXdoaP0ac3RXn9bIYRdR8zezZbIraLyLffr6w==",
+  "metadata": {
+    "encrypted_at": "2025-07-18T17:19:37.231912",
+    "key_derivation": "PBKDF2-SHA256",
+    "encryption_algorithm": "AES-256-GCM",
+    "data_hash": "9eb46f4292cd849776bac7b0739529a1a24865a22619925b393e351797ddee97",
+    "access_count": 0,
+    "last_accessed": null
+  },
+  "nonce": "0IGgwv2uLLW5z1Jh",
+  "salt": "qNp879nqWbJB84AKYHQgKQ=="
+}
