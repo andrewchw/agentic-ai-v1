@@ -341,7 +341,7 @@ class TestConvenienceFunctions:
         # Use a temporary storage for testing
         global encrypted_storage
         from src.utils.encrypted_storage import _get_global_storage
-        
+
         encrypted_storage = _get_global_storage()
         encrypted_storage.storage_path = self.temp_dir
 

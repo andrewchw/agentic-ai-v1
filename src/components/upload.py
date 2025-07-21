@@ -11,6 +11,7 @@ import tempfile
 from io import StringIO
 from typing import Tuple, Dict, Any
 from src.utils.privacy_pipeline import privacy_pipeline, PipelineResult
+from src.utils.product_catalog_db import catalog_db, get_catalog_stats, is_catalog_available
 
 # File size limits (in bytes)
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
@@ -183,6 +184,33 @@ def save_corrected_file(content: str, original_filename: str) -> tuple[bool, str
 
     except Exception as e:
         return False, f"Error saving corrected file: {str(e)}", ""
+
+
+def validate_flexible_columns(df_columns, expected_column_groups):
+    """
+    Validate columns with flexible naming (supports both spaces and underscores)
+    
+    Args:
+        df_columns: List of actual column names in the DataFrame
+        expected_column_groups: List of lists, each containing alternative names for a required column
+        
+    Returns:
+        tuple: (is_valid, missing_columns_list)
+    """
+    missing_columns = []
+    
+    for column_group in expected_column_groups:
+        # Check if any variant of the column exists
+        if isinstance(column_group, list):
+            found = any(col in df_columns for col in column_group)
+            if not found:
+                missing_columns.append(column_group[0])  # Use the first variant as the "primary" name
+        else:
+            # Single column name
+            if column_group not in df_columns:
+                missing_columns.append(column_group)
+    
+    return len(missing_columns) == 0, missing_columns
 
 
 def validate_csv_file(uploaded_file, expected_columns=None, auto_correct_encoding=True):
@@ -412,6 +440,22 @@ def render_upload_page():
     """Render the data upload page"""
 
     st.markdown("## 📂 Upload Customer Data")
+    
+    # Auto-load persistent product catalog into session if available
+    if is_catalog_available() and "product_catalog" not in st.session_state:
+        catalog_df = catalog_db.load_catalog()
+        if not catalog_df.empty:
+            st.session_state["product_catalog"] = {
+                "original_data": catalog_df,
+                "catalog_data": catalog_df,
+                "metadata": {
+                    "filename": "persistent_catalog.json",
+                    "data_type": "product_catalog",
+                    "persistent": True,
+                    "loaded_from": "database"
+                }
+            }
+            st.session_state["catalog_filename"] = "persistent_catalog.json"
 
     st.markdown(
         """
@@ -420,22 +464,31 @@ def render_upload_page():
     """
     )
 
-    # Expected columns for validation
-    CUSTOMER_COLUMNS = [
-        "Account ID",
-        "Family Name",
-        "Given Name",
-        "Gender",
-        "Email",
-        "Birth Date",
-        "Customer Type",
-        "Customer Class",
-        "Brand",
+    # Expected columns for validation (flexible - supports both spaces and underscores)
+    CUSTOMER_COLUMNS_FLEXIBLE = [
+        ["Account ID", "Account_ID"],
+        ["Family Name", "Family_Name"],
+        ["Given Name", "Given_Name"],
+        ["Gender"],
+        ["Email"],
+        ["Birth Date", "Date_of_Birth"],
+        ["Customer Type", "Customer_Type"],
+        ["Customer Class", "Customer_Class"],
+        # Brand removed - not required since it's always Three HK
     ]
-    PURCHASE_COLUMNS = ["Account ID"]  # More flexible for purchase history
+    PURCHASE_COLUMNS = ["Account ID", "Account_ID"]  # More flexible for purchase history
+    
+    # Product catalog expected columns (flexible)
+    PRODUCT_CATALOG_COLUMNS_FLEXIBLE = [
+        ["Plan_ID"],
+        ["Plan_Name"],
+        ["Plan_Type"],
+        ["Category"],
+        ["Base_Price"]
+    ]
 
     # File upload tabs
-    tab1, tab2, tab3 = st.tabs(["📊 Customer Data", "📈 Purchase History", "📂 Sample Data"])
+    tab1, tab2, tab3, tab4 = st.tabs(["📊 Customer Data", "📈 Purchase History", "📦 Product Catalog", "📂 Sample Data"])
 
     with tab1:
         st.markdown("### 📊 Customer Profile Data")
@@ -467,11 +520,22 @@ def render_upload_page():
 
         if uploaded_customer_file:
             with st.spinner("Validating and processing customer data..."):
+                # First validate the basic file format
                 is_valid, message, df = validate_csv_file(
                     uploaded_customer_file,
-                    CUSTOMER_COLUMNS,
+                    expected_columns=None,  # Skip basic column validation
                     auto_correct_encoding=auto_correct_encoding,
                 )
+                
+                if is_valid:
+                    # Then do flexible column validation
+                    columns_valid, missing_columns = validate_flexible_columns(
+                        df.columns.tolist(), CUSTOMER_COLUMNS_FLEXIBLE
+                    )
+                    
+                    if not columns_valid:
+                        is_valid = False
+                        message = f"Missing required columns: {', '.join(missing_columns)}"
 
                 if is_valid:
                     st.success(f"✅ {message}")
@@ -543,11 +607,19 @@ def render_upload_page():
 
         if uploaded_purchase_file:
             with st.spinner("Validating and processing purchase history..."):
+                # First validate the basic file format
                 is_valid, message, df = validate_csv_file(
                     uploaded_purchase_file,
-                    PURCHASE_COLUMNS,
+                    expected_columns=None,  # Skip basic column validation for purchase history
                     auto_correct_encoding=auto_correct_encoding_purchase,
                 )
+                
+                if is_valid:
+                    # Check for Account ID column (flexible naming)
+                    has_account_id = any(col in df.columns for col in PURCHASE_COLUMNS)
+                    if not has_account_id:
+                        is_valid = False
+                        message = f"Missing required column: Account ID (or Account_ID)"
 
                 if is_valid:
                     st.success(f"✅ {message}")
@@ -589,6 +661,147 @@ def render_upload_page():
                         del st.session_state["purchase_data"]
 
     with tab3:
+        st.markdown("### 📦 Product Catalog Management")
+        
+        # Show current catalog status
+        if is_catalog_available():
+            stats = get_catalog_stats()
+            st.success(f"✅ Product catalog loaded: {stats['total_plans']} plans available")
+            
+            # Show catalog summary
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.metric("Total Plans", stats['total_plans'])
+            with col2:
+                st.metric("Categories", len(stats['categories']))
+            with col3:
+                st.metric("Avg Price", f"HK${stats['price_range']['avg']:.0f}")
+            
+            # Show current catalog preview
+            with st.expander("📋 Current Catalog Preview", expanded=False):
+                current_catalog = catalog_db.load_catalog()
+                st.dataframe(current_catalog.head(10), use_container_width=True)
+                st.caption(f"Showing first 10 of {len(current_catalog)} plans. Last updated: {stats['last_updated'][:19]}")
+            
+            # Option to clear catalog
+            if st.button("🗑️ Clear Current Catalog", type="secondary"):
+                if catalog_db.clear_catalog():
+                    st.success("✅ Product catalog cleared!")
+                    st.rerun()
+                else:
+                    st.error("❌ Failed to clear catalog")
+        else:
+            st.info("📦 No product catalog currently loaded. Upload one below or it will load from the default database.")
+        
+        st.markdown("#### Upload New Catalog")
+        st.markdown("Upload a new product catalog to replace the current one (persists across sessions).")
+
+        uploaded_catalog_file = st.file_uploader(
+            "Choose product catalog CSV file",
+            type=["csv"],
+            help="Upload product catalog with plans and pricing (Max 10MB) - will be saved permanently",
+            key="catalog_upload",
+        )
+
+        if uploaded_catalog_file:
+            with st.spinner("Validating and processing product catalog..."):
+                # First validate the basic file format
+                is_valid, message, df = validate_csv_file(
+                    uploaded_catalog_file,
+                    expected_columns=None,  # Skip basic column validation
+                    auto_correct_encoding=True,
+                )
+                
+                if is_valid:
+                    # Then do flexible column validation
+                    columns_valid, missing_columns = validate_flexible_columns(
+                        df.columns.tolist(), PRODUCT_CATALOG_COLUMNS_FLEXIBLE
+                    )
+                    
+                    if not columns_valid:
+                        is_valid = False
+                        message = f"Missing required columns: {', '.join(missing_columns)}"
+
+                if is_valid:
+                    st.success(f"✅ {message}")
+
+                    # Save to persistent database
+                    with st.spinner("💾 Saving catalog to persistent database..."):
+                        save_success = catalog_db.save_catalog_from_csv_upload(df, uploaded_catalog_file.name)
+                    
+                    if save_success:
+                        st.success("💾 Product catalog saved to persistent database!")
+                        
+                        # Also store in session state for immediate use
+                        processed_data = {
+                            "original_data": df,
+                            "catalog_data": df,  # Same as original since no PII to protect
+                            "metadata": {
+                                "filename": uploaded_catalog_file.name,
+                                "uploaded_at": pd.Timestamp.now().isoformat(),
+                                "original_shape": df.shape,
+                                "original_columns": list(df.columns),
+                                "data_type": "product_catalog",
+                                "persistent": True  # Indicates this is saved persistently
+                            }
+                        }
+                        st.session_state["product_catalog"] = processed_data
+                        st.session_state["catalog_filename"] = uploaded_catalog_file.name
+                        
+                        # Display updated statistics
+                        updated_stats = get_catalog_stats()
+                        st.success(f"📦 Catalog updated: {updated_stats['total_plans']} plans now available")
+                        
+                        # Display preview
+                        st.markdown("#### 📊 New Catalog Preview")
+                        st.dataframe(df.head(MAX_PREVIEW_ROWS), use_container_width=True)
+                        
+                        # Show catalog statistics
+                        col1, col2, col3 = st.columns(3)
+                        with col1:
+                            st.metric("Total Plans", len(df))
+                        with col2:
+                            if "Plan_Type" in df.columns:
+                                st.metric("Plan Types", df["Plan_Type"].nunique())
+                            elif "Category" in df.columns:
+                                st.metric("Categories", df["Category"].nunique())
+                        with col3:
+                            if "Base_Price" in df.columns:
+                                avg_price = df["Base_Price"].mean() if pd.api.types.is_numeric_dtype(df["Base_Price"]) else "N/A"
+                                if avg_price != "N/A":
+                                    st.metric("Avg Price", f"HK${avg_price:.0f}")
+
+                        st.success(
+                            "✅ Product catalog permanently saved! "
+                            "It will be available across all sessions without re-uploading."
+                        )
+                        
+                        # Auto-refresh to show the updated catalog status
+                        st.rerun()
+                    else:
+                        st.error("❌ Failed to save catalog to database")
+                        # Still store in session for this session
+                        processed_data = {
+                            "original_data": df,
+                            "catalog_data": df,
+                            "metadata": {
+                                "filename": uploaded_catalog_file.name,
+                                "uploaded_at": pd.Timestamp.now().isoformat(),
+                                "original_shape": df.shape,
+                                "original_columns": list(df.columns),
+                                "data_type": "product_catalog",
+                                "persistent": False
+                            }
+                        }
+                        st.session_state["product_catalog"] = processed_data
+                        st.session_state["catalog_filename"] = uploaded_catalog_file.name
+
+                else:
+                    st.error(f"❌ {message}")
+                    if "product_catalog" in st.session_state:
+                        del st.session_state["product_catalog"]
+
+    with tab4:
         st.markdown("### 📂 Sample Data Available")
         st.markdown("Preview and use the provided sample datasets to test the system.")
 
@@ -654,7 +867,7 @@ def render_upload_page():
     st.markdown("---")
     st.markdown("### 📊 Current Data Status")
 
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
 
     with col1:
         if "customer_data" in st.session_state:
@@ -702,8 +915,34 @@ def render_upload_page():
         else:
             st.warning("⏳ No purchase data uploaded")
 
+    with col3:
+        if "product_catalog" in st.session_state:
+            catalog_data = st.session_state["product_catalog"]
+            st.success(f"✅ Product Catalog: {st.session_state.get('catalog_filename', 'Unknown')}")
+
+            # Product catalog format
+            if isinstance(catalog_data, dict):
+                original_df = catalog_data.get("original_data")
+                if original_df is not None:
+                    st.caption(f"Plans: {len(original_df)} | Ready for analysis")
+                    # Show plan type distribution if available
+                    if "Plan_Type" in original_df.columns:
+                        plan_types = original_df["Plan_Type"].nunique()
+                        st.caption(f"📦 {plan_types} plan types available")
+                else:
+                    st.caption("Catalog data available")
+            else:
+                # Legacy format
+                st.caption(f"Plans: {len(catalog_data)} | Format: Legacy")
+        else:
+            st.warning("⏳ No product catalog uploaded")
+
     # Next Steps
-    if "customer_data" in st.session_state and "purchase_data" in st.session_state:
+    has_customer = "customer_data" in st.session_state
+    has_purchase = "purchase_data" in st.session_state  
+    has_catalog = "product_catalog" in st.session_state
+    
+    if has_customer and has_purchase:
         customer_data = st.session_state["customer_data"]
         purchase_data = st.session_state["purchase_data"]
 
@@ -712,7 +951,13 @@ def render_upload_page():
         purchase_processed = isinstance(purchase_data, dict) and "pseudonymized_data" in purchase_data
 
         if customer_processed and purchase_processed:
-            st.success("🎉 Both datasets uploaded and privacy-processed! Ready to proceed to secure data analysis.")
+            # Enhanced success message based on catalog availability
+            if has_catalog:
+                st.success("🎉 All datasets uploaded and processed! Ready for enhanced AI analysis with product catalog.")
+                catalog_info = "📦 Product catalog will enhance recommendation accuracy and plan matching"
+            else:
+                st.success("🎉 Core datasets uploaded and privacy-processed! Ready to proceed to secure data analysis.")
+                catalog_info = "💡 Consider uploading a product catalog for more accurate plan recommendations"
 
             # Show privacy summary
             customer_pii_count = len(customer_data.get("metadata", {}).get("pii_fields_identified", []))
@@ -723,16 +968,21 @@ def render_upload_page():
                 f"🔒 Privacy Protection Summary: {total_pii_fields} total PII fields "
                 f"identified and protected across both datasets"
             )
+            
+            st.info(catalog_info)
 
             if st.button("🚀 Proceed to Secure Analysis", type="primary"):
                 st.info("✅ Ready for AI analysis! All PII has been securely processed:")
-                st.markdown(
-                    """
-                - **Original data**: Encrypted and stored locally
-                - **Pseudonymized data**: Available for external LLM processing (no PII)
-                - **Display data**: Masked for UI viewing with toggle control
-                """
-                )
+                analysis_features = [
+                    "**Original data**: Encrypted and stored locally",
+                    "**Pseudonymized data**: Available for external LLM processing (no PII)",
+                    "**Display data**: Masked for UI viewing with toggle control"
+                ]
+                
+                if has_catalog:
+                    analysis_features.append("**Product catalog**: Available for enhanced recommendations")
+                
+                st.markdown("- " + "\n- ".join(analysis_features))
                 st.success("Data processing and AI analysis will be implemented in upcoming tasks!")
                 # This will link to the next page/component in future tasks
         else:
@@ -741,7 +991,16 @@ def render_upload_page():
                 "Please re-upload files to ensure privacy protection."
             )
     else:
-        st.info("📋 Upload both customer and purchase data files to continue with the analysis.")
+        missing_data = []
+        if not has_customer:
+            missing_data.append("customer data")
+        if not has_purchase:
+            missing_data.append("purchase history")
+            
+        if has_catalog and not has_customer and not has_purchase:
+            st.info("📋 Product catalog uploaded! Now upload customer and purchase data to begin analysis.")
+        else:
+            st.info(f"📋 Upload {' and '.join(missing_data)} to continue with the analysis.")
 
     # Privacy and Security Notice
     st.markdown("---")
@@ -789,14 +1048,21 @@ def render_upload_page():
         st.markdown(
             """
         **Customer Data CSV Requirements:**
-        - Must include: Account ID, Family Name, Given Name, Gender, Email, Birth Date, Customer Type, Customer Class, Brand
-        - Optional: Chinese Given Name, ID Type, ID Number, Company Name
+        - Must include: Account ID (or Account_ID), Family Name (or Family_Name), Given Name (or Given_Name), Gender, Email, Birth Date (or Date_of_Birth), Customer Type (or Customer_Type), Customer Class (or Customer_Class)
+        - Optional: Chinese Given Name, ID Type, ID Number, Company Name (or Company_Name), Brand
         - File size limit: 10MB
         - Encoding: UTF-8
+        - Note: Column names can use either spaces or underscores
 
         **Purchase History CSV Requirements:**
         - Must include: Account ID
         - Recommended: Purchase History columns, Engagement Data
+        - File size limit: 10MB
+        - Encoding: UTF-8
+
+        **Product Catalog CSV Requirements:**
+        - Must include: Plan_ID, Plan_Name, Plan_Type, Category, Base_Price
+        - Recommended: Setup_Fee, Data_Allowance, Features, Target_Segment
         - File size limit: 10MB
         - Encoding: UTF-8
 

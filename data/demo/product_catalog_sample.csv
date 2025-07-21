@@ -1,0 +1,11 @@
+Plan_ID,Plan_Name,Plan_Type,Category,Base_Price,Setup_Fee,Contract_Required,Data_Allowance,Voice_Minutes,SMS_Allowance,Features,Target_Segment,Roaming_Included
+5G_UNLIMITED_PRO,5G Unlimited Pro,Postpaid,Mobile,980,0,24,Unlimited,Unlimited,Unlimited,"5G,Hotspot,Premium_Support",Premium,Asia_Pacific
+5G_UNLIMITED_PLUS,5G Unlimited Plus,Postpaid,Mobile,1299,0,24,Unlimited,Unlimited,Unlimited,"5G,Hotspot,Premium_Support,International_Roaming",Premium,Worldwide
+MOBILE_5G_BASIC,5G Basic Plan,Postpaid,Mobile,699,0,24,50GB,2000,1000,"5G,Basic_Support",Standard,Local_Only
+FIBER_1000_BIZ,Business Fiber 1000M,Postpaid,Fixed,2800,500,24,1000GB,N/A,N/A,"Fiber,Static_IP,SLA,24x7_Support",Enterprise,N/A
+OFFICE_FIBER_500,Office Fiber 500M,Postpaid,Fixed,1200,300,24,500GB,N/A,N/A,"Fiber,Dynamic_IP,Business_Support",SME,N/A
+HOME_FIBER_300,Home Fiber 300M,Postpaid,Fixed,499,200,24,300GB,N/A,N/A,"Fiber,WiFi6_Router",Consumer,N/A
+VAS_ROAMING_ASIA,Asia Roaming Pack,Add-on,VAS,88,0,0,5GB,60,100,"Asia_Pacific_Roaming",All,Asia_Pacific
+VAS_PREMIUM_SUPPORT,Premium Support,Add-on,VAS,50,0,0,N/A,N/A,N/A,"24x7_Support,Priority_Queue",Premium,N/A
+VAS_DEVICE_INSURANCE,Device Insurance,Add-on,VAS,35,0,0,N/A,N/A,N/A,"Device_Protection,Replacement",All,N/A
+VAS_CLOUD_BACKUP,Cloud Backup 100GB,Add-on,VAS,25,0,0,N/A,N/A,N/A,"Cloud_Storage,Auto_Backup",All,N/A 

@@ -92,7 +92,7 @@ class ServerError(OpenRouterError):
 @dataclass
 class OpenRouterConfig:
     """Configuration for OpenRouter API client."""
-
+    
     api_key: str
     base_url: str = "https://openrouter.ai/api/v1"
     default_model: str = "deepseek/deepseek-chat"
@@ -108,7 +108,7 @@ class OpenRouterConfig:
 @dataclass
 class APIResponse:
     """Standardized API response wrapper."""
-
+    
     success: bool
     data: Optional[Dict[str, Any]] = None
     error: Optional[str] = None
@@ -116,7 +116,7 @@ class APIResponse:
     tokens_used: Optional[int] = None
     request_id: Optional[str] = None
     timestamp: str = ""
-
+    
     def __post_init__(self):
         if not self.timestamp:
             self.timestamp = datetime.now().isoformat()
@@ -124,11 +124,11 @@ class APIResponse:
 
 class RateLimiter:
     """Thread-safe rate limiter using token bucket algorithm."""
-
+    
     def __init__(self, max_calls: int, time_window: int = 60):
         """
         Initialize rate limiter.
-
+        
         Args:
             max_calls: Maximum number of calls allowed
             time_window: Time window in seconds (default: 60 for per-minute limiting)
@@ -137,50 +137,50 @@ class RateLimiter:
         self.time_window = time_window
         self.calls = defaultdict(list)
         self.lock = threading.Lock()
-
+    
     def allow_request(self, identifier: str = "default") -> bool:
         """
         Check if request is allowed within rate limits.
-
+        
         Args:
             identifier: Unique identifier for rate limiting (default: "default")
-
+            
         Returns:
             True if request is allowed, False otherwise
         """
         with self.lock:
             now = time.time()
-
+            
             # Ensure identifier exists
             if identifier not in self.calls:
                 self.calls[identifier] = []
-
+            
             # Clean old entries more efficiently
             cutoff_time = now - self.time_window
             self.calls[identifier] = [call_time for call_time in self.calls[identifier] if call_time > cutoff_time]
-
+            
             # Check if we can make another call
             current_count = len(self.calls[identifier])
             if current_count < self.max_calls:
                 self.calls[identifier].append(now)
                 return True
-
+            
             return False
-
+    
     def wait_time(self, identifier: str = "default") -> float:
         """
         Get the time to wait before next request is allowed.
-
+        
         Args:
             identifier: Unique identifier for rate limiting
-
+            
         Returns:
             Time to wait in seconds
         """
         with self.lock:
             if not self.calls[identifier]:
                 return 0.0
-
+            
             oldest_call = min(self.calls[identifier])
             wait_time = self.time_window - (time.time() - oldest_call)
             return max(0.0, wait_time)
@@ -189,11 +189,11 @@ class RateLimiter:
 class OpenRouterClient:
     """
     OpenRouter API client for business analysis tasks.
-
+    
     Provides secure, rate-limited access to DeepSeek and other LLMs
     through OpenRouter's unified API interface.
     """
-
+    
     def __init__(
         self,
         config: Optional[OpenRouterConfig] = None,
@@ -202,7 +202,7 @@ class OpenRouterClient:
     ):
         """
         Initialize OpenRouter client.
-
+        
         Args:
             config: Custom configuration (will auto-detect from env if None)
             auto_configure: Whether to automatically configure from environment
@@ -212,16 +212,16 @@ class OpenRouterClient:
             config = self._load_config_from_env()
         elif config is None:
             raise ValueError("Configuration must be provided or auto_configure must be True")
-
+        
         self.config = config
-
+        
         # Validate configuration
         self._validate_config()
-
+        
         # Initialize components
         self.session = self._create_session()
         self.rate_limiter = RateLimiter(max_calls=self.config.rate_limit_per_minute, time_window=60)
-
+        
         # Enhanced logging setup
         self.enhanced_logging = enable_enhanced_logging and ENHANCED_LOGGING_AVAILABLE
         if self.enhanced_logging:
@@ -231,13 +231,13 @@ class OpenRouterClient:
             self.api_logger = None
             if enable_enhanced_logging:
                 logger.warning("Enhanced logging requested but not available")
-
+        
         # Request tracking
         self.request_count = 0
         self.total_tokens_used = 0
-
+        
         logger.info(f"OpenRouter client initialized for model: {self.config.default_model}")
-
+    
     def _load_config_from_env(self) -> OpenRouterConfig:
         """Load configuration from environment variables."""
         api_key = os.getenv("OPENROUTER_API_KEY")
@@ -246,7 +246,7 @@ class OpenRouterClient:
                 "OPENROUTER_API_KEY environment variable is required. "
                 "Get your API key from https://openrouter.ai/keys"
             )
-
+        
         return OpenRouterConfig(
             api_key=api_key,
             default_model=os.getenv("OPENROUTER_MODEL", "deepseek/deepseek-chat"),
@@ -258,25 +258,25 @@ class OpenRouterClient:
             app_name=os.getenv("OPENROUTER_APP_NAME", "Agentic AI Revenue Assistant"),
             app_url=os.getenv("OPENROUTER_APP_URL", "https://github.com/agentic-ai/revenue-assistant"),
         )
-
+    
     def _validate_config(self) -> None:
         """Validate configuration parameters."""
         if not self.config.api_key:
             raise ValueError("API key is required")
-
+        
         if not self.config.base_url:
             raise ValueError("Base URL is required")
-
+        
         if self.config.max_tokens <= 0:
             raise ValueError("Max tokens must be positive")
-
+        
         if not 0 <= self.config.temperature <= 2:
             raise ValueError("Temperature must be between 0 and 2")
-
+    
     def _create_session(self) -> requests.Session:
         """Create configured HTTP session with retries and proper headers."""
         session = requests.Session()
-
+        
         # Configure retries
         retry_strategy = Retry(
             total=self.config.max_retries,
@@ -284,23 +284,23 @@ class OpenRouterClient:
             status_forcelist=[429, 500, 502, 503, 504],
             allowed_methods=["HEAD", "GET", "POST"],
         )
-
+        
         adapter = HTTPAdapter(max_retries=retry_strategy)
         session.mount("http://", adapter)
         session.mount("https://", adapter)
-
+        
         # Set headers
         session.headers.update(
             {
-                "Authorization": f"Bearer {self.config.api_key}",
-                "Content-Type": "application/json",
-                "HTTP-Referer": self.config.app_url,
+            "Authorization": f"Bearer {self.config.api_key}",
+            "Content-Type": "application/json",
+            "HTTP-Referer": self.config.app_url,
                 "X-Title": self.config.app_name,
             }
         )
-
+        
         return session
-
+    
     def _wait_for_rate_limit(self) -> None:
         """Wait if rate limit is exceeded."""
         if not self.rate_limiter.allow_request():
@@ -315,7 +315,7 @@ class OpenRouterClient:
                         max_requests=self.config.rate_limit_per_minute,
                         wait_time=wait_time,
                     )
-
+                
                 logger.warning(f"Rate limit exceeded. Waiting {wait_time:.2f} seconds...")
                 time.sleep(wait_time)
         else:
@@ -329,26 +329,26 @@ class OpenRouterClient:
                     requests_in_window=current_requests,
                     max_requests=self.config.rate_limit_per_minute,
                 )
-
+    
     def test_connection(self) -> APIResponse:
         """
         Test connection to OpenRouter API.
-
+        
         Returns:
             APIResponse indicating success or failure
         """
         try:
             self._wait_for_rate_limit()
-
+            
             # Make a simple test request to get available models
             response = self.session.get(f"{self.config.base_url}/models", timeout=self.config.timeout)
-
+            
             self.request_count += 1
-
+            
             if response.status_code == 200:
                 data = response.json()
                 logger.info(f"Connection test successful. Available models: {len(data.get('data', []))}")
-
+                
                 return APIResponse(
                     success=True,
                     data={"models_available": len(data.get("data", []))},
@@ -357,50 +357,50 @@ class OpenRouterClient:
             else:
                 error_msg = f"Connection test failed: {response.status_code} - {response.text}"
                 logger.error(error_msg)
-
+                
                 return APIResponse(success=False, error=error_msg, request_id=response.headers.get("x-request-id"))
-
+                
         except requests.exceptions.RequestException as e:
             error_msg = f"Connection test failed: {str(e)}"
             logger.error(error_msg)
-
+            
             return APIResponse(success=False, error=error_msg)
-
+    
     def get_available_models(self) -> APIResponse:
         """
         Get list of available models from OpenRouter.
-
+        
         Returns:
             APIResponse with model information
         """
         try:
             self._wait_for_rate_limit()
-
+            
             response = self.session.get(f"{self.config.base_url}/models", timeout=self.config.timeout)
-
+            
             self.request_count += 1
-
+            
             if response.status_code == 200:
                 data = response.json()
                 models = data.get("data", [])
-
+                
                 logger.info(f"Retrieved {len(models)} available models")
-
+                
                 return APIResponse(
                     success=True, data={"models": models}, request_id=response.headers.get("x-request-id")
                 )
             else:
                 error_msg = f"Failed to get models: {response.status_code} - {response.text}"
                 logger.error(error_msg)
-
+                
                 return APIResponse(success=False, error=error_msg, request_id=response.headers.get("x-request-id"))
-
+                
         except requests.exceptions.RequestException as e:
             error_msg = f"Failed to get models: {str(e)}"
             logger.error(error_msg)
-
+            
             return APIResponse(success=False, error=error_msg)
-
+    
     def completion(
         self,
         prompt: str,
@@ -411,22 +411,22 @@ class OpenRouterClient:
     ) -> APIResponse:
         """
         Generate text completion using OpenRouter API.
-
+        
         Args:
             prompt: Input text prompt
             model: Model to use (defaults to configured model)
             max_tokens: Maximum tokens to generate
             temperature: Sampling temperature
             **kwargs: Additional parameters for the API
-
+        
         Returns:
             APIResponse with completion result
         """
         request_id = None
-
+        
         try:
             self._wait_for_rate_limit()
-
+            
             # Prepare request payload
             payload = {
                 "model": model or self.config.default_model,
@@ -435,42 +435,42 @@ class OpenRouterClient:
                 "temperature": temperature if temperature is not None else self.config.temperature,
                 **kwargs,
             }
-
+            
             url = f"{self.config.base_url}/chat/completions"
-
+            
             # Enhanced logging - log request
             if self.enhanced_logging and self.api_logger:
                 # Convert headers to string dict for logging
                 headers_dict = {k: str(v) for k, v in self.session.headers.items()}
                 request_id = self.api_logger.log_request(method="POST", url=url, headers=headers_dict, payload=payload)
-
+            
             # Log request (without sensitive data)
             logger.info(f"Making completion request to model: {payload['model']}")
             logger.debug(f"Request payload: {json.dumps({k: v for k, v in payload.items() if k != 'messages'})}")
-
+            
             # Make API request
             response = self.session.post(url, json=payload, timeout=self.config.timeout)
-
+            
             self.request_count += 1
-
+            
             if response.status_code == 200:
                 data = response.json()
-
+                
                 # Extract response information
                 content = data.get("choices", [{}])[0].get("message", {}).get("content", "")
                 usage = data.get("usage", {})
                 tokens_used = usage.get("total_tokens", 0)
-
+                
                 self.total_tokens_used += tokens_used
-
+                
                 # Enhanced logging - log response
                 if self.enhanced_logging and self.api_logger and request_id:
                     self.api_logger.log_response(
                         request_id=request_id, status_code=response.status_code, response_data=data
                     )
-
+                
                 logger.info(f"Completion successful. Tokens used: {tokens_used}")
-
+                
                 return APIResponse(
                     success=True,
                     data={"content": content, "usage": usage, "model": data.get("model"), "full_response": data},
@@ -480,34 +480,34 @@ class OpenRouterClient:
                 )
             else:
                 error_msg = f"Completion failed: {response.status_code} - {response.text}"
-
+                
                 # Enhanced logging - log error response
                 if self.enhanced_logging and self.api_logger and request_id:
                     self.api_logger.log_response(
                         request_id=request_id, status_code=response.status_code, error_message=error_msg
                     )
-
+                
                 logger.error(error_msg)
-
+                
                 return APIResponse(success=False, error=error_msg, request_id=response.headers.get("x-request-id"))
-
+                
         except requests.exceptions.RequestException as e:
             error_msg = f"Completion request failed: {str(e)}"
-
+            
             # Enhanced logging - log exception
             if self.enhanced_logging and self.api_logger and request_id:
                 self.api_logger.log_response(
                     request_id=request_id, status_code=0, error_message=error_msg  # Use 0 for connection errors
                 )
-
+            
             logger.error(error_msg)
-
+            
             return APIResponse(success=False, error=error_msg)
-
+    
     def get_stats(self) -> Dict[str, Any]:
         """
         Get client usage statistics.
-
+        
         Returns:
             Dictionary with usage stats
         """
@@ -1237,11 +1237,11 @@ Focus on practical, executable recommendations that sales teams can implement im
 def create_client(api_key: Optional[str] = None, model: Optional[str] = None) -> OpenRouterClient:
     """
     Create a configured OpenRouter client.
-
+    
     Args:
         api_key: API key (will use environment variable if None)
         model: Default model to use
-
+    
     Returns:
         Configured OpenRouterClient instance
     """
@@ -1250,17 +1250,17 @@ def create_client(api_key: Optional[str] = None, model: Optional[str] = None) ->
         config = OpenRouterConfig(
             api_key=api_key or os.getenv("OPENROUTER_API_KEY", ""), default_model=model or "deepseek/deepseek-chat"
         )
-
+    
     return OpenRouterClient(config)
 
 
 def test_openrouter_connection(api_key: Optional[str] = None) -> bool:
     """
     Quick test of OpenRouter connection.
-
+    
     Args:
         api_key: API key to test (uses environment if None)
-
+    
     Returns:
         True if connection successful, False otherwise
     """
@@ -1270,4 +1270,4 @@ def test_openrouter_connection(api_key: Optional[str] = None) -> bool:
         return result.success
     except Exception as e:
         logger.error(f"Connection test failed: {str(e)}")
-        return False
+        return False 

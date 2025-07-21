@@ -24,6 +24,7 @@ from datetime import datetime, timedelta
 from enum import Enum
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
+import pandas as pd
 
 # Import business analysis workflow
 try:
@@ -34,6 +35,14 @@ except ImportError:
     from utils.business_analysis_workflow import BusinessAnalysisWorkflow, AnalysisRequest, AnalysisResult
     from utils.enhanced_field_identification import EnhancedFieldIdentifier
     from utils.integrated_display_masking import IntegratedDisplayMasking
+
+from .recommendation_generator import (
+    RecommendationGenerator,
+    ActionableRecommendation,
+    RecommendationPriority,
+    ActionType,
+    create_sample_recommendations
+)
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -839,7 +848,7 @@ class ActionModule:
 
     Responsible for:
     - Executing analysis workflows
-    - Generating recommendations
+    - Generating recommendations using RecommendationGenerator
     - Managing action queues
     - Coordinating with external systems
     """
@@ -848,6 +857,22 @@ class ActionModule:
         self.business_workflow = business_workflow
         self.action_queue = []
         self.active_actions = {}
+        
+        # Initialize recommendation generator with integrated components
+        try:
+            from .customer_analysis import CustomerDataAnalyzer
+            from .lead_scoring import LeadScoringEngine
+            from .three_hk_business_rules import ThreeHKBusinessRulesEngine
+            
+            self.recommendation_generator = RecommendationGenerator(
+                customer_analyzer=CustomerDataAnalyzer(),
+                lead_scorer=LeadScoringEngine(),
+                business_rules=ThreeHKBusinessRulesEngine()
+            )
+            logger.info("RecommendationGenerator initialized successfully")
+        except Exception as e:
+            logger.warning(f"RecommendationGenerator initialization failed: {e}")
+            self.recommendation_generator = None
 
     def execute_action(self, action: AgentAction, context: AgentContext) -> Dict[str, Any]:
         """
@@ -945,8 +970,142 @@ class ActionModule:
             return {"success": False, "error": str(e)}
 
     def _execute_generate_recommendations(self, action: AgentAction, context: AgentContext) -> Dict[str, Any]:
-        """Execute recommendations generation action."""
+        """Execute recommendations generation action using the enhanced RecommendationGenerator."""
         try:
+            if not self.recommendation_generator:
+                # Fallback to old LLM-based recommendations
+                return self._execute_legacy_recommendations(action, context)
+            
+            start_time = time.time()
+            
+            # Prepare customer data for recommendation generation
+            customer_data = context.customer_data.get("original_data", {})
+            
+            # Handle purchase history format
+            if isinstance(context.purchase_history, dict):
+                purchase_records = context.purchase_history.get("records", [])
+            else:
+                purchase_records = context.purchase_history or []
+            
+            # Create lead DataFrame for the recommendation generator
+            lead_row = {
+                "customer_id": context.customer_id,
+                "customer_name": customer_data.get("customer_name", customer_data.get("name", "Unknown")),
+                "customer_type": customer_data.get("customer_type", customer_data.get("account_type", "unknown")),
+                "annual_revenue": customer_data.get("annual_revenue", 0),
+                "employee_count": customer_data.get("employee_count", 0),
+                "current_monthly_spend": customer_data.get("monthly_spend", customer_data.get("current_monthly_spend", 0)),
+                "contract_end_date": customer_data.get("contract_end_date", ""),
+                "last_interaction": customer_data.get("last_interaction", datetime.now().strftime("%Y-%m-%d")),
+                "preferred_contact_time": customer_data.get("preferred_contact_time", "morning"),
+                "industry": customer_data.get("industry", customer_data.get("segment", "unknown")),
+                "location": customer_data.get("location", "Hong Kong"),
+                "decision_maker_identified": customer_data.get("decision_maker_identified", True),
+                "budget_confirmed": customer_data.get("budget_confirmed", False),
+                "competitor_mentions": customer_data.get("competitor_mentions", ""),
+                "urgency_indicators": customer_data.get("urgency_indicators", []),
+                "pain_points": customer_data.get("pain_points", []),
+            }
+            
+            # Add purchase history context
+            if purchase_records:
+                total_spend = sum(record.get("amount", 0) for record in purchase_records)
+                recent_purchases = len([r for r in purchase_records if r.get("purchase_date", "") > "2023-01-01"])
+                lead_row.update({
+                    "total_historical_spend": total_spend,
+                    "recent_purchase_count": recent_purchases,
+                    "purchase_categories": list(set(record.get("category", "") for record in purchase_records))
+                })
+            
+            # Create single-row DataFrame
+            leads_df = pd.DataFrame([lead_row])
+            
+            # Generate recommendations
+            recommendations = self.recommendation_generator.generate_recommendations(
+                leads_df, max_recommendations=5
+            )
+            
+            processing_time = time.time() - start_time
+            
+            # Format recommendations for agent context
+            formatted_recommendations = []
+            for rec in recommendations:
+                formatted_rec = {
+                    "recommendation_id": rec.recommendation_id,
+                    "customer_id": rec.lead_id,
+                    "customer_name": rec.customer_name,
+                    "priority": rec.priority.value,
+                    "action_type": rec.action_type.value,
+                    "title": rec.title,
+                    "description": rec.description,
+                    "expected_revenue": rec.expected_revenue,
+                    "conversion_probability": rec.conversion_probability,
+                    "urgency_score": rec.urgency_score,
+                    "business_impact_score": rec.business_impact_score,
+                    "next_steps": rec.next_steps,
+                    "talking_points": rec.talking_points,
+                    "objection_handling": rec.objection_handling,
+                    "recommended_offers": rec.recommended_offers,
+                    "explanation": {
+                        "primary_reason": rec.explanation.primary_reason,
+                        "supporting_factors": rec.explanation.supporting_factors,
+                        "risk_factors": rec.explanation.risk_factors,
+                        "confidence_score": rec.explanation.confidence_score,
+                        "data_sources": rec.explanation.data_sources,
+                    },
+                    "expires_at": rec.expires_at.isoformat() if rec.expires_at else None,
+                    "tags": rec.tags,
+                    "created_at": rec.created_at.isoformat(),
+                }
+                formatted_recommendations.append(formatted_rec)
+            
+            # Create summary statistics
+            summary = {
+                "total_recommendations": len(recommendations),
+                "priority_distribution": {},
+                "action_type_distribution": {},
+                "total_expected_revenue": sum(rec.expected_revenue for rec in recommendations),
+                "average_conversion_probability": sum(rec.conversion_probability for rec in recommendations) / len(recommendations) if recommendations else 0,
+                "average_business_impact": sum(rec.business_impact_score for rec in recommendations) / len(recommendations) if recommendations else 0,
+            }
+            
+            # Calculate distributions
+            for rec in recommendations:
+                priority = rec.priority.value
+                action_type = rec.action_type.value
+                
+                summary["priority_distribution"][priority] = summary["priority_distribution"].get(priority, 0) + 1
+                summary["action_type_distribution"][action_type] = summary["action_type_distribution"].get(action_type, 0) + 1
+            
+            logger.info(f"Generated {len(recommendations)} recommendations in {processing_time:.2f}s")
+            
+            return {
+                "success": True,
+                "result": {
+                    "recommendations": formatted_recommendations,
+                    "summary": summary,
+                    "generation_metadata": {
+                        "generator_type": "RecommendationGenerator",
+                        "processing_time": processing_time,
+                        "customer_id": context.customer_id,
+                        "timestamp": datetime.now().isoformat(),
+                    }
+                },
+                "error": None,
+                "processing_time": processing_time,
+                "tokens_used": 0,  # Our generator doesn't use external API tokens
+            }
+
+        except Exception as e:
+            logger.error(f"Enhanced recommendations generation failed: {e}")
+            # Fallback to legacy system
+            return self._execute_legacy_recommendations(action, context)
+
+    def _execute_legacy_recommendations(self, action: AgentAction, context: AgentContext) -> Dict[str, Any]:
+        """Execute legacy LLM-based recommendations as fallback."""
+        try:
+            logger.info("Using legacy LLM-based recommendation generation")
+            
             # Get customer analysis from context
             analysis_data = context.analysis_results or {}
 
@@ -979,7 +1138,7 @@ class ActionModule:
             }
 
         except Exception as e:
-            logger.error(f"Recommendations generation execution failed: {e}")
+            logger.error(f"Legacy recommendations generation execution failed: {e}")
             return {"success": False, "error": str(e)}
 
     def _get_default_offers(self) -> List[Dict[str, Any]]:
@@ -998,10 +1157,32 @@ class ActionModule:
                 "name": "Business Pro Package",
                 "price": 1299.00,
                 "currency": "HKD",
-                "features": ["Multi-line", "VPN Access", "Priority Network", "24/7 Support"],
+                "features": ["Business Support 24/7", "Dedicated Account Manager", "Priority Network"],
                 "target_segment": "Business",
             },
+            {
+                "offer_id": "THREE_FAMILY_PLUS",
+                "name": "Family Plus Plan",
+                "price": 399.00,
+                "currency": "HKD",
+                "features": ["Multi-device sharing", "Parental controls", "Family discounts"],
+                "target_segment": "Consumer",
+            },
         ]
+
+    def get_action_status(self, action_id: str) -> Dict[str, Any]:
+        """Get status of a specific action."""
+        return self.active_actions.get(action_id, {"status": "not_found"})
+
+    def list_active_actions(self) -> List[Dict[str, Any]]:
+        """List all currently active actions."""
+        return list(self.active_actions.values())
+
+    def queue_action(self, action: AgentAction) -> str:
+        """Add an action to the execution queue."""
+        action_id = f"action_{int(time.time())}"
+        self.action_queue.append({"id": action_id, "action": action, "queued_at": time.time()})
+        return action_id
 
 
 class CoreAgent:

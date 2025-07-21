@@ -74,8 +74,15 @@ class DataMerger:
 
     def __init__(self):
         """Initialize the data merger"""
-        self.account_id_column = "Account ID"
+        self.account_id_variants = ["Account ID", "Account_ID"]
         logger.info("DataMerger initialized")
+    
+    def _find_account_id_column(self, df: pd.DataFrame) -> Optional[str]:
+        """Find the Account ID column in the dataframe (supports flexible naming)"""
+        for variant in self.account_id_variants:
+            if variant in df.columns:
+                return variant
+        return None
 
     def merge_datasets(
         self,
@@ -198,19 +205,26 @@ class DataMerger:
         """Validate datasets for merging compatibility"""
         errors = []
 
-        # Check for Account ID column in both datasets
-        if self.account_id_column not in customer_df.columns:
-            errors.append(f"Customer data missing '{self.account_id_column}' column")
+        # Check for Account ID column in both datasets (flexible naming)
+        customer_account_col = self._find_account_id_column(customer_df)
+        purchase_account_col = self._find_account_id_column(purchase_df)
+        
+        if customer_account_col is None:
+            errors.append(f"Customer data missing Account ID column (tried: {', '.join(self.account_id_variants)})")
 
-        if self.account_id_column not in purchase_df.columns:
-            errors.append(f"Purchase data missing '{self.account_id_column}' column")
+        if purchase_account_col is None:
+            errors.append(f"Purchase data missing Account ID column (tried: {', '.join(self.account_id_variants)})")
 
         if errors:
             return {"valid": False, "message": "Dataset validation failed", "errors": errors}
 
+        # Store the found column names for later use
+        self.customer_account_col = customer_account_col
+        self.purchase_account_col = purchase_account_col
+
         # Check for empty Account ID values
-        customer_null_ids = customer_df[self.account_id_column].isnull().sum()
-        purchase_null_ids = purchase_df[self.account_id_column].isnull().sum()
+        customer_null_ids = customer_df[customer_account_col].isnull().sum()
+        purchase_null_ids = purchase_df[purchase_account_col].isnull().sum()
 
         warnings = []
         if customer_null_ids > 0:
@@ -223,9 +237,13 @@ class DataMerger:
     def _generate_quality_report(self, customer_df: pd.DataFrame, purchase_df: pd.DataFrame) -> DataQualityReport:
         """Generate comprehensive data quality report"""
 
+        # Use the flexible column names found during validation
+        customer_account_col = getattr(self, 'customer_account_col', self._find_account_id_column(customer_df))
+        purchase_account_col = getattr(self, 'purchase_account_col', self._find_account_id_column(purchase_df))
+
         # Get unique Account IDs from each dataset
-        customer_ids = set(customer_df[self.account_id_column].dropna().astype(str))
-        purchase_ids = set(purchase_df[self.account_id_column].dropna().astype(str))
+        customer_ids = set(customer_df[customer_account_col].dropna().astype(str))
+        purchase_ids = set(purchase_df[purchase_account_col].dropna().astype(str))
 
         # Find matches and mismatches
         matched_ids = customer_ids.intersection(purchase_ids)
@@ -233,17 +251,17 @@ class DataMerger:
         unmatched_purchase = list(purchase_ids - customer_ids)
 
         # Check for duplicates
-        customer_duplicates = customer_df[customer_df[self.account_id_column].duplicated()][
-            self.account_id_column
+        customer_duplicates = customer_df[customer_df[customer_account_col].duplicated()][
+            customer_account_col
         ].tolist()
-        purchase_duplicates = purchase_df[purchase_df[self.account_id_column].duplicated()][
-            self.account_id_column
+        purchase_duplicates = purchase_df[purchase_df[purchase_account_col].duplicated()][
+            purchase_account_col
         ].tolist()
 
         # Count missing Account IDs
         missing_ids = {
-            "customer": customer_df[self.account_id_column].isnull().sum(),
-            "purchase": purchase_df[self.account_id_column].isnull().sum(),
+            "customer": customer_df[customer_account_col].isnull().sum(),
+            "purchase": purchase_df[purchase_account_col].isnull().sum(),
         }
 
         # Calculate quality score
@@ -276,26 +294,31 @@ class DataMerger:
     ) -> Dict[str, Any]:
         """Perform the actual merge operation"""
         try:
+            # Use the flexible column names found during validation
+            customer_account_col = getattr(self, 'customer_account_col', self._find_account_id_column(customer_df))
+            purchase_account_col = getattr(self, 'purchase_account_col', self._find_account_id_column(purchase_df))
+            
             # Clean Account IDs (remove null values and convert to string)
-            customer_clean = customer_df.dropna(subset=[self.account_id_column]).copy()
-            purchase_clean = purchase_df.dropna(subset=[self.account_id_column]).copy()
+            customer_clean = customer_df.dropna(subset=[customer_account_col]).copy()
+            purchase_clean = purchase_df.dropna(subset=[purchase_account_col]).copy()
 
-            customer_clean[self.account_id_column] = customer_clean[self.account_id_column].astype(str)
-            purchase_clean[self.account_id_column] = purchase_clean[self.account_id_column].astype(str)
+            customer_clean[customer_account_col] = customer_clean[customer_account_col].astype(str)
+            purchase_clean[purchase_account_col] = purchase_clean[purchase_account_col].astype(str)
 
-            # Add prefixes to avoid column name conflicts
+            # Standardize column names for merging (use "Account_ID" as standard)
+            merge_key = "Account_ID"
             customer_clean = customer_clean.add_prefix("customer_").rename(
-                columns={f"customer_{self.account_id_column}": self.account_id_column}
+                columns={f"customer_{customer_account_col}": merge_key}
             )
             purchase_clean = purchase_clean.add_prefix("purchase_").rename(
-                columns={f"purchase_{self.account_id_column}": self.account_id_column}
+                columns={f"purchase_{purchase_account_col}": merge_key}
             )
 
             # Perform merge based on strategy
             merged_df = pd.merge(
                 customer_clean,
                 purchase_clean,
-                on=self.account_id_column,
+                on=merge_key,
                 how=strategy.value,
                 suffixes=("_customer", "_purchase"),
             )

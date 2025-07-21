@@ -1796,3 +1796,4 @@ def _generate_batch_insights(individual_analyses: List[Dict[str, Any]]) -> Dict[
     except Exception as e:
         logger.warning(f"Batch insights generation error: {e}")
         return {"error": str(e)}
+ 

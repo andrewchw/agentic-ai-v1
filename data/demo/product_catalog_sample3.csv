@@ -1,0 +1,40 @@
+﻿Plan_ID,Plan_Name,Plan_Type,Category,Base_Price,Setup_Fee,Contract_Required,Data_Allowance,Voice_Minutes,SMS_Allowance,Features,Target_Segment,Roaming_Included
+5G_UNLIMITED_PRO,5G Unlimited Pro,Postpaid,Mobile,980,0,24,Unlimited,Unlimited,Unlimited,"5G,Hotspot,Premium_Support",Premium,Asia_Pacific
+5G_UNLIMITED_PLUS,5G Unlimited Plus,Postpaid,Mobile,1299,0,24,Unlimited,Unlimited,Unlimited,"5G,Hotspot,Premium_Support,International_Roaming",Premium,Worldwide
+MOBILE_5G_BASIC,5G Basic Plan,Postpaid,Mobile,699,0,24,50GB,2000,1000,"5G,Basic_Support",Standard,Local_Only
+FIBER_1000_BIZ,Business Fiber 1000M,Postpaid,Fixed,2800,500,24,1000GB,,,"Fiber,Static_IP,SLA,24x7_Support",Enterprise,
+OFFICE_FIBER_500,Office Fiber 500M,Postpaid,Fixed,1200,300,24,500GB,,,"Fiber,Dynamic_IP,Business_Support",SME,
+HOME_FIBER_300,Home Fiber 300M,Postpaid,Fixed,499,200,24,300GB,,,"Fiber,WiFi6_Router",Consumer,
+VAS_ROAMING_ASIA,Asia Roaming Pack,Add-on,VAS,88,0,0,5GB,60,100,Asia_Pacific_Roaming,All,Asia_Pacific
+VAS_PREMIUM_SUPPORT,Premium Support,Add-on,VAS,50,0,0,,,,"24x7_Support,Priority_Queue",Premium,
+VAS_DEVICE_INSURANCE,Device Insurance,Add-on,VAS,35,0,0,,,,"Device_Protection,Replacement",All,
+VAS_CLOUD_BACKUP,Cloud Backup 100GB,Add-on,VAS,25,0,0,,,,"Cloud_Storage,Auto_Backup",All,
+5G_BASIC_30GB,5G Basic 30GB Plan,Postpaid,Mobile,124,0,30,30GB,Unlimited,Unlimited,"5G,China_Macau_1GB",Standard,China_Macau
+5G_STANDARD_50GB,5G Standard 50GB Plan,Postpaid,Mobile,148,0,24,50GB,Unlimited,Unlimited,"5G,China_Macau_3GB",Standard,China_Macau
+5G_PLUS_60GB,5G Plus 60GB Plan,Postpaid,Mobile,188,0,24,60GB,Unlimited,Unlimited,"5G,China_Macau_4GB",Standard,China_Macau
+5G_PREMIUM_100GB,5G Premium 100GB Plan,Postpaid,Mobile,228,0,24,100GB,Unlimited,Unlimited,"5G,China_Macau_4GB,Handset_Voucher",Premium,China_Macau
+4G5_BASIC_5GB,4.5G Basic 5GB,Postpaid,Mobile,148,0,24,5GB,Unlimited,Unlimited,"4.5G,42Mbps_Speed",Standard,Local_Only
+4G5_STANDARD_10GB,4.5G Standard 10GB,Postpaid,Mobile,198,0,24,10GB,Unlimited,Unlimited,"4.5G,Enhanced_Data",Standard,Local_Only
+4G5_PLUS_15GB,4.5G Plus 15GB,Postpaid,Mobile,288,0,24,15GB,Unlimited,Unlimited,"4.5G,Premium_Support",Premium,Local_Only
+4G5_PREMIUM_25GB,4.5G Premium 25GB,Postpaid,Mobile,428,0,24,25GB,Unlimited,Unlimited,"4.5G,Handset_Voucher",Premium,Local_Only
+BIZ_5G_BASIC,Business 5G Basic,Postpaid,Mobile,168,0,24,50GB,Unlimited,Unlimited,"5G,SLA,Priority_Network",Enterprise,Local_Only
+5G_MULTI_60GB,5G Multi-SIM 60GB,Postpaid,Mobile,268,0,24,60GB,Unlimited,Unlimited,"5G,Multi_SIM_2,China_Macau",Family,China_Macau
+5G_MULTI_100GB,5G Multi-SIM 100GB,Postpaid,Mobile,308,0,24,100GB,Unlimited,Unlimited,"5G,Multi_SIM_2,Enhanced_Features",Family,China_Macau
+5G_STUDENT,5G Student Plan,Postpaid,Mobile,148,0,24,50GB,Unlimited,Unlimited,"5G,Campus_Data,China_Macau_3GB",Student,China_Macau
+5G_BB_BASIC,5G Broadband Basic,Postpaid,Fixed,148,0,24,300GB,,,"5G,Fair_Usage,5G_Router",Consumer,
+5G_BB_UNLIMITED,5G Broadband Unlimited,Postpaid,Fixed,196,0,24,Unlimited,,,"5G,WiFi6_Router",Consumer,
+BIZ_5G_BB,Business 5G Broadband,Postpaid,Fixed,198,0,24,Unlimited,,,"5G,24x7_Support",Enterprise,
+VAS_APAC_UPGRADE,Asia Pacific Data Upgrade,Add-on,VAS,28,0,0,,,,"35_Destinations,Japan_Taiwan_Thailand_Korea",All,Asia_Pacific
+VAS_VIDEO_STREAM,Infinite Video Streaming Pack,Add-on,VAS,38,0,0,Unlimited,,,"Unlimited_Streaming,Designated_Apps",All,
+VAS_CHINA_ROAM,China & Macau Data Roaming,Add-on,VAS,38,0,0,,,,All_3_China_Networks,All,China_Macau
+VAS_HANDSET_SWITCH,Handset Switch Service,Add-on,VAS,50,0,0,,,,"Device_Replacement,Any_Reason",All,
+VAS_DEVICE_PLUS,Device Protection Plus,Add-on,VAS,35,0,0,,,,"Water_Damage,Accidental_Damage",All,
+VAS_CLOUD_200GB,Cloud Storage 200GB,Add-on,VAS,25,0,0,,,,"Auto_Backup,Bill_to_3_Rebate",All,
+PREPAID_LOCAL_168,Local Prepaid SIM 1GB,Prepaid,Mobile,168,0,0,1GB,Per use billing,Per use billing,"4G_LTE,30_Days_Validity",Tourist,Local_Only
+PREPAID_LOCAL_248,Local Prepaid SIM 2GB,Prepaid,Mobile,248,0,0,2GB,Per use billing,Per use billing,"4G_LTE,30_Days_Validity",Tourist,Local_Only
+PREPAID_LOCAL_298,Local Prepaid SIM 3GB,Prepaid,Mobile,298,0,0,3GB,Per use billing,Per use billing,"4G_LTE,30_Days_Validity",Tourist,Local_Only
+PREPAID_TRAVEL_268,Travel SIM Multi-Region,Prepaid,Mobile,268,0,0,Varies,Per use billing,Per use billing,"Multi_Region,365_Days_Validity",Travel,Multi_Region
+SMARTWATCH_ESIM_18,Smart Watch eSIM Individual,Add-on,VAS,18,0,0,Shared,Shared,Shared,"Apple_Watch,Samsung_Galaxy_Watch,Same_Number",All,Local_Only
+SMARTWATCH_ESIM_22,Smart Watch eSIM Family,Add-on,VAS,22,0,12,Unlimited,Unlimited,Unlimited,"Apple_Watch,New_Number,Family_Setup",Family,Local_Only
+VAS_DEVICE_UPGRADE,Device Upgrade Service,Add-on,VAS,0,18,24,,,,"Handset_Upgrade,Annual_Eligibility",Existing_Customers,
+VAS_TRADE_IN,Device Trade-in Service,Service,VAS,0,0,0,,,,"7_Days_Defective_Trade,Same_Model_Replace",All,
