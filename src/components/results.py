@@ -88,7 +88,12 @@ def render_results_page():
                         if debug_info.get("response_info"):
                             if debug_info["response_info"]["received"]:
                                 st.success(f"✅ Response received: {debug_info['response_info']['content_length']} chars")
-                                st.write(f"   - Choices: {debug_info['response_info']['choices_count']}")
+                                
+                                # Show model and token info if available
+                                if debug_info["response_info"].get("model_used"):
+                                    st.write(f"   - Model: {debug_info['response_info']['model_used']}")
+                                if debug_info["response_info"].get("tokens_used"):
+                                    st.write(f"   - Tokens: {debug_info['response_info']['tokens_used']}")
                                 
                                 if debug_info["response_info"].get("parsed_successfully"):
                                     st.success("✅ JSON parsed successfully")
@@ -101,6 +106,8 @@ def render_results_page():
                                     st.code(debug_info["response_info"]["raw_content"], language="json")
                             else:
                                 st.error("❌ No response received")
+                                if debug_info["response_info"].get("error"):
+                                    st.error(f"   - Error: {debug_info['response_info']['error']}")
                         
                         # Customer Profile
                         if debug_info.get("customer_profile"):
@@ -1022,7 +1029,11 @@ PRODUCT CATALOG CONTEXT:
 ANALYSIS REQUIREMENTS:
 1. Determine the customer's priority level (CRITICAL, HIGH, MEDIUM, LOW)
 2. Recommend the best action type (IMMEDIATE_CALL, RETENTION_OUTREACH, OFFER_UPGRADE, SCHEDULE_MEETING, FOLLOW_UP)
-3. Calculate expected revenue potential based on current monthly fee and opportunity
+3. Calculate expected ANNUAL revenue potential considering:
+   - Current contract remaining duration (assume 12-24 months if not specified)
+   - Monthly revenue increase from upgrade/retention
+   - Potential contract renewal value (additional 24 months)
+   - Total 2-3 year customer lifetime value impact
 4. Estimate conversion probability (0.0 to 1.0)
 5. Generate specific, actionable next steps
 6. Create compelling talking points for sales team
@@ -1035,7 +1046,7 @@ Return a JSON object with these exact fields:
     "action_type": "IMMEDIATE_CALL|RETENTION_OUTREACH|OFFER_UPGRADE|SCHEDULE_MEETING|FOLLOW_UP",
     "title": "Brief recommendation title",
     "description": "Detailed analysis and reasoning",
-    "expected_revenue": number,
+    "expected_revenue": number (annual contract value, not monthly),
     "conversion_probability": number between 0.0 and 1.0,
     "urgency_score": number between 0.0 and 1.0,
     "business_impact_score": number between 0.0 and 1.0,
@@ -1054,6 +1065,13 @@ Return a JSON object with these exact fields:
 }}
 
 Focus on Three HK's strengths: superior mainland China connectivity, enterprise support, and competitive pricing.
+
+REVENUE CALCULATION GUIDELINES:
+- For UPGRADES: Calculate (new_monthly_fee - current_monthly_fee) × remaining_contract_months + renewal_value
+- For RETENTION: Calculate current_monthly_fee × 24_months (avoiding churn)
+- For NEW SERVICES: Calculate additional_monthly_value × contract_duration
+- Consider 2-3 year customer lifetime value, not just monthly fees
+- Example: Upgrading from HK$450 to HK$650 monthly = HK$200 increase × 18 months remaining + HK$650 × 24 months renewal = HK$19,200 total value
 """
         
         debug_info["prompt"] = prompt
@@ -1090,11 +1108,34 @@ Focus on Three HK's strengths: superior mainland China connectivity, enterprise 
                     "tokens_used": response.tokens_used
                 }
                 
-                # Try to parse JSON content
+                # Try to parse JSON content (handle markdown code blocks)
                 try:
-                    ai_data = json.loads(ai_content)
+                    # Clean JSON from markdown code blocks if present
+                    clean_content = ai_content.strip()
+                    if clean_content.startswith('```json'):
+                        # Extract JSON from markdown code block
+                        lines = clean_content.split('\n')
+                        json_lines = []
+                        in_json = False
+                        for line in lines:
+                            if line.strip() == '```json':
+                                in_json = True
+                                continue
+                            elif line.strip() == '```' and in_json:
+                                break
+                            elif in_json:
+                                json_lines.append(line)
+                        clean_content = '\n'.join(json_lines)
+                    elif clean_content.startswith('```'):
+                        # Handle generic code blocks
+                        clean_content = clean_content.split('```')[1]
+                        if clean_content.startswith('json\n'):
+                            clean_content = clean_content[5:]  # Remove 'json\n'
+                    
+                    ai_data = json.loads(clean_content)
                     debug_info["response_info"]["parsed_successfully"] = True
                     debug_info["response_info"]["parsed_fields"] = list(ai_data.keys())
+                    debug_info["response_info"]["cleaned_content"] = clean_content
                     
                     # Store debug info in session state
                     if "ai_debug_info" not in st.session_state:
