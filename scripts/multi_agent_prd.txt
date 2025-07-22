@@ -1,0 +1,80 @@
+Agentic AI Revenue Assistant - Multi-Agent Architecture PRD
+
+=== PROJECT OVERVIEW ===
+Transform the existing single-agent system into a collaborative multi-agent platform that showcases true agentic AI capabilities using different LLMs via OpenRouter.
+
+=== VISION STATEMENT ===
+Demonstrate cutting-edge multi-agent AI collaboration where specialized agents with different LLMs communicate, delegate tasks, and work together to solve complex business problems for Hong Kong telecom companies.
+
+=== CORE REQUIREMENTS ===
+
+1. Multi-Agent Architecture Foundation
+- Integrate CrewAI framework for agent orchestration
+- Transform existing single-agent codebase to multi-agent system  
+- Maintain all existing privacy and security features
+- Preserve Three HK branding and Hong Kong market focus
+
+2. Lead Intelligence Agent (Agent 1)
+- Powered by DeepSeek LLM via OpenRouter
+- Specializes in customer data analysis and pattern recognition
+- Responsibilities: Lead scoring, customer segmentation, behavioral analysis
+- Uses existing customer analysis algorithms as foundation
+
+3. Revenue Optimization Agent (Agent 2) 
+- Powered by Llama3 LLM via OpenRouter
+- Specializes in business strategy and revenue optimization
+- Responsibilities: Offer matching, pricing strategy, retention recommendations
+- Uses existing Three HK business rules as foundation
+
+4. Agent Collaboration System
+- Agents communicate with each other through defined protocols
+- Lead Intelligence Agent delegates pricing questions to Revenue Optimization Agent
+- Revenue Optimization Agent asks questions back for market context
+- Both agents collaborate on final recommendations
+- Task delegation and question-answer workflows
+
+5. Multi-Agent Dashboard
+- Visual interface showing real-time agent interactions
+- Agent conversation logs and communication transparency  
+- Comparative analysis showing benefits of agent specialization
+- Interactive demonstration of agent task delegation
+
+6. Demo Capabilities
+- Upload customer data (existing privacy-first pipeline)
+- Watch agents analyze data collaboratively
+- See agent-to-agent communication in real-time
+- View specialized insights from each agent
+- Generate collaborative final recommendations
+
+=== TECHNICAL SPECIFICATIONS ===
+
+Framework: CrewAI for agent orchestration
+LLM Integration: OpenRouter API with multiple models
+- Agent 1: DeepSeek for analytical tasks
+- Agent 2: Llama3 for strategic tasks
+Privacy: Maintain existing pseudonymization and GDPR compliance
+UI: Enhanced Streamlit interface with multi-agent visualization
+Storage: Existing encrypted local storage system
+APIs: Existing OpenRouter integration expanded for multiple models
+
+=== SUCCESS METRICS ===
+- Two agents successfully communicate and delegate tasks
+- Real-time visualization of agent collaboration
+- Demonstrated benefits of specialized vs single-agent approach  
+- Maintains sub-30 second analysis response time
+- Preserves all existing privacy and security features
+- Professional demo showcasing true agentic AI capabilities
+
+=== DELIVERABLES ===
+1. CrewAI framework integration
+2. Lead Intelligence Agent (DeepSeek) implementation  
+3. Revenue Optimization Agent (Llama3) implementation
+4. Agent communication and delegation protocols
+5. Multi-agent collaboration dashboard
+6. Interactive demo interface
+7. Agent conversation logs and transparency features
+8. Comparative analysis and visualization tools
+9. Updated documentation and user guides
+10. Performance testing and optimization
+
+This PRD focuses on transforming the existing robust single-agent system into a collaborative multi-agent platform that demonstrates true agentic AI capabilities rather than just another chatbot or single-agent system.

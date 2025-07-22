@@ -83,4 +83,10 @@ htmlcov/
 *.key
 *.pem
 secrets/
-.secrets 
+.secrets
+
+# Added by Claude Task Master
+logs
+.idea
+.vscode
+tasks/ 

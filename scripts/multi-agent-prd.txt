@@ -1,0 +1,118 @@
+# Agentic AI Revenue Assistant - Multi-Agent Architecture
+
+## Overview
+Transform the Agentic AI Revenue Assistant into a cutting-edge multi-agent collaborative system that showcases true agentic AI capabilities. Two specialized AI agents work together to analyze customer data, optimize revenue strategies, and demonstrate advanced agent-to-agent communication and task delegation.
+
+## Strategic Vision
+**Objective:** Demonstrate how a multi-agent AI system can help Hong Kong businesses increase revenue through collaborative AI decision-making, with strict data privacy and agent specialization.
+
+**Core Differentiator:** Unlike single-agent systems, this showcases real agent collaboration where specialized agents communicate, ask questions, delegate tasks, and collaboratively solve complex business problems.
+
+## Multi-Agent Architecture
+
+### Agent 1: Lead Intelligence Agent (DeepSeek LLM)
+**Role:** Customer Data Analysis Specialist
+**Responsibilities:**
+- Analyze customer behavioral patterns and purchase history
+- Identify high-value prospect characteristics  
+- Perform lead scoring and segmentation
+- Extract actionable insights from customer data
+- Delegate pricing and offer questions to Revenue Agent
+
+**Specialization:** Advanced data analysis, pattern recognition, customer insights
+
+### Agent 2: Revenue Optimization Agent (Llama3 LLM)  
+**Role:** Business Strategy and Optimization Advisor
+**Responsibilities:**
+- Optimize Three HK product offers and pricing strategies
+- Analyze competitive positioning and market opportunities
+- Recommend retention strategies for at-risk customers
+- Provide business intelligence and revenue forecasting
+- Answer pricing questions from Lead Intelligence Agent
+
+**Specialization:** Business strategy, offer optimization, revenue maximization
+
+## Agent Collaboration Framework
+
+### Communication Protocols
+- **Task Delegation:** Lead Agent delegates specific pricing questions to Revenue Agent
+- **Information Exchange:** Agents share context and ask follow-up questions
+- **Collaborative Decision Making:** Joint recommendations combining both specializations
+- **Transparent Process:** All agent conversations logged and visible to users
+
+### Example Collaboration Flow
+1. Lead Intelligence Agent analyzes customer data patterns
+2. Agent identifies high-value prospects but needs pricing optimization
+3. Lead Agent **delegates** pricing strategy question to Revenue Agent
+4. Revenue Agent **asks questions back** about customer segments and market context
+5. Both agents **collaborate** on final recommendations with combined insights
+6. Dashboard shows complete agent conversation and decision process
+
+## Technical Implementation
+
+### Framework & Integration
+- **Agent Framework:** CrewAI for agent orchestration and communication
+- **LLM Integration:** OpenRouter API for both DeepSeek and Llama3 models
+- **Privacy Layer:** Maintain existing pseudonymization and GDPR compliance
+- **Communication:** Agent-to-agent messaging and task delegation protocols
+
+### User Interface
+- **Multi-Agent Dashboard:** Visual representation of agent interactions
+- **Conversation Logs:** Real-time display of agent communication
+- **Collaborative Results:** Combined recommendations from both agents
+- **Agent Performance:** Comparative analysis showing specialization benefits
+
+## Demo Features
+
+### Agent Collaboration Showcase
+- **Live Agent Conversations:** Watch agents communicate and delegate tasks
+- **Specialization Benefits:** See how different LLMs excel at different tasks
+- **Decision Transparency:** Full visibility into collaborative decision-making
+- **Task Delegation:** Demonstrate agents asking questions and sharing workload
+
+### Business Value Demonstration  
+- **Lead Generation:** Enhanced lead identification through specialized analysis
+- **Revenue Optimization:** Improved offer matching and pricing strategies
+- **Retention Strategies:** Proactive customer retention through agent collaboration
+- **Market Insights:** Combined intelligence from both agent specializations
+
+## Privacy & Security
+- **Data Transformation:** All sensitive data pseudonymized before agent processing
+- **Agent Isolation:** Each agent processes anonymized data only
+- **Audit Logging:** Complete log of all agent interactions and decisions
+- **API Security:** OpenRouter integration with secure key management
+
+## Success Metrics
+- **Agent Collaboration:** Successful task delegation and question-answer workflows
+- **Specialization Value:** Demonstrate benefits of multi-agent vs single-agent approach
+- **Business Impact:** Improved lead conversion and revenue optimization recommendations
+- **Demo Effectiveness:** Clear visualization of agentic AI capabilities
+
+## Development Phases
+
+### Phase 1: Multi-Agent Architecture (Task 12)
+- CrewAI framework integration and setup
+- Lead Intelligence Agent implementation with DeepSeek
+- Revenue Optimization Agent implementation with Llama3  
+- Agent communication protocols and task delegation
+- Basic agent-to-agent conversation capabilities
+
+### Phase 2: Agent Collaboration Dashboard (Task 13)
+- Multi-agent interaction visualization interface
+- Real-time agent conversation logs and decision tracking
+- Comparative analysis dashboard showing agent specialization
+- Export functionality for collaborative recommendations
+
+### Phase 3: Production Enhancement (Tasks 14-15)
+- Security audit for multi-agent systems
+- Performance optimization for agent collaboration
+- Advanced analytics and reporting for agent insights
+
+## Key Differentiators
+1. **True Agent Collaboration:** Real task delegation, not just parallel processing
+2. **LLM Specialization:** Different models optimized for different business functions
+3. **Transparent Communication:** Full visibility into agent decision-making process  
+4. **Privacy-First Multi-Agent:** Advanced data protection with agent collaboration
+5. **Business-Focused:** Practical revenue optimization through agent teamwork
+
+This multi-agent architecture transforms the system from a single AI tool into a collaborative AI platform that demonstrates the future of agentic AI in business applications.
