@@ -1,11 +1,11 @@
 # Task ID: 17
-# Title: Critical Bug Fix: Real-Time Privacy Toggle Functionality on Analysis Result Page
-# Status: done
-# Dependencies: None
-# Priority: high
-# Description: Resolve a critical frontend bug where the 'Show Sensitive Data' toggle on the Analysis Result page did not update displayed data after merging, ensuring real-time privacy masking and GDPR/PDPO compliance.
+# Title: Multi-tenant Support and Deployment Scaling
+# Status: backlog
+# Dependencies: 16
+# Priority: low
+# Description: Enterprise multi-tenant architecture and horizontal scaling capabilities.
 # Details:
-Refactor the Analysis Result page frontend to ensure the privacy toggle state is dynamically tracked and immediately reflected in all displayed and exported data. Update the display_merge_results() function to accept a current_show_sensitive parameter and implement real-time detection of toggle changes, triggering dynamic re-processing and live masking/unmasking of sensitive data. Ensure the export functionality always respects the current privacy setting. Add robust type safety and error handling throughout the affected components. Collaborate with backend engineers to confirm that all privacy masking logic remains consistent and that no regressions are introduced. Document the changes and update relevant user guides to reflect the improved toggle behavior.
+Multi-tenant architecture, horizontal scaling, and enterprise deployment capabilities for the multi-agent platform.
 
 # Test Strategy:
-1. Manually verify that toggling 'Show Sensitive Data' after merging instantly updates all sensitive fields on the Analysis Result page, with no stale or incorrectly masked data. 2. Confirm that exporting data always matches the current privacy state. 3. Run all existing privacy masking (10/10), data merging (13/13), and UI functionality (1/1) automated tests to ensure no regressions. 4. Add new automated UI tests to simulate rapid toggle changes and verify real-time updates. 5. Review code for type safety and error handling. 6. Validate GDPR/PDPO compliance by confirming that no sensitive data is exposed when the toggle is off.
+Multi-tenant testing, scaling validation, and enterprise deployment verification.

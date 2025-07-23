@@ -1,47 +1,11 @@
 # Task ID: 6
 # Title: Data Merging and Alignment Logic
-# Status: completed
+# Status: done
 # Dependencies: 5
 # Priority: high
-# Description: Implement logic to merge customer profile and purchase history data by Account ID. The Upload Data page is now fully functional after a critical bug fix: master password validation errors in encrypted storage have been resolved, ensuring robust password handling and consistent initialization. The upload component and privacy pipeline now initialize correctly, and EncryptedStorage works with a consistent password. Major UI test failures (CSS/branding, selector conflicts, title display) are fixed.
-
-MAJOR MILESTONE: All 10/10 Playwright UI tests are now passing after resolving navigation dropdown timing/selector issues and content expectation mismatches. The UI test suite is robust and reliable for ongoing development. Data merging and alignment logic is fully implemented and production-ready. The DataMerger class provides robust Account ID-based alignment, supports multiple merge strategies (inner, left, right, outer joins), and integrates privacy masking throughout the merge process. Comprehensive data quality reporting, error handling, and a Streamlit UI for results visualization are included. All 13/13 tests (including edge cases and privacy integration) are passing. The merged data structure supports both masked and unmasked views, and the privacy pipeline is correctly integrated. Export functionality and real-time performance metrics are available. UI stability is now validated across all supported environments and browsers, with a production-ready test suite.
-
-OUTSTANDING SUCCESS: All privacy masking requirements have been fully validated and are working correctly. All 10/10 privacy masking tests are passing, with 13/13 existing data merging tests also passing and no regressions. Sensitive field types (emails, names, HKID, phone numbers, account IDs) have been comprehensively validated. The privacy toggle functionality (show_sensitive=True/False) is confirmed to work as intended, and masking behavior is consistent across both customer and purchase datasets. All merge strategies (INNER, LEFT, RIGHT, OUTER) preserve privacy settings. A critical issue with name field masking was resolved by expanding field identification patterns in src/utils/enhanced_field_identification.py, resulting in perfect detection and masking of all name field variations. Field-specific masking for emails, names, HKID, phone, and Account ID is validated. See tests/privacy_masking_validation_report.md for the comprehensive validation report. Task 6 is now ready for completion, with privacy masking in merged data outputs production-ready and fully compliant with GDPR and Hong Kong PDPO requirements.
+# Description: Implement logic to merge customer profile and purchase history data by Account ID.
 # Details:
-Build data alignment functionality that matches customer records with their purchase history using Account ID as the primary key. Handle cases where IDs don't match, missing records, and duplicate entries. Create a unified data structure for analysis. The Upload Data page is now operational after resolving a critical encrypted storage bug, and the privacy pipeline initializes correctly. Major UI issues (branding, selectors, title display) have been fixed.
-
-MAJOR UPDATE: All Playwright UI test failures have been resolved (10/10 passing). Selector and timing issues were fixed, and test expectations are now aligned with current content. Data merging and alignment logic is complete and production-ready. The DataMerger class supports Account ID-based alignment, multiple merge strategies (inner, left, right, outer), and robust error handling. Privacy masking is fully integrated: all merged data respects the privacy toggle, with masked data shown by default and unmasked only when explicitly enabled. The merged data structure maintains both masked and unmasked views. Comprehensive data quality metrics, mismatch detection, and export functionality (CSV, quality reports, metadata) are included. Real-time processing and performance metrics are available. All 13/13 tests (including privacy and edge cases) are passing. UI stability is now validated across Chromium, Firefox, and WebKit browsers, in both headless and headed modes, with 5 consecutive successful runs and <20% variance in execution times. No intermittent or flaky tests observed. See tests/ui_stability_validation_report.md for full details.
-
-OUTSTANDING SUCCESS: All privacy masking requirements fully validated. 10/10 privacy masking tests and 13/13 data merging tests are passing. All sensitive field types (emails, names, HKID, phone numbers, account IDs) are validated. Privacy toggle works as intended, and masking is consistent across datasets and merge strategies. Name field masking issue resolved by expanding field identification patterns. Field-specific masking confirmed for all required types. See tests/privacy_masking_validation_report.md for details. Task 6 is now ready for completion and is fully compliant with GDPR and Hong Kong PDPO.
+Built data alignment functionality with Account ID matching, multiple merge strategies, and privacy masking integration. Comprehensive data quality reporting and error handling.
 
 # Test Strategy:
-All 10/10 Playwright UI tests are now passing after resolving selector, timing, and content expectation issues. UI stability has been validated across Chromium, Firefox, and WebKit browsers, in both headless and headed execution modes, with 5 consecutive successful runs and no intermittent failures. Continue to monitor UI reliability using Playwright’s Trace Viewer and robust locators. Confirm that the Upload Data page and privacy pipeline initialize without errors after the encrypted storage fix. Privacy masking toggle has been rigorously tested: sensitive data is masked by default in all merged and aligned outputs, and only unmasked when the toggle is ON. Sample data confirms masking behavior for emails, names, HKID, phone numbers, and account IDs. Regression testing of the privacy pipeline integration with the merged data structure is complete. All privacy masking output validation tests are passing, and the solution is production-ready and compliant with GDPR and Hong Kong PDPO.
-
-# Subtasks:
-## 6.1. Investigate and Fix Playwright UI Test Failures [completed]
-### Dependencies: None
-### Description: Analyze the remaining 6/10 failing Playwright tests, focusing on navigation dropdown timing/selector issues and content expectation mismatches. Use Playwright’s Trace Viewer and robust locators to identify root causes. Address routing, hydration, and selector issues as needed. Ensure all UI tests pass, but proceed with data merging logic as core application functionality is now stable.
-### Details:
-
-
-## 6.2. Validate UI Stability in CI and Local Environments [completed]
-### Dependencies: None
-### Description: With all Playwright UI tests now passing (10/10), run the Playwright test suite in both local and CI environments to confirm stability and consistency across platforms. Ensure that the test suite remains robust and reliable for ongoing development. Continue to monitor navigation-related test reliability and address any new issues that arise.
-### Details:
-
-
-## 6.3. Implement Data Merging and Alignment Logic [completed]
-### Dependencies: None
-### Description: Proceed to implement the logic to merge customer profile and purchase history data by Account ID, handling mismatches, missing records, and duplicates. Ensure the new logic is tested with sample datasets and does not introduce regressions in the now-stable UI. Confirm that the Upload Data page and privacy pipeline continue to function correctly after the encrypted storage fix. 
-
-CRITICAL: Integrate the fixed privacy masking logic into the data merging process. All merged data must respect the privacy toggle, displaying masked data by default and only revealing sensitive information when the toggle is ON. Test merged outputs for correct masking behavior.
-### Details:
-
-
-## 6.4. Test Privacy Masking in Merged Data Outputs [completed]
-### Dependencies: None
-### Description: Create and run tests to verify that the privacy masking toggle works correctly in all merged and aligned data outputs. Ensure that sensitive fields (e.g., email, name) are masked by default and only unmasked when the 'Show Sensitive Data' toggle is enabled. Use representative sample data to confirm correct masking and unmasking behavior after merging.
-### Details:
-
-
+All privacy masking and data merging tests passing. UI stability validated.
