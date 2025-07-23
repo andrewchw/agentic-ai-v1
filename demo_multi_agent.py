@@ -19,7 +19,7 @@ traditional single-model approaches.
     else:
         delegation_count = len(analysis_results.get("delegation_items", []))
     
-    print(f"   • Delegation items: {delegation_count}")
+    print(f"   • Delegation items: {delegation_count}")"""
 import os
 import sys
 import json

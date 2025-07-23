@@ -150,6 +150,242 @@ class MultiAgentRevenueSystem:
         except Exception as e:
             logger.error(f"Failed to initialize agents: {str(e)}")
             raise
+
+    def get_agent_protocol_status(self) -> Dict[str, Any]:
+        """
+        Get Agent Protocol compatible status information.
+        
+        Returns:
+            Status information formatted for Agent Protocol
+        """
+        return {
+            "system_name": "Multi-Agent Revenue System",
+            "protocol_version": "1.0.0",
+            "agents": [
+                {
+                    "name": "Lead Intelligence Agent",
+                    "role": self.lead_intelligence_config.role,
+                    "llm_model": self.lead_intelligence_config.llm_model,
+                    "status": "ready" if self.lead_intelligence_agent else "not_initialized",
+                    "capabilities": [
+                        "customer_pattern_analysis",
+                        "lead_scoring",
+                        "churn_prediction",
+                        "market_trends"
+                    ]
+                },
+                {
+                    "name": "Revenue Optimization Agent", 
+                    "role": self.revenue_optimization_config.role,
+                    "llm_model": self.revenue_optimization_config.llm_model,
+                    "status": "ready" if self.revenue_optimization_agent else "not_initialized",
+                    "capabilities": [
+                        "pricing_optimization",
+                        "offer_matching",
+                        "retention_strategies",
+                        "revenue_analysis"
+                    ]
+                }
+            ],
+            "collaboration_features": [
+                "task_delegation",
+                "inter_agent_communication",
+                "collaborative_analysis",
+                "unified_recommendations"
+            ],
+            "privacy_compliance": "GDPR/PDPO",
+            "market_specialization": "Hong Kong Telecommunications"
+        }
+
+    def execute_agent_protocol_task(self, task_input: str, additional_input: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        """
+        Execute a task using Agent Protocol interface.
+        
+        Args:
+            task_input: Task description/prompt
+            additional_input: Additional parameters
+            
+        Returns:
+            Task execution results formatted for Agent Protocol
+        """
+        try:
+            logger.info(f"Executing Agent Protocol task: {task_input[:100]}...")
+            
+            # Determine task routing based on input analysis
+            task_type = self._analyze_task_type(task_input, additional_input)
+            
+            if task_type == "lead_intelligence":
+                return self._execute_lead_intelligence_task(task_input, additional_input)
+            elif task_type == "revenue_optimization":
+                return self._execute_revenue_optimization_task(task_input, additional_input)
+            else:
+                return self._execute_collaborative_task(task_input, additional_input)
+                
+        except Exception as e:
+            logger.error(f"Agent Protocol task execution failed: {str(e)}")
+            return {
+                "status": "failed",
+                "error": str(e),
+                "output": f"Task execution failed: {str(e)}"
+            }
+
+    def _analyze_task_type(self, task_input: str, additional_input: Optional[Dict[str, Any]] = None) -> str:
+        """Analyze task input to determine appropriate agent routing"""
+        
+        # Check additional_input for explicit routing
+        if additional_input and "focus" in additional_input:
+            return additional_input["focus"]
+        
+        # Analyze task_input for keywords
+        task_lower = task_input.lower()
+        
+        lead_keywords = ["customer", "data", "pattern", "churn", "lead", "segment", "analyze"]
+        revenue_keywords = ["pricing", "offer", "strategy", "retention", "revenue", "optimize"]
+        
+        lead_matches = sum(1 for keyword in lead_keywords if keyword in task_lower)
+        revenue_matches = sum(1 for keyword in revenue_keywords if keyword in task_lower)
+        
+        if lead_matches > revenue_matches and lead_matches > 1:
+            return "lead_intelligence"
+        elif revenue_matches > lead_matches and revenue_matches > 1:
+            return "revenue_optimization"
+        else:
+            return "collaborative"
+
+    def _execute_lead_intelligence_task(self, task_input: str, additional_input: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        """Execute task using Lead Intelligence Agent"""
+        try:
+            # Generate sample data for demonstration
+            sample_data = self._generate_sample_data()
+            
+            # Execute using specialized Lead Intelligence Agent
+            lead_agent = create_lead_intelligence_agent()
+            analysis_result = lead_agent.analyze_customer_patterns(sample_data)
+            
+            return {
+                "status": "completed",
+                "agent": "Lead Intelligence Agent (DeepSeek)",
+                "analysis_type": "customer_pattern_analysis",
+                "output": f"Lead Intelligence analysis completed for {len(sample_data.get('records', []))} customers",
+                "results": {
+                    "lead_scores": analysis_result.get("lead_scores", {}),
+                    "customer_segments": analysis_result.get("customer_segments", {}),
+                    "churn_analysis": analysis_result.get("churn_analysis", {}),
+                    "agent_insights": analysis_result.get("agent_insights", [])
+                }
+            }
+            
+        except Exception as e:
+            logger.error(f"Lead Intelligence task failed: {str(e)}")
+            return {
+                "status": "failed",
+                "agent": "Lead Intelligence Agent (DeepSeek)",
+                "error": str(e),
+                "output": f"Lead Intelligence analysis failed: {str(e)}"
+            }
+
+    def _execute_revenue_optimization_task(self, task_input: str, additional_input: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        """Execute task using Revenue Optimization Agent"""
+        try:
+            # Execute using specialized Revenue Optimization Agent
+            revenue_agent = create_revenue_optimization_agent()
+            
+            # Create sample optimization context
+            optimization_context = {
+                "customer_segment": additional_input.get("customer_segment", "premium_individual") if additional_input else "premium_individual",
+                "current_plan": "5G Supreme",
+                "usage_pattern": "high_data_user",
+                "churn_risk": "low"
+            }
+            
+            optimization_result = revenue_agent.optimize_customer_offers(optimization_context)
+            
+            return {
+                "status": "completed",
+                "agent": "Revenue Optimization Agent (Llama3)",
+                "analysis_type": "offer_optimization",
+                "output": f"Revenue optimization completed for {optimization_context['customer_segment']} segment",
+                "results": {
+                    "recommendations": optimization_result.get("recommendations", []),
+                    "pricing_analysis": optimization_result.get("pricing_analysis", {}),
+                    "revenue_impact": optimization_result.get("revenue_impact", {})
+                }
+            }
+            
+        except Exception as e:
+            logger.error(f"Revenue optimization task failed: {str(e)}")
+            return {
+                "status": "failed",
+                "agent": "Revenue Optimization Agent (Llama3)",
+                "error": str(e),
+                "output": f"Revenue optimization failed: {str(e)}"
+            }
+
+    def _execute_collaborative_task(self, task_input: str, additional_input: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        """Execute collaborative task using both agents"""
+        try:
+            # Generate sample data
+            sample_data = self._generate_sample_data()
+            
+            # Execute collaborative analysis
+            collaboration_result = self.run_collaborative_analysis(sample_data)
+            
+            return {
+                "status": "completed",
+                "agents": ["Lead Intelligence Agent (DeepSeek)", "Revenue Optimization Agent (Llama3)"],
+                "analysis_type": "collaborative_analysis",
+                "output": "Multi-agent collaborative analysis completed successfully",
+                "results": collaboration_result
+            }
+            
+        except Exception as e:
+            logger.error(f"Collaborative task failed: {str(e)}")
+            return {
+                "status": "failed",
+                "agents": ["Lead Intelligence Agent (DeepSeek)", "Revenue Optimization Agent (Llama3)"],
+                "error": str(e),
+                "output": f"Collaborative analysis failed: {str(e)}"
+            }
+
+    def _generate_sample_data(self) -> Dict[str, Any]:
+        """Generate sample customer data for demonstrations"""
+        return {
+            "records": [
+                {
+                    "customer_id": "HK_CUST_001",
+                    "monthly_spend": 180.50,
+                    "data_usage_gb": 65.2,
+                    "active_services": 3,
+                    "tenure_months": 28,
+                    "plan_type": "5G",
+                    "family_lines": 2,
+                    "business_features": False,
+                    "roaming_usage": 5.2
+                },
+                {
+                    "customer_id": "HK_CUST_002", 
+                    "monthly_spend": 45.00,
+                    "data_usage_gb": 8.5,
+                    "active_services": 1,
+                    "tenure_months": 6,
+                    "plan_type": "4G",
+                    "family_lines": 0,
+                    "business_features": False,
+                    "roaming_usage": 0
+                },
+                {
+                    "customer_id": "HK_CUST_003",
+                    "monthly_spend": 320.00,
+                    "data_usage_gb": 120.0,
+                    "active_services": 5,
+                    "tenure_months": 48,
+                    "plan_type": "5G",
+                    "family_lines": 4,
+                    "business_features": True,
+                    "roaming_usage": 15.8
+                }
+            ]
+        }
     
     def create_customer_analysis_tasks(self, customer_data: Dict[str, Any]) -> List[Task]:
         """

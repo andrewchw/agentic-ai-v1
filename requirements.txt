@@ -1,5 +1,7 @@
 # Core Web Framework
 streamlit>=1.32.0
+fastapi>=0.110.0  # Agent Protocol REST API
+uvicorn>=0.29.0  # ASGI server for FastAPI
 
 # Data Processing
 pandas>=2.2.0
