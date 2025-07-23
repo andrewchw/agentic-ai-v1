@@ -24,6 +24,8 @@ import json
 from ..utils.logger import setup_logging
 from ..utils.privacy_pipeline import PrivacyPipeline
 from ..utils.openrouter_client import OpenRouterClient
+from .lead_intelligence_agent import create_lead_intelligence_agent
+from .revenue_optimization_agent import create_revenue_optimization_agent
 
 # Setup logging
 setup_logging()
@@ -292,7 +294,146 @@ class MultiAgentRevenueSystem:
             logger.error(f"Multi-agent analysis failed: {str(e)}")
             raise
     
+    def run_collaborative_analysis(self, customer_data: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Run collaborative analysis between Lead Intelligence and Revenue Optimization agents.
+        
+        This demonstrates true agentic AI collaboration where:
+        1. Lead Intelligence Agent analyzes customer data
+        2. Identifies items that need Revenue Agent expertise
+        3. Delegates specific tasks to Revenue Agent
+        4. Revenue Agent responds with strategic recommendations
+        5. Both agents collaborate on final recommendations
+        
+        Args:
+            customer_data: Customer data for analysis
+            
+        Returns:
+            Comprehensive collaboration results
+        """
+        logger.info("Starting collaborative multi-agent analysis")
+        
+        try:
+            # Step 1: Lead Intelligence Agent analyzes customer data
+            lead_agent = create_lead_intelligence_agent()
+            logger.info("Lead Intelligence Agent analyzing customer patterns...")
+            
+            lead_analysis = lead_agent.analyze_customer_patterns(customer_data)
+            
+            # Step 2: Extract delegation items
+            delegation_items = lead_analysis.get("delegation_items", [])
+            collaboration_requests = lead_analysis.get("collaboration_requests", [])
+            
+            logger.info(f"Lead Agent identified {len(delegation_items)} delegation items")
+            
+            # Step 3: Revenue Optimization Agent responds to delegations
+            revenue_agent = create_revenue_optimization_agent()
+            logger.info("Revenue Optimization Agent processing delegations...")
+            
+            revenue_responses = []
+            for item in delegation_items:
+                response = revenue_agent.respond_to_delegation(item)
+                revenue_responses.append(response)
+            
+            # Step 4: Revenue Agent provides additional analysis
+            revenue_analysis = revenue_agent.optimize_revenue_opportunities(lead_analysis)
+            
+            # Step 5: Combine results for final recommendations
+            collaborative_results = {
+                "lead_intelligence_analysis": {
+                    "customer_segments": lead_analysis.get("customer_segments"),
+                    "lead_scores": lead_analysis.get("lead_scores"),
+                    "churn_analysis": lead_analysis.get("churn_analysis"),
+                    "agent_insights": lead_analysis.get("agent_insights")
+                },
+                "revenue_optimization_analysis": {
+                    "total_revenue_potential": revenue_analysis.total_revenue_potential,
+                    "segment_opportunities": revenue_analysis.segment_opportunities,
+                    "retention_savings": revenue_analysis.retention_savings,
+                    "recommended_actions": revenue_analysis.recommended_actions
+                },
+                "agent_collaboration": {
+                    "delegation_items": delegation_items,
+                    "revenue_responses": revenue_responses,
+                    "collaboration_requests": collaboration_requests
+                },
+                "combined_recommendations": self._synthesize_recommendations(
+                    lead_analysis, revenue_analysis, revenue_responses
+                ),
+                "collaboration_summary": {
+                    "lead_agent_contributions": len(lead_analysis.get("agent_insights", [])),
+                    "revenue_agent_responses": len(revenue_responses),
+                    "total_opportunities_identified": len(delegation_items),
+                    "collaboration_success": True
+                }
+            }
+            
+            logger.info("Collaborative analysis completed successfully")
+            return collaborative_results
+            
+        except Exception as e:
+            logger.error(f"Collaborative analysis failed: {str(e)}")
+            return {
+                "error": str(e),
+                "collaboration_success": False
+            }
+    
+    def _synthesize_recommendations(self, lead_analysis: Dict[str, Any], 
+                                  revenue_analysis, revenue_responses: List[Dict[str, Any]]) -> List[str]:
+        """Synthesize recommendations from both agents"""
+        recommendations = []
+        
+        # Add Lead Agent insights
+        lead_insights = lead_analysis.get("agent_insights", [])
+        for insight in lead_insights:
+            recommendations.append(f"Lead Intelligence: {insight}")
+        
+        # Add Revenue Agent recommendations
+        revenue_actions = revenue_analysis.recommended_actions
+        for action in revenue_actions:
+            recommendations.append(f"Revenue Strategy: {action}")
+        
+        # Add collaboration-specific recommendations
+        for response in revenue_responses:
+            if response.get("status") == "completed":
+                response_type = response.get("response_type", "general")
+                if response_type == "pricing_strategy":
+                    recommendations.append("Collaboration Result: Tiered pricing strategy developed with Lead Agent insights")
+                elif response_type == "retention_strategy":
+                    recommendations.append("Collaboration Result: Targeted retention campaigns designed based on churn analysis")
+        
+        return recommendations
+
     def get_agent_status(self) -> Dict[str, Any]:
+        """Get status of all agents in the system"""
+        try:
+            # Get Lead Intelligence Agent status
+            lead_agent = create_lead_intelligence_agent()
+            lead_status = lead_agent.get_agent_status()
+            
+            # Get Revenue Optimization Agent status
+            revenue_agent = create_revenue_optimization_agent()
+            revenue_status = revenue_agent.get_agent_status()
+            
+            return {
+                "lead_intelligence_agent": {
+                    "name": "lead_intelligence_agent",
+                    "model": lead_status.get("llm_model", "unknown"),
+                    "status": lead_status.get("status", "unknown")
+                },
+                "revenue_optimization_agent": {
+                    "name": "revenue_optimization_agent", 
+                    "model": revenue_status.get("llm_model", "unknown"),
+                    "status": revenue_status.get("status", "unknown")
+                },
+                "system_status": "operational" if self.privacy_pipeline else "error"
+            }
+        except Exception as e:
+            logger.error(f"Failed to get agent status: {str(e)}")
+            return {
+                "error": str(e),
+                "system_status": "error"
+            }
         """Get current status of all agents"""
         return {
             "lead_intelligence_agent": {

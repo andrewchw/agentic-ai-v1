@@ -8,8 +8,18 @@ develop revenue optimization strategies.
 
 Perfect for demonstrating to stakeholders how agentic AI differs from 
 traditional single-model approaches.
-"""
-
+"    print("📊 Performance Metrics:")
+    print(f"   • Customers analyzed: {customer_count}")
+    print(f"   • Segments identified: {len(segments.get('segment_distribution', {}))}")
+    print(f"   • High-value leads: {lead_scores.get('high_value_count', 0)}")
+    
+    # Get delegation items from either collaboration or analysis results
+    if 'collaboration_results' in locals() and collaboration_results.get("collaboration_success", False):
+        delegation_count = collaboration_results.get("collaboration_summary", {}).get("total_opportunities_identified", 0)
+    else:
+        delegation_count = len(analysis_results.get("delegation_items", []))
+    
+    print(f"   • Delegation items: {delegation_count}")
 import os
 import sys
 import json
@@ -247,51 +257,112 @@ def run_demo():
         print(f"❌ Analysis failed: {str(e)}")
         return
     
-    # Step 5: Agent Collaboration Demo
-    print_banner("Step 5: Agent Collaboration", "-")
+    # Step 5: Real Agent Collaboration Demo
+    print_banner("Step 5: Real Agent Collaboration", "-")
     
-    # Show delegation items
-    delegation_items = analysis_results.get("delegation_items", [])
+    print_agent_conversation(
+        "System",
+        "Initiating real multi-agent collaboration..."
+    )
     
-    if delegation_items:
-        print_agent_conversation(
-            "Lead Intelligence Agent",
-            "I've identified several items that need Revenue Agent expertise..."
-        )
+    simulate_agent_thinking(1.0)
+    
+    try:
+        # Run actual agent collaboration
+        collaboration_results = system.run_collaborative_analysis(customer_data)
         
-        for item in delegation_items:
-            print(f"\n   📋 Delegation Item:")
-            print(f"      Type: {item.get('type', 'unknown')}")
-            print(f"      Priority: {item.get('priority', 'medium')}")
-            print(f"      Description: {item.get('description', 'No description')}")
+        if collaboration_results.get("collaboration_success", False):
+            print_agent_conversation(
+                "Lead Intelligence Agent",
+                "Analysis complete! I've identified key patterns and delegated strategic questions to Revenue Agent."
+            )
+            
+            # Show delegation items
+            delegation_items = collaboration_results.get("agent_collaboration", {}).get("delegation_items", [])
+            if delegation_items:
+                print(f"\n   📋 Delegated {len(delegation_items)} strategic items:")
+                for item in delegation_items[:3]:  # Show first 3
+                    print(f"      • {item.get('type', 'unknown')}: {item.get('description', 'No description')}")
+            
+            simulate_agent_thinking(2.0)
+            
+            print_agent_conversation(
+                "Revenue Optimization Agent",
+                "Received delegation requests and completed strategic analysis. Here are my recommendations:",
+                is_response=True
+            )
+            
+            # Show revenue responses
+            revenue_responses = collaboration_results.get("agent_collaboration", {}).get("revenue_responses", [])
+            if revenue_responses:
+                for response in revenue_responses[:2]:  # Show first 2 responses
+                    if response.get("status") == "completed":
+                        response_type = response.get("response_type", "general")
+                        print(f"      ✅ {response_type.replace('_', ' ').title()}: Strategy developed")
+            
+            # Show collaboration summary
+            summary = collaboration_results.get("collaboration_summary", {})
+            print(f"\n   🤝 Collaboration Summary:")
+            print(f"      • Lead Agent contributions: {summary.get('lead_agent_contributions', 0)}")
+            print(f"      • Revenue Agent responses: {summary.get('revenue_agent_responses', 0)}")
+            print(f"      • Opportunities identified: {summary.get('total_opportunities_identified', 0)}")
+            
+            print_agent_conversation(
+                "Lead Intelligence Agent",
+                "Perfect collaboration! Revenue Agent's strategies align with my customer analysis. Ready to implement.",
+                is_response=True
+            )
+            
+        else:
+            print("❌ Collaboration failed - falling back to simulated demo")
+            # Fall back to simulated collaboration as before
+            
+    except Exception as e:
+        print(f"⚠️  Real collaboration error: {str(e)}")
+        print("   Falling back to simulated collaboration demo")
         
-        # Simulate delegation
-        print_agent_conversation(
-            "Lead Intelligence Agent",
-            "Revenue Agent, I need your strategic input on these high-value opportunities."
-        )
+        # Original simulated collaboration code as fallback
+        delegation_items = analysis_results.get("delegation_items", [])
         
-        simulate_agent_thinking(1.5)
-        
-        print_agent_conversation(
-            "Revenue Optimization Agent (Simulated)",
-            "Received your analysis. Working on pricing strategies for premium segments...",
-            is_response=True
-        )
-        
-        simulate_agent_thinking(2.0)
-        
-        print_agent_conversation(
-            "Revenue Optimization Agent (Simulated)",
-            "Strategy complete! For high-value leads, recommend tiered offers: Premium+ plans with 20% discount for first 6 months.",
-            is_response=True
-        )
-        
-        print_agent_conversation(
-            "Lead Intelligence Agent",
-            "Perfect! Your pricing strategy aligns with my customer behavior analysis. Let's implement this approach.",
-            is_response=True
-        )
+        if delegation_items:
+            print_agent_conversation(
+                "Lead Intelligence Agent",
+                "I've identified several items that need Revenue Agent expertise..."
+            )
+            
+            for item in delegation_items:
+                print(f"\n   📋 Delegation Item:")
+                print(f"      Type: {item.get('type', 'unknown')}")
+                print(f"      Priority: {item.get('priority', 'medium')}")
+                print(f"      Description: {item.get('description', 'No description')}")
+            
+            # Simulate delegation
+            print_agent_conversation(
+                "Lead Intelligence Agent",
+                "Revenue Agent, I need your strategic input on these high-value opportunities."
+            )
+            
+            simulate_agent_thinking(1.5)
+            
+            print_agent_conversation(
+                "Revenue Optimization Agent (Simulated)",
+                "Received your analysis. Working on pricing strategies for premium segments...",
+                is_response=True
+            )
+            
+            simulate_agent_thinking(2.0)
+            
+            print_agent_conversation(
+                "Revenue Optimization Agent (Simulated)",
+                "Strategy complete! For high-value leads, recommend tiered offers: Premium+ plans with 20% discount for first 6 months.",
+                is_response=True
+            )
+            
+            print_agent_conversation(
+                "Lead Intelligence Agent",
+                "Perfect! Your pricing strategy aligns with my customer behavior analysis. Let's implement this approach.",
+                is_response=True
+            )
     
     # Step 6: Results Summary
     print_banner("Step 6: Collaboration Results", "-")
