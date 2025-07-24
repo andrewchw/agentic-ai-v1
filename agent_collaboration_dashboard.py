@@ -111,7 +111,7 @@ class AgentCollaborationDashboard:
     def check_agent_protocol_health(self) -> bool:
         """Check if Agent Protocol server is healthy."""
         try:
-            response = requests.get(f"{API_BASE}/health", timeout=5)
+            response = requests.get(f"{API_BASE}/agent/health", timeout=5)
             return response.status_code == 200
         except Exception as e:
             logger.warning(f"Agent Protocol health check failed: {e}")
@@ -120,7 +120,7 @@ class AgentCollaborationDashboard:
     def fetch_agent_tasks(self) -> List[Dict[str, Any]]:
         """Fetch tasks from Agent Protocol API."""
         try:
-            response = requests.get(f"{API_BASE}/tasks", timeout=10)
+            response = requests.get(f"{API_BASE}/agent/tasks", timeout=10)
             if response.status_code == 200:
                 tasks_data = response.json()
                 return tasks_data.get('tasks', [])
@@ -132,7 +132,7 @@ class AgentCollaborationDashboard:
     def fetch_task_details(self, task_id: str) -> Optional[Dict[str, Any]]:
         """Fetch detailed information for a specific task."""
         try:
-            response = requests.get(f"{API_BASE}/tasks/{task_id}", timeout=10)
+            response = requests.get(f"{API_BASE}/agent/tasks/{task_id}", timeout=10)
             if response.status_code == 200:
                 return response.json()
             return None
@@ -146,7 +146,7 @@ class AgentCollaborationDashboard:
             payload = {
                 "input": f"Task Type: {task_type}\nDescription: {description}\nSpecialty: Hong Kong Telecom Analysis"
             }
-            response = requests.post(f"{API_BASE}/tasks", json=payload, timeout=15)
+            response = requests.post(f"{API_BASE}/agent/tasks", json=payload, timeout=15)
             if response.status_code == 200:
                 task_data = response.json()
                 return task_data.get('task_id')
