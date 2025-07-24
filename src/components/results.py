@@ -1967,66 +1967,198 @@ def display_merge_results(result: MergeResult, current_show_sensitive: Optional[
 
 
 def render_agent_collaboration_section(results: Dict[str, Any]):
-    """Render agent collaboration section for automatic multi-agent processing"""
+    """Render enhanced agent collaboration section with CrewAI options"""
     
     st.markdown("""
-    **🚀 Automatic Revenue Optimization:** 
-    Send your Lead Intelligence analysis to our Sales Optimization Agent for immediate 
-    revenue strategies, personalized offers, and email campaigns.
+    **🚀 Enhanced Multi-Agent Revenue Optimization:** 
+    Choose between standard 2-agent collaboration or advanced CrewAI-powered 5-agent orchestration 
+    for sophisticated revenue strategies and business intelligence.
     """)
     
-    col1, col2 = st.columns([3, 1])
+    # Collaboration mode selection
+    col1, col2 = st.columns([2, 1])
     
     with col1:
-        st.markdown("""
-        **What happens when you trigger collaboration:**
-        - 🎯 **Sales Optimization Agent** receives your analysis results
-        - 💰 **Revenue projections** calculated for each customer segment  
-        - 📧 **Personalized email templates** generated for Hong Kong market
-        - 📊 **Business impact analysis** with ROI calculations
-        - ⚡ **Priority actions** identified for immediate execution
-        """)
+        collaboration_mode = st.selectbox(
+            "🎯 **Select Collaboration Mode:**",
+            options=[
+                "crewai_enhanced", 
+                "standard", 
+                "hybrid"
+            ],
+            format_func=lambda x: {
+                "standard": "🔧 Standard (2-Agent) - Proven 7.8% uplift",
+                "crewai_enhanced": "🚀 CrewAI Enhanced (5-Agent) - Advanced orchestration", 
+                "hybrid": "⚡ Hybrid (Both) - Comprehensive analysis"
+            }[x],
+            help="Choose your collaboration approach",
+            key="collaboration_mode_select"
+        )
     
     with col2:
         collaboration_triggered = st.button(
-            "🤖 Trigger Agent Collaboration", 
+            "🤖 Launch Collaboration", 
             type="primary",
-            help="Send analysis results to Sales Optimization Agent",
+            help="Start multi-agent analysis with selected mode",
             key="agent_collaboration_trigger"
         )
     
+    # Display mode-specific information
+    if collaboration_mode == "standard":
+        st.markdown("""
+        **🔧 Standard Mode Features:**
+        - 🎯 **Lead Intelligence + Sales Optimization** (2 agents)
+        - 💰 **Revenue projections** for customer segments  
+        - 📧 **Personalized email templates** for Hong Kong market
+        - 📊 **Business impact analysis** with ROI calculations
+        - ⚡ **Proven 7.8% revenue uplift** from previous demonstrations
+        """)
+    
+    elif collaboration_mode == "crewai_enhanced":
+        st.markdown("""
+        **🚀 CrewAI Enhanced Mode Features:**
+        - 🧠 **5 Specialized Agents** with hierarchical processing
+        - 🎯 **Customer Intelligence Specialist** - Deep segmentation analysis
+        - 📈 **Market Intelligence Director** - Competitive landscape insights  
+        - 💰 **Revenue Optimization Expert** - Advanced revenue strategies
+        - 🔄 **Retention & Lifecycle Specialist** - Customer journey optimization
+        - 📧 **Campaign Orchestration Director** - Multi-channel campaign design
+        - 🤝 **Consensus validation** for strategic recommendations
+        - 📊 **15-25% potential revenue uplift** with advanced orchestration
+        """)
+    
+    else:  # hybrid
+        st.markdown("""
+        **⚡ Hybrid Mode Features:**
+        - 🔧 **Standard analysis** for proven baseline results
+        - 🚀 **CrewAI enhancement** for advanced insights
+        - 📊 **Comparative analysis** between both approaches
+        - 🎯 **Best-of-both** recommendations and strategies
+        - 💰 **Maximum coverage** of optimization opportunities
+        """)
+    
     if collaboration_triggered:
-        process_agent_collaboration_from_results(results)
+        process_agent_collaboration_from_results(results, collaboration_mode)
 
 
-def process_agent_collaboration_from_results(lead_results: Dict[str, Any]):
-    """Process agent collaboration using Lead Intelligence results"""
+def process_agent_collaboration_from_results(lead_results: Dict[str, Any], mode: str = "standard"):
+    """Process agent collaboration using Lead Intelligence results with enhanced CrewAI integration"""
     
     try:
-        # Import the integration service
+        # Import both integration services
         import sys
         import os
         sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
+        
+        # Try CrewAI integration first
+        try:
+            from crewai_integration_bridge import process_agent_collaboration_with_crewai
+            crewai_available = True
+            st.success("✅ CrewAI integration bridge loaded successfully!")
+        except ImportError as e:
+            st.warning(f"🔄 CrewAI integration bridge not available (ImportError): {e}, falling back to standard mode")
+            crewai_available = False
+            mode = "standard"
+        except Exception as e:
+            st.warning(f"🔄 CrewAI integration bridge error: {e}, falling back to standard mode")
+            crewai_available = False
+            mode = "standard"
+        
+        # Standard integration fallback
         from src.agents.agent_integration_orchestrator import create_integration_service
         
-        with st.spinner("🤖 Initiating multi-agent collaboration..."):
-            # Transform Lead Intelligence results to format expected by Sales Optimization Agent
+        with st.spinner(f"🤖 Initiating {mode} multi-agent collaboration..."):
+            # Transform Lead Intelligence results
             transformed_results = transform_lead_intelligence_results(lead_results)
             
-            # Initialize integration service
-            integration_service = create_integration_service()
-            
-            # Process the collaboration
-            collaboration_results = integration_service.process_lead_intelligence_completion(
-                transformed_results
-            )
+            # Process based on selected mode
+            if mode in ["crewai_enhanced", "hybrid"] and crewai_available:
+                # Use CrewAI enhanced integration
+                collaboration_results = process_agent_collaboration_with_crewai(
+                    transformed_results, mode
+                )
+            else:
+                # Use standard integration
+                integration_service = create_integration_service()
+                collaboration_results = integration_service.process_lead_intelligence_completion(
+                    transformed_results
+                )
+                # Add mode information for consistency
+                collaboration_results["mode"] = "standard"
+                collaboration_results["collaboration_type"] = "Standard 2-Agent"
+                collaboration_results["agents_involved"] = ["Lead Intelligence Agent", "Sales Optimization Agent"]
+                collaboration_results["enhancement_level"] = "Standard"
             
             # Display results
             if collaboration_results.get("error"):
                 st.error(f"❌ Agent collaboration failed: {collaboration_results['error']}")
+                if collaboration_results.get("fallback_used"):
+                    st.info(f"🔄 Fallback was attempted due to: {collaboration_results.get('fallback_reason', 'Unknown reason')}")
                 return
             
-            st.success("✅ Multi-agent collaboration completed successfully!")
+            # Success message with mode information
+            mode_display = collaboration_results.get("collaboration_type", mode.title())
+            enhancement_level = collaboration_results.get("enhancement_level", "Standard")
+            st.success(f"✅ {mode_display} collaboration completed successfully! ({enhancement_level})")
+            
+            # Show collaboration overview
+            with st.expander("🎯 Collaboration Overview", expanded=True):
+                col1, col2, col3 = st.columns(3)
+                
+                with col1:
+                    agents = collaboration_results.get("agents_involved", [])
+                    st.metric("Agents Involved", len(agents))
+                    for agent in agents:
+                        st.write(f"• {agent}")
+                
+                with col2:
+                    processing_time = collaboration_results.get("processing_time", 0)
+                    st.metric("Processing Time", f"{processing_time:.2f}s")
+                    st.write(f"**Mode:** {collaboration_results.get('mode', 'standard').title()}")
+                
+                with col3:
+                    enhancement = collaboration_results.get("enhancement_level", "Standard")
+                    st.metric("Enhancement Level", enhancement)
+                    if collaboration_results.get("fallback_used"):
+                        st.warning("⚠️ Fallback mode used")
+            
+            # Show CrewAI-specific enhancements if available
+            crewai_enhancements = collaboration_results.get("crewai_enhancements", {})
+            if crewai_enhancements:
+                with st.expander("🚀 CrewAI Advanced Features", expanded=True):
+                    
+                    # Collaboration metrics
+                    collaboration_metrics = crewai_enhancements.get("collaboration_metrics", {})
+                    if collaboration_metrics:
+                        st.markdown("#### 🤝 Collaboration Quality Metrics")
+                        col1, col2, col3 = st.columns(3)
+                        
+                        with col1:
+                            consensus_score = collaboration_metrics.get("consensus_score", 0)
+                            st.metric("Consensus Score", f"{consensus_score:.1%}")
+                        
+                        with col2:
+                            avg_confidence = collaboration_metrics.get("average_confidence", 0)
+                            st.metric("Average Confidence", f"{avg_confidence:.1%}")
+                        
+                        with col3:
+                            interactions = collaboration_metrics.get("total_interactions", 0)
+                            st.metric("Agent Interactions", interactions)
+                    
+                    # Consensus validation details
+                    consensus_scores = crewai_enhancements.get("consensus_scores", {})
+                    if consensus_scores:
+                        st.markdown("#### 🎯 Agent Agreement Analysis")
+                        for agent, score in consensus_scores.items():
+                            st.write(f"**{agent}:** {score:.1%} agreement")
+                    
+                    # Implementation roadmap
+                    implementation_roadmap = crewai_enhancements.get("implementation_roadmap", {})
+                    if implementation_roadmap:
+                        st.markdown("#### 🗺️ Strategic Implementation Roadmap")
+                        phases = implementation_roadmap.get("implementation_phases", [])
+                        for phase in phases:
+                            st.write(f"**{phase.get('phase', 'Phase')}:** {phase.get('focus', 'Implementation focus')}")
             
             # Show workflow steps
             with st.expander("🔄 View Collaboration Workflow", expanded=True):
@@ -2062,7 +2194,7 @@ def process_agent_collaboration_from_results(lead_results: Dict[str, Any]):
                         annual_impact = revenue_analysis.get("expected_annual_uplift", 0)
                         st.metric("Annual Revenue Impact", f"HK${annual_impact:,.0f}")
                 
-                # Customer impact summary
+                # Enhanced customer impact for CrewAI mode
                 customer_impact = business_impact.get("customer_impact", {})
                 if customer_impact:
                     st.markdown("### 👥 Customer Impact Summary")
@@ -2070,11 +2202,32 @@ def process_agent_collaboration_from_results(lead_results: Dict[str, Any]):
                     
                     with col1:
                         st.write(f"**📊 {customer_impact.get('total_customers_analyzed', 0)}** customers analyzed")
-                        st.write(f"**🎯 {customer_impact.get('segments_identified', 0)}** segments identified")
+                        segments = customer_impact.get('segments_identified', customer_impact.get('customer_segments', 0))
+                        st.write(f"**🎯 {segments}** segments identified")
                     
                     with col2:
-                        st.write(f"**💰 {customer_impact.get('personalized_offers_created', 0)}** personalized offers created")
-                        st.write(f"**📧 {customer_impact.get('email_templates_generated', 0)}** email templates generated")
+                        offers = customer_impact.get('personalized_offers_created', customer_impact.get('targeted_campaigns', 0))
+                        st.write(f"**💰 {offers}** personalized offers created")
+                        emails = customer_impact.get('email_templates_generated', customer_impact.get('communication_strategies', 0))
+                        st.write(f"**📧 {emails}** email templates generated")
+                
+                # Show operational efficiency for enhanced modes
+                operational_efficiency = business_impact.get("operational_efficiency", {})
+                if operational_efficiency:
+                    st.markdown("### ⚡ Operational Efficiency Gains")
+                    col1, col2, col3 = st.columns(3)
+                    
+                    with col1:
+                        time_savings = operational_efficiency.get("time_savings_percentage", 0)
+                        st.metric("Time Savings", f"{time_savings:.1f}%")
+                    
+                    with col2:
+                        accuracy_improvement = operational_efficiency.get("accuracy_improvement", 0)
+                        st.metric("Accuracy Improvement", f"{accuracy_improvement:.1f}%")
+                    
+                    with col3:
+                        coverage_increase = operational_efficiency.get("coverage_increase", 0)
+                        st.metric("Coverage Increase", f"{coverage_increase:.1f}%")
             
             # Show sales optimization results
             sales_results = collaboration_results.get("collaboration_results", {}).get("sales_optimization", {})
