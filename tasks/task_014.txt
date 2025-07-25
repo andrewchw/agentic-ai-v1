@@ -1,6 +1,6 @@
 # Task ID: 14
 # Title: Security and Compliance Features
-# Status: in-progress
+# Status: deferred
 # Dependencies: 13
 # Priority: medium
 # Description: Production security validation and compliance verification for multi-agent systems, reflecting current built-in security features, recent validation results, and remaining enterprise requirements.

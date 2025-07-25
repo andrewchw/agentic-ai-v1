@@ -15,8 +15,12 @@ from pathlib import Path
 project_root = Path(__file__).parent
 sys.path.insert(0, str(project_root))
 
-# Set environment variables
-os.environ["OPENROUTER_API_KEY"] = "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"
+# Check for environment variables - DO NOT hardcode API keys
+if not os.environ.get("OPENROUTER_API_KEY"):
+    print("❌ OPENROUTER_API_KEY not found in environment variables")
+    print("Please set: $env:OPENROUTER_API_KEY='your-api-key-here'")
+    sys.exit(1)
+    
 os.environ["LITELLM_LOG"] = "DEBUG"
 os.environ["ENABLE_PREMIUM_BACKUP"] = "true"
 

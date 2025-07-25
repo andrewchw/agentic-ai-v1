@@ -226,9 +226,21 @@ class CrewAIIntegrationBridge:
         revenue_insights = lead_results.get("revenue_insights", {})
         churn_analysis = lead_results.get("churn_analysis", {})
         
+        # Calculate actual customer count from segments or use uploaded data count
+        actual_customer_count = 0
+        if customer_segments:
+            # Sum up customers from all segments
+            for segment_name, segment_data in customer_segments.items():
+                if isinstance(segment_data, dict) and "count" in segment_data:
+                    actual_customer_count += segment_data["count"]
+        
+        # Use revenue insights total if segments don't provide count
+        if actual_customer_count == 0:
+            actual_customer_count = revenue_insights.get("total_customers", 100)  # Default to 100 (user's uploaded data)
+        
         # Build CrewAI-compatible data structure
         crewai_data = {
-            "total_customers": revenue_insights.get("total_customers", 190),
+            "total_customers": actual_customer_count,
             "fields": ["customer_id", "segment", "arpu", "churn_risk", "behavior_pattern"],
             "timestamp": datetime.now().isoformat(),
             "market_context": "Hong Kong telecom competitive environment",
@@ -237,10 +249,11 @@ class CrewAIIntegrationBridge:
             "segment_analysis": customer_segments,
             "revenue_baseline": revenue_insights.get("monthly_revenue", 130000),
             "churn_indicators": churn_analysis,
-            "original_recommendations": lead_results.get("original_recommendations_count", 0)
+            "original_recommendations": lead_results.get("original_recommendations_count", 0),
+            "original_data_source": "lead_intelligence_analysis"
         }
         
-        logger.info(f"Transformed lead intelligence data for CrewAI processing: {crewai_data['total_customers']} customers")
+        logger.info(f"Transformed lead intelligence data for CrewAI processing: {crewai_data['total_customers']} customers from {len(customer_segments)} segments")
         return crewai_data
     
     def _transform_crewai_results(self, crewai_results: Dict[str, Any]) -> Dict[str, Any]:

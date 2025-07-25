@@ -14,8 +14,11 @@ from pathlib import Path
 project_root = Path(__file__).parent
 sys.path.insert(0, str(project_root))
 
-# Set environment variables
-os.environ["OPENROUTER_API_KEY"] = "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"
+# Check for environment variables - DO NOT hardcode API keys
+if not os.environ.get("OPENROUTER_API_KEY"):
+    print("❌ OPENROUTER_API_KEY not found in environment variables")
+    print("Please set: $env:OPENROUTER_API_KEY='your-api-key-here'")
+    sys.exit(1)
 
 def get_openrouter_models():
     """Get all available models from OpenRouter API"""

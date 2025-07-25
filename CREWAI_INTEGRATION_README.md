@@ -16,8 +16,8 @@ The revolutionary 5-agent CrewAI system is now fully operational with **zero AI 
 # Activate venv
 .\venv\Scripts\Activate.ps1
 
-# Set API key
-$env:OPENROUTER_API_KEY="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"
+# Set API key (REPLACE with your actual API key)
+$env:OPENROUTER_API_KEY="your-openrouter-api-key-here"
 
 # Launch Streamlit
 streamlit run src/main.py
