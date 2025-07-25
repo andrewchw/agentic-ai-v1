@@ -2324,6 +2324,136 @@ def process_agent_collaboration_from_results(lead_results: Dict[str, Any], mode:
                         
                         st.markdown("---")
             
+            # Display concrete deliverables if available
+            deliverables = collaboration_results.get('deliverables')
+            if deliverables:
+                st.markdown("### 📦 **Generated Deliverables**")
+                
+                # Deliverables summary metrics
+                summary = deliverables.get('summary_count', {})
+                col1, col2, col3, col4 = st.columns(4)
+                
+                with col1:
+                    st.metric(
+                        label="🎁 Personalized Offers",
+                        value=summary.get('offers_created', 0),
+                        help="Custom offers created for individual customers"
+                    )
+                
+                with col2:
+                    st.metric(
+                        label="📧 Email Templates", 
+                        value=summary.get('emails_generated', 0),
+                        help="Ready-to-use email marketing templates"
+                    )
+                
+                with col3:
+                    st.metric(
+                        label="📋 Recommendations",
+                        value=summary.get('recommendations_made', 0),
+                        help="Actionable customer recommendations"
+                    )
+                
+                with col4:
+                    st.metric(
+                        label="📁 Export Files",
+                        value=summary.get('files_exported', 0),
+                        help="Files ready for download/export"
+                    )
+                
+                # Show personalized offers
+                offers = deliverables.get('personalized_offers', [])
+                if offers:
+                    st.markdown("#### 🎁 **Personalized Customer Offers**")
+                    
+                    # Create tabs for different offer types
+                    offer_types = list(set(offer['offer_type'] for offer in offers))
+                    tabs = st.tabs(offer_types)
+                    
+                    for i, offer_type in enumerate(offer_types):
+                        with tabs[i]:
+                            type_offers = [offer for offer in offers if offer['offer_type'] == offer_type]
+                            
+                            for offer in type_offers[:5]:  # Show first 5 offers per type
+                                with st.expander(f"🎯 {offer['customer_name']} - {offer['title']}", expanded=False):
+                                    col1, col2 = st.columns([2, 1])
+                                    
+                                    with col1:
+                                        st.write(f"**Customer ID:** {offer['customer_id']}")
+                                        st.write(f"**Current Plan:** {offer['current_plan']}")
+                                        st.write(f"**Recommended:** {offer['recommended_plan']}")
+                                        st.write(f"**Offer:** {offer['description']}")
+                                        st.write(f"**Discount:** {offer['discount']}")
+                                    
+                                    with col2:
+                                        st.metric("💰 Monthly Value", offer['estimated_value'])
+                                        st.metric("📈 Annual Impact", offer['revenue_impact'])
+                                        st.metric("🎯 Confidence", f"{offer['confidence']:.0%}")
+                                        st.write(f"**Expires:** {offer['expiry_date']}")
+                
+                # Show email templates
+                templates = deliverables.get('email_templates', [])
+                if templates:
+                    st.markdown("#### 📧 **Email Marketing Templates**")
+                    
+                    for template in templates:
+                        with st.expander(f"📨 {template['template_name']} - {template['template_id']}", expanded=False):
+                            col1, col2 = st.columns([3, 1])
+                            
+                            with col1:
+                                st.markdown(f"**Subject:** {template['subject']}")
+                                st.markdown("**Email Body:**")
+                                st.text_area(
+                                    "template_body",
+                                    value=template['body'],
+                                    height=200,
+                                    key=f"template_{template['template_id']}",
+                                    label_visibility="collapsed"
+                                )
+                            
+                            with col2:
+                                st.write(f"**Target:** {template['target_audience']}")
+                                st.write(f"**Offer Type:** {template['offer_type']}")
+                                st.write("**Personalization Fields:**")
+                                for field in template['personalization_fields']:
+                                    st.write(f"• {field}")
+                
+                # Show customer recommendations
+                recommendations = deliverables.get('customer_recommendations', [])
+                if recommendations:
+                    st.markdown("#### 📋 **Customer Action Recommendations**")
+                    
+                    # Group by priority
+                    high_priority = [r for r in recommendations if r['priority'] == 'High']
+                    medium_priority = [r for r in recommendations if r['priority'] == 'Medium']
+                    
+                    if high_priority:
+                        st.markdown("**🔴 High Priority Actions**")
+                        for rec in high_priority[:3]:  # Show top 3 high priority
+                            with st.container():
+                                col1, col2, col3 = st.columns([2, 2, 1])
+                                
+                                with col1:
+                                    st.write(f"**Customer:** {rec['customer_name']}")
+                                    st.write(f"**Action:** {rec['action']}")
+                                    st.write(f"**Timeline:** {rec['timeline']}")
+                                
+                                with col2:
+                                    st.write(f"**Expected:** {rec['expected_outcome']}")
+                                    st.write("**Talking Points:**")
+                                    for point in rec['talking_points'][:2]:
+                                        st.write(f"• {point}")
+                                
+                                with col3:
+                                    st.metric("🎯 Success Rate", rec['success_probability'])
+                                
+                                st.markdown("---")
+                    
+                    if medium_priority:
+                        with st.expander(f"🟡 Medium Priority Actions ({len(medium_priority)} customers)", expanded=False):
+                            for rec in medium_priority[:5]:  # Show first 5 medium priority
+                                st.write(f"**{rec['customer_name']}** - {rec['action']} - Expected: {rec['expected_outcome']}")
+            
             # Show next steps
             st.markdown("### 🚀 **Next Steps**")
             st.info("""
