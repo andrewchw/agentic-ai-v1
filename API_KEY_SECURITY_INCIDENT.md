@@ -134,3 +134,27 @@ Before deployment:
 ## 🔐 Security is now ENTERPRISE-GRADE
 
 The Agentic AI Revenue Assistant now implements enterprise-level security practices for API key management, ensuring this incident cannot recur.
+
+---
+
+## 🎯 BONUS FEATURE ADDED: User-Configurable Customer Analysis
+
+**New Feature:** Added configurable customer analysis limits to address user feedback
+
+**Enhancement Details:**
+- ✅ **User Control**: Select 1-100 customers to analyze (previously hardcoded to 5)
+- ✅ **Smart Defaults**: Defaults to 5 for backwards compatibility and quick testing
+- ✅ **Performance Guidance**: Built-in time estimates and recommendations
+- ✅ **Flexible Processing**: From quick 5-customer insights to comprehensive 100-customer analysis
+- ✅ **UI Integration**: Seamlessly integrated into upload workflow
+
+**Files Modified:**
+- ✅ `src/components/upload.py` - Added analysis configuration section with customer selector
+- ✅ `src/components/results.py` - Updated processing logic to respect user settings
+- ✅ `test_customer_limit_config.py` - Validation tests for new functionality
+
+**User Experience Improvement:**
+- **Before**: Fixed 5-customer limit with no user control
+- **After**: User selects 1-100 customers with intelligent time estimates and recommendations
+
+This addresses the user's question: *"why only analyse only 5 customers out of the 100 customer records by default and no where to let me select to analyse more customer records at the same time."*

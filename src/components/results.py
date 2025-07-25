@@ -615,9 +615,17 @@ def generate_recommendations_from_real_data(df: pd.DataFrame):
         
         # If we have real customer data, create personalized recommendations
         if not df.empty and len(df) > 0:
-            # Process up to 5 customers for recommendations
-            real_customers = df.head(min(5, len(df)))
-            st.write(f"🎯 Processing {len(real_customers)} customers for recommendations")
+            # Get user-configured customer limit from session state, default to 5 for backwards compatibility
+            customers_to_analyze = st.session_state.get("customers_to_analyze", 5)
+            
+            # Process up to the specified number of customers for recommendations
+            actual_customers_to_process = min(customers_to_analyze, len(df))
+            real_customers = df.head(actual_customers_to_process)
+            
+            st.write(f"🎯 Processing {len(real_customers)} customers for recommendations (selected: {customers_to_analyze}, available: {len(df)})")
+            
+            if customers_to_analyze > len(df):
+                st.info(f"📊 Note: You selected {customers_to_analyze} customers, but only {len(df)} are available in your dataset.")
             
             for i, (_, row) in enumerate(real_customers.iterrows()):
                 try:
@@ -2188,7 +2196,12 @@ def process_agent_collaboration_from_results(lead_results: Dict[str, Any], mode:
                     
                     with col3:
                         uplift = revenue_analysis.get("uplift_percentage", 0)
-                        st.metric("Revenue Uplift", f"{uplift:.1f}%", delta=f"+{uplift:.1f}%")
+                        # Ensure numeric conversion for uplift
+                        try:
+                            uplift_val = float(uplift) if uplift else 0.0
+                        except (ValueError, TypeError):
+                            uplift_val = 0.0
+                        st.metric("Revenue Uplift", f"{uplift_val:.1f}%", delta=f"+{uplift_val:.1f}%")
                     
                     with col4:
                         annual_impact = revenue_analysis.get("expected_annual_uplift", 0)
@@ -2219,15 +2232,30 @@ def process_agent_collaboration_from_results(lead_results: Dict[str, Any], mode:
                     
                     with col1:
                         time_savings = operational_efficiency.get("time_savings_percentage", 0)
-                        st.metric("Time Savings", f"{time_savings:.1f}%")
+                        # Ensure numeric conversion
+                        try:
+                            time_savings_val = float(time_savings) if time_savings else 0.0
+                        except (ValueError, TypeError):
+                            time_savings_val = 0.0
+                        st.metric("Time Savings", f"{time_savings_val:.1f}%")
                     
                     with col2:
                         accuracy_improvement = operational_efficiency.get("accuracy_improvement", 0)
-                        st.metric("Accuracy Improvement", f"{accuracy_improvement:.1f}%")
+                        # Ensure numeric conversion
+                        try:
+                            accuracy_val = float(accuracy_improvement) if accuracy_improvement else 0.0
+                        except (ValueError, TypeError):
+                            accuracy_val = 0.0
+                        st.metric("Accuracy Improvement", f"{accuracy_val:.1f}%")
                     
                     with col3:
                         coverage_increase = operational_efficiency.get("coverage_increase", 0)
-                        st.metric("Coverage Increase", f"{coverage_increase:.1f}%")
+                        # Ensure numeric conversion
+                        try:
+                            coverage_val = float(coverage_increase) if coverage_increase else 0.0
+                        except (ValueError, TypeError):
+                            coverage_val = 0.0
+                        st.metric("Coverage Increase", f"{coverage_val:.1f}%")
             
             # Show sales optimization results
             sales_results = collaboration_results.get("collaboration_results", {}).get("sales_optimization", {})

@@ -971,6 +971,58 @@ def render_upload_page():
             
             st.info(catalog_info)
 
+            # Analysis Configuration Section
+            st.markdown("---")
+            st.markdown("### ⚙️ Analysis Configuration")
+            
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                # Get current customer count for reference
+                if isinstance(customer_data, dict) and "original_data" in customer_data:
+                    total_customers = len(customer_data["original_data"])
+                else:
+                    total_customers = len(customer_data) if isinstance(customer_data, pd.DataFrame) else 0
+                
+                st.info(f"📊 **Total customers available:** {total_customers}")
+                
+                # Customer analysis limit selector
+                max_customers = min(total_customers, 100)  # Cap at 100 for performance
+                default_customers = min(total_customers, 5)  # Default to 5 for backwards compatibility
+                
+                customers_to_analyze = st.number_input(
+                    "🎯 **Customers to analyze**",
+                    min_value=1,
+                    max_value=max_customers,
+                    value=default_customers,
+                    step=1,
+                    help=f"Select how many customers to analyze (1-{max_customers}). More customers = more comprehensive insights but longer processing time."
+                )
+                
+                # Store in session state for use in analysis
+                st.session_state["customers_to_analyze"] = customers_to_analyze
+                
+            with col2:
+                st.markdown("**📈 Processing Estimates:**")
+                if customers_to_analyze <= 5:
+                    time_estimate = "< 1 minute"
+                    recommendation = "✅ **Recommended** - Quick insights"
+                elif customers_to_analyze <= 20:
+                    time_estimate = "1-3 minutes" 
+                    recommendation = "⚡ **Balanced** - Good depth vs speed"
+                elif customers_to_analyze <= 50:
+                    time_estimate = "3-8 minutes"
+                    recommendation = "🔍 **Comprehensive** - Deep insights"
+                else:
+                    time_estimate = "8-15 minutes"
+                    recommendation = "🏢 **Enterprise** - Maximum coverage"
+                
+                st.caption(f"⏱️ Estimated time: {time_estimate}")
+                st.caption(recommendation)
+                
+                if customers_to_analyze > 20:
+                    st.warning("⚠️ Large datasets may take longer to process")
+
             if st.button("🚀 Proceed to Secure Analysis", type="primary"):
                 st.info("✅ Ready for AI analysis! All PII has been securely processed:")
                 analysis_features = [

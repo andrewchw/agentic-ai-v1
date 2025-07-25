@@ -41,8 +41,8 @@
       "complex"
     ],
     "rate_limit_info": "VERIFIED WORKING - Most reliable 70B model, excellent stability",
-    "last_used": "2025-07-25T12:27:51.070040",
-    "failure_count": 2,
+    "last_used": "2025-07-25T16:37:23.991928",
+    "failure_count": 0,
     "last_failure": "2025-07-25T16:24:52.363715",
     "is_available": true
   },
@@ -64,8 +64,8 @@
       "analysis"
     ],
     "rate_limit_info": "VERIFIED WORKING - Latest Mistral model with excellent reliability",
-    "last_used": "2025-07-25T15:07:52.149902",
-    "failure_count": 3,
+    "last_used": "2025-07-25T17:05:48.822621",
+    "failure_count": 0,
     "last_failure": "2025-07-25T16:24:50.852717",
     "is_available": true
   },
