@@ -28,7 +28,7 @@ DASHBOARD_PORT = 8501
 def check_agent_protocol_health():
     """Check if Agent Protocol server is running."""
     try:
-        response = requests.get(f"{AGENT_PROTOCOL_URL}/ap/v1/health", timeout=5)
+        response = requests.get(f"{AGENT_PROTOCOL_URL}/ap/v1/agent/health", timeout=5)
         return response.status_code == 200
     except:
         return False

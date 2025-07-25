@@ -30,10 +30,16 @@ from collections import defaultdict
 # Import enhanced logging
 try:
     from .api_logger import get_api_logger
-
     ENHANCED_LOGGING_AVAILABLE = True
 except ImportError:
     ENHANCED_LOGGING_AVAILABLE = False
+
+# Import smart model management
+try:
+    from .free_models_manager import get_free_models_manager, handle_api_failure, handle_api_success
+    SMART_MODELS_AVAILABLE = True
+except ImportError:
+    SMART_MODELS_AVAILABLE = False
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -95,7 +101,7 @@ class OpenRouterConfig:
     
     api_key: str
     base_url: str = "https://openrouter.ai/api/v1"
-    default_model: str = "deepseek/deepseek-chat"
+    default_model: str = "qwen/qwen3-coder:free"  # FREE model without provider prefix for direct API
     max_tokens: int = 4000
     temperature: float = 0.7
     timeout: int = 30
@@ -232,6 +238,15 @@ class OpenRouterClient:
             if enable_enhanced_logging:
                 logger.warning("Enhanced logging requested but not available")
         
+        # Smart model management setup
+        self.smart_models_enabled = SMART_MODELS_AVAILABLE
+        if self.smart_models_enabled:
+            self.models_manager = get_free_models_manager()
+            logger.info("Smart model management enabled")
+        else:
+            self.models_manager = None
+            logger.warning("Smart model management not available")
+        
         # Request tracking
         self.request_count = 0
         self.total_tokens_used = 0
@@ -249,7 +264,7 @@ class OpenRouterClient:
         
         return OpenRouterConfig(
             api_key=api_key,
-            default_model=os.getenv("OPENROUTER_MODEL", "deepseek/deepseek-chat"),
+            default_model=os.getenv("OPENROUTER_MODEL", "openrouter/qwen/qwen3-coder:free"),  # Changed to FREE model with provider prefix
             max_tokens=int(os.getenv("OPENROUTER_MAX_TOKENS", "4000")),
             temperature=float(os.getenv("OPENROUTER_TEMPERATURE", "0.7")),
             timeout=int(os.getenv("OPENROUTER_TIMEOUT", "30")),
@@ -407,16 +422,18 @@ class OpenRouterClient:
         model: Optional[str] = None,
         max_tokens: Optional[int] = None,
         temperature: Optional[float] = None,
+        use_case: str = "general",
         **kwargs,
     ) -> APIResponse:
         """
-        Generate text completion using OpenRouter API.
+        Generate text completion using OpenRouter API with smart model selection.
         
         Args:
             prompt: Input text prompt
-            model: Model to use (defaults to configured model)
+            model: Model to use (defaults to smart model selection)
             max_tokens: Maximum tokens to generate
             temperature: Sampling temperature
+            use_case: Type of task for smart model selection ("analysis", "creative", "general", etc.)
             **kwargs: Additional parameters for the API
         
         Returns:
@@ -427,9 +444,16 @@ class OpenRouterClient:
         try:
             self._wait_for_rate_limit()
             
+            # Use smart model selection if available and no specific model requested
+            if model is None and self.smart_models_enabled:
+                model = self.models_manager.get_model_for_openrouter_client(use_case)
+                logger.debug(f"Smart model selection chose: {model} for use case: {use_case}")
+            elif model is None:
+                model = self.config.default_model
+            
             # Prepare request payload
             payload = {
-                "model": model or self.config.default_model,
+                "model": model,
                 "messages": [{"role": "user", "content": prompt}],
                 "max_tokens": max_tokens or self.config.max_tokens,
                 "temperature": temperature if temperature is not None else self.config.temperature,
@@ -469,6 +493,10 @@ class OpenRouterClient:
                         request_id=request_id, status_code=response.status_code, response_data=data
                     )
                 
+                # Smart model management - handle success
+                if self.smart_models_enabled:
+                    handle_api_success(model)
+                
                 logger.info(f"Completion successful. Tokens used: {tokens_used}")
                 
                 return APIResponse(
@@ -487,6 +515,11 @@ class OpenRouterClient:
                         request_id=request_id, status_code=response.status_code, error_message=error_msg
                     )
                 
+                # Smart model management - handle failure
+                if self.smart_models_enabled:
+                    error_type = "rate_limit" if response.status_code == 429 else "api_error"
+                    handle_api_failure(model, error_type)
+                
                 logger.error(error_msg)
                 
                 return APIResponse(success=False, error=error_msg, request_id=response.headers.get("x-request-id"))
@@ -499,6 +532,10 @@ class OpenRouterClient:
                 self.api_logger.log_response(
                     request_id=request_id, status_code=0, error_message=error_msg  # Use 0 for connection errors
                 )
+            
+            # Smart model management - handle connection failure
+            if self.smart_models_enabled:
+                handle_api_failure(model, "connection_error")
             
             logger.error(error_msg)
             
@@ -1248,7 +1285,7 @@ def create_client(api_key: Optional[str] = None, model: Optional[str] = None) ->
     config = None
     if api_key or model:
         config = OpenRouterConfig(
-            api_key=api_key or os.getenv("OPENROUTER_API_KEY", ""), default_model=model or "deepseek/deepseek-chat"
+            api_key=api_key or os.getenv("OPENROUTER_API_KEY", ""), default_model=model or "openrouter/qwen/qwen3-coder:free"  # Changed to FREE model with provider prefix
         )
     
     return OpenRouterClient(config)

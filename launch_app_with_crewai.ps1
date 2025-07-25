@@ -8,9 +8,19 @@ Write-Host "📁 Working Directory: $(Get-Location)" -ForegroundColor Cyan
 Write-Host "🔧 Activating virtual environment..." -ForegroundColor Yellow
 .\venv\Scripts\Activate.ps1
 
-# Set OpenRouter API key for CrewAI integration
-Write-Host "🔑 Setting OpenRouter API key for CrewAI..." -ForegroundColor Yellow
-$env:OPENROUTER_API_KEY="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"
+# Set OpenRouter API key for CrewAI integration (load from .env file)
+Write-Host "🔑 Loading OpenRouter API key from .env file..." -ForegroundColor Yellow
+# Load environment variables from .env file
+if (Test-Path ".env") {
+    Get-Content ".env" | ForEach-Object {
+        if ($_ -match "^OPENROUTER_API_KEY=(.+)$") {
+            $env:OPENROUTER_API_KEY = $Matches[1]
+            Write-Host "✅ OpenRouter API key loaded from .env file" -ForegroundColor Green
+        }
+    }
+} else {
+    Write-Host "⚠️  .env file not found - please ensure OPENROUTER_API_KEY is set" -ForegroundColor Yellow
+}
 
 # Verify CrewAI installation
 Write-Host "🧪 Verifying CrewAI installation..." -ForegroundColor Yellow

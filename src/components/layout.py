@@ -6,6 +6,13 @@ Handles page configuration, header, sidebar, and Three HK branding
 import streamlit as st
 from config.app_config import config
 
+# Import model selection component
+try:
+    from src.components.model_selection import render_model_selection_sidebar, init_model_selection_state
+    MODEL_SELECTION_AVAILABLE = True
+except ImportError:
+    MODEL_SELECTION_AVAILABLE = False
+
 
 def setup_page_config():
     """Configure the Streamlit page settings"""
@@ -71,6 +78,11 @@ def render_header():
 
 def render_sidebar():
     """Render the sidebar navigation and return selected page"""
+    
+    # Initialize model selection state
+    if MODEL_SELECTION_AVAILABLE:
+        init_model_selection_state()
+    
     with st.sidebar:
         st.markdown(f"### {config.APP_NAME}")
         st.markdown(f"**Version:** {config.APP_VERSION}")
@@ -96,6 +108,10 @@ def render_sidebar():
         if page != st.session_state.current_page:
             st.session_state.current_page = page
             st.rerun()
+
+        # Add model selection component
+        if MODEL_SELECTION_AVAILABLE:
+            render_model_selection_sidebar()
 
         st.markdown("---")
 

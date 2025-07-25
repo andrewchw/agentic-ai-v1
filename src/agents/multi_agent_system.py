@@ -75,7 +75,7 @@ class MultiAgentRevenueSystem:
             You excel at identifying patterns in customer behavior, predicting churn risk, and scoring lead quality.
             Your expertise includes customer segmentation, lifetime value calculation, and competitive analysis.
             You work closely with business strategists to ensure data insights translate into actionable revenue opportunities.""",
-            llm_model="deepseek/deepseek-chat",
+            llm_model="qwen/qwen3-coder:free",  # Changed to FREE model
             temperature=0.2  # Lower temperature for analytical tasks
         )
         
@@ -87,7 +87,7 @@ class MultiAgentRevenueSystem:
             You specialize in pricing optimization, offer matching, and retention strategies for Three HK.
             Your knowledge includes competitive positioning, market trends, and customer psychology.
             You collaborate with data analysts to transform insights into profitable business actions.""",
-            llm_model="meta-llama/llama-3.1-8b-instruct:free",
+            llm_model="mistralai/mistral-7b-instruct:free",  # Use working model
             temperature=0.4  # Moderate temperature for strategic thinking
         )
         

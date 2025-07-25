@@ -44,6 +44,15 @@ logger = logging.getLogger(__name__)
 # Add src to path for imports
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 
+# Import model selection components
+from src.components.model_selection import (
+    render_model_selection_sidebar, 
+    render_model_status_page,
+    init_model_selection_state,
+    should_show_model_status,
+    hide_model_status
+)
+
 # Agent Protocol API Configuration
 AGENT_PROTOCOL_URL = "http://127.0.0.1:8080"
 API_BASE = f"{AGENT_PROTOCOL_URL}/ap/v1"
@@ -65,11 +74,11 @@ class AgentCollaborationDashboard:
                 'last_update': datetime.now()
             }
         
-        # Define agent types and their specializations
+        # Define agent types and their specializations (Updated for Llama 3.3 70B)
         self.agent_types = {
             'lead_intelligence': {
                 'name': 'Lead Intelligence Agent',
-                'model': 'DeepSeek LLM',
+                'model': 'Llama 3.3 70B (Most Reliable)',
                 'specialization': 'Data Analysis & Pattern Recognition',
                 'color': '#1f77b4',
                 'capabilities': [
@@ -82,7 +91,7 @@ class AgentCollaborationDashboard:
             },
             'revenue_optimization': {
                 'name': 'Revenue Optimization Agent',
-                'model': 'Llama3 LLM',
+                'model': 'Mistral Small 3.2 24B',
                 'specialization': 'Business Strategy & Optimization',
                 'color': '#ff7f0e',
                 'capabilities': [
@@ -123,7 +132,19 @@ class AgentCollaborationDashboard:
             response = requests.get(f"{API_BASE}/agent/tasks", timeout=10)
             if response.status_code == 200:
                 tasks_data = response.json()
-                return tasks_data.get('tasks', [])
+                # API returns a list directly, not a dict with 'tasks' key
+                if isinstance(tasks_data, list):
+                    # Ensure each task is a dictionary
+                    valid_tasks = []
+                    for task in tasks_data:
+                        if isinstance(task, dict):
+                            valid_tasks.append(task)
+                        else:
+                            # Convert to dict if it's not already
+                            logger.warning(f"Task is not a dict: {type(task)} - {task}")
+                    return valid_tasks
+                else:
+                    return tasks_data.get('tasks', []) if hasattr(tasks_data, 'get') else []
             return []
         except Exception as e:
             logger.error(f"Failed to fetch tasks: {e}")
@@ -146,11 +167,19 @@ class AgentCollaborationDashboard:
             payload = {
                 "input": f"Task Type: {task_type}\nDescription: {description}\nSpecialty: Hong Kong Telecom Analysis"
             }
+            logger.info(f"Creating demo task: {task_type} - {description}")
+            
             response = requests.post(f"{API_BASE}/agent/tasks", json=payload, timeout=15)
+            logger.info(f"Agent Protocol response: {response.status_code}")
+            
             if response.status_code == 200:
                 task_data = response.json()
-                return task_data.get('task_id')
-            return None
+                task_id = task_data.get('task_id')
+                logger.info(f"Demo task created successfully: {task_id}")
+                return task_id
+            else:
+                logger.error(f"Failed to create demo task: HTTP {response.status_code} - {response.text}")
+                return None
         except Exception as e:
             logger.error(f"Failed to create demo task: {e}")
             return None
@@ -162,7 +191,23 @@ class AgentCollaborationDashboard:
         response_times = []
         collaboration_patterns = []
         
+        # Handle empty tasks list
+        if not tasks:
+            return {
+                'interactions': interactions,
+                'agent_usage': agent_usage,
+                'avg_response_time': 0,
+                'total_tasks': 0,
+                'completed_tasks': 0,
+                'collaboration_patterns': collaboration_patterns
+            }
+        
         for task in tasks:
+            # Ensure task is a dictionary
+            if not isinstance(task, dict):
+                logger.warning(f"Skipping non-dict task: {type(task)} - {task}")
+                continue
+                
             if task.get('status') == 'completed':
                 # Determine agent type based on task content
                 task_input = task.get('input', '').lower()
@@ -184,7 +229,8 @@ class AgentCollaborationDashboard:
                         updated_time = datetime.fromisoformat(updated_at.replace('Z', '+00:00'))
                         response_time = (updated_time - created_time).total_seconds()
                         response_times.append(response_time)
-                    except:
+                    except Exception as e:
+                        logger.debug(f"Failed to parse dates for task {task.get('task_id', 'unknown')}: {e}")
                         pass
                 
                 # Record interaction
@@ -201,7 +247,7 @@ class AgentCollaborationDashboard:
             'agent_usage': agent_usage,
             'avg_response_time': sum(response_times) / len(response_times) if response_times else 0,
             'total_tasks': len(tasks),
-            'completed_tasks': len([t for t in tasks if t.get('status') == 'completed']),
+            'completed_tasks': len([t for t in tasks if isinstance(t, dict) and t.get('status') == 'completed']),
             'collaboration_patterns': collaboration_patterns
         }
     
@@ -268,14 +314,27 @@ class AgentCollaborationDashboard:
         if st.button("Execute Demo Task"):
             task_type, description = demo_scenarios[selected_scenario]
             with st.spinner(f"Creating {task_type} demo task..."):
-                task_id = self.create_demo_task(task_type, description)
-                if task_id:
-                    st.success(f"✅ Demo task created: {task_id}")
-                    time.sleep(2)  # Allow task to process
-                    self.refresh_dashboard_data()
-                    st.rerun()
-                else:
-                    st.error("❌ Failed to create demo task")
+                try:
+                    task_id = self.create_demo_task(task_type, description)
+                    if task_id:
+                        st.success(f"✅ Demo task created successfully!")
+                        st.info(f"📋 **Task ID**: `{task_id}`")
+                        st.info(f"🤖 **Agent**: {task_type.replace('_', ' ').title()}")
+                        st.info(f"📝 **Description**: {description}")
+                        
+                        # Clear cache and refresh data
+                        if 'dashboard_data' in st.session_state:
+                            del st.session_state.dashboard_data
+                        
+                        time.sleep(1)  # Allow task to process
+                        st.balloons()  # Visual feedback
+                        st.rerun()
+                    else:
+                        st.error("❌ Failed to create demo task - no task ID returned")
+                        st.info("💡 Check if the Agent Protocol server is running on port 8080")
+                except Exception as e:
+                    st.error(f"❌ Error creating demo task: {str(e)}")
+                    st.info("🔧 Debug info: Check Agent Protocol server connection")
     
     def render_agent_overview(self):
         """Render agent overview section."""
@@ -391,15 +450,103 @@ class AgentCollaborationDashboard:
         else:
             st.info("No agent interactions recorded yet. Create a demo task to see the timeline in action!")
     
-    def render_task_details(self):
-        """Render detailed task information."""
-        st.header("📋 Task Details & Collaboration Logs")
+    def get_agent_for_task(self, task_details: Dict[str, Any]) -> Dict[str, str]:
+        """Determine which agent should handle this task based on content."""
+        task_input = task_details.get('input', '').lower()
+        task_description = f"{task_input} {task_details.get('description', '')}".lower()
+        additional_input = task_details.get('additional_input', {})
         
-        tasks = self.session_state.dashboard_data.get('tasks', [])
+        # Check if this is a CrewAI multi-agent task
+        if isinstance(additional_input, dict) and additional_input.get('agent_system') == 'CrewAI':
+            return {
+                'agent_type': 'crewai_multi_agent',
+                'agent_name': 'CrewAI Multi-Agent System',
+                'model': 'Llama 3.3 70B + Mistral 7B',
+                'specialization': '5-Agent Collaborative Analysis',
+                'color': '#9c27b0'
+            }
+        
+        # Analyze task content to determine agent assignment
+        if any(keyword in task_description for keyword in [
+            'lead intelligence', 'customer segmentation', 'lead scoring', 
+            'data analysis', 'pattern recognition', 'churn risk', 
+            'customer analysis', 'behavioral analysis'
+        ]):
+            return {
+                'agent_type': 'lead_intelligence',
+                'agent_name': 'Lead Intelligence Agent',
+                'model': 'Llama 3.3 70B (Most Reliable)',
+                'specialization': 'Data Analysis & Pattern Recognition',
+                'color': '#1f77b4'
+            }
+        elif any(keyword in task_description for keyword in [
+            'revenue optimization', 'arpu', 'pricing', 'business strategy',
+            'optimization', 'retention', 'product recommendation',
+            'revenue', 'business insights'
+        ]):
+            return {
+                'agent_type': 'revenue_optimization', 
+                'agent_name': 'Revenue Optimization Agent',
+                'model': 'Mistral 7B Instruct (Free)',
+                'specialization': 'Business Strategy & Optimization',
+                'color': '#ff7f0e'
+            }
+        else:
+            return {
+                'agent_type': 'collaborative',
+                'agent_name': 'Collaborative Agent',
+                'model': 'Multi-LLM Orchestration', 
+                'specialization': 'Workflow Coordination',
+                'color': '#2ca02c'
+            }
+
+    def render_task_details(self):
+        """Render detailed task information with agent assignment."""
+        st.header("📋 Task Details & Agent Assignment")
+        
+        # Add refresh controls
+        col_refresh, col_auto, col_clear = st.columns([1, 2, 1])
+        with col_refresh:
+            if st.button("🔄 Refresh Tasks"):
+                # Clear cache and force fresh data fetch
+                if 'dashboard_data' in st.session_state:
+                    del st.session_state.dashboard_data
+                st.rerun()
+        
+        with col_auto:
+            auto_refresh = st.checkbox("Auto-refresh every 10 seconds", value=False)
+            if auto_refresh:
+                time.sleep(10)
+                st.rerun()
+                
+        with col_clear:
+            if st.button("🗑️ Clear Cache"):
+                # Force clear all cached data
+                for key in list(st.session_state.keys()):
+                    if 'dashboard_data' in key:
+                        del st.session_state[key]
+                st.rerun()
+        
+        # Show refresh timestamp
+        st.caption(f"Last updated: {time.strftime('%H:%M:%S')}")
+        
+        # Force fresh data fetch
+        fresh_tasks = self.fetch_agent_tasks()
+        st.caption(f"Found {len(fresh_tasks)} tasks in Agent Protocol")
+        
+        tasks = fresh_tasks or self.session_state.dashboard_data.get('tasks', [])
         
         if tasks:
-            # Task selection
-            task_options = [(task['task_id'], f"Task {task['task_id'][:8]} - {task.get('status', 'unknown')}") for task in tasks]
+            # Show task count
+            st.info(f"📊 **{len(tasks)} tasks found** - Latest: {max(tasks, key=lambda x: x.get('created_at', ''))['task_id'][:8]} ")
+            
+            # Task selection with agent indication
+            task_options = []
+            for task in sorted(tasks, key=lambda x: x.get('created_at', ''), reverse=True):  # Sort by newest first
+                agent_info = self.get_agent_for_task(task)
+                task_display = f"Task {task['task_id'][:8]} - {task.get('status', 'unknown')} ({agent_info['agent_name']}) - {task.get('created_at', 'Unknown time')}"
+                task_options.append((task['task_id'], task_display))
+                
             selected_task_id = st.selectbox(
                 "Select a task to view details:",
                 options=[t[0] for t in task_options],
@@ -411,6 +558,19 @@ class AgentCollaborationDashboard:
                 task_details = self.fetch_task_details(selected_task_id)
                 
                 if task_details:
+                    # Get agent assignment
+                    agent_info = self.get_agent_for_task(task_details)
+                    
+                    # Display agent assignment prominently
+                    st.markdown(f"""
+                    <div style="border: 2px solid {agent_info['color']}; border-radius: 10px; padding: 15px; margin: 10px 0; background-color: {agent_info['color']}15;">
+                        <h3 style="color: {agent_info['color']}; margin: 0;">🤖 Assigned Agent: {agent_info['agent_name']}</h3>
+                        <p style="margin: 5px 0;"><strong>Model:</strong> {agent_info['model']}</p>
+                        <p style="margin: 5px 0;"><strong>Specialization:</strong> {agent_info['specialization']}</p>
+                        <p style="margin: 5px 0;"><strong>Agent Type:</strong> {agent_info['agent_type']}</p>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    
                     col1, col2 = st.columns(2)
                     
                     with col1:
@@ -419,17 +579,49 @@ class AgentCollaborationDashboard:
                             'Task ID': task_details.get('task_id'),
                             'Status': task_details.get('status'),
                             'Created': task_details.get('created_at'),
-                            'Updated': task_details.get('updated_at')
+                            'Updated': task_details.get('updated_at'),
+                            'Agent Assignment': agent_info['agent_name']
                         })
                     
                     with col2:
                         st.subheader("Task Input")
                         st.text_area("Input:", task_details.get('input', ''), height=100, disabled=True)
                     
-                    # Task output/result
+                    # Task output/result  
                     if task_details.get('output'):
                         st.subheader("Agent Response")
                         st.text_area("Output:", str(task_details.get('output')), height=200, disabled=True)
+                    
+                    # Show CrewAI relationship
+                    st.subheader("🔗 CrewAI Integration")
+                    if agent_info['agent_type'] == 'crewai_multi_agent':
+                        st.success("""
+                        **CrewAI Role**: Multi-Agent Collaborative System  
+                        **Configuration**: Full 5-agent orchestration with hierarchical processing  
+                        **Agents**: Customer Intelligence + Market Intelligence + Revenue Optimization + Retention & Lifecycle + Campaign Orchestration  
+                        **Models**: Llama 3.3 70B (Lead) + Mistral 7B (Revenue) + Smart model selection  
+                        **Process**: Sequential task execution with cross-agent delegation and memory sharing
+                        """)
+                    elif agent_info['agent_type'] == 'lead_intelligence':
+                        st.info("""
+                        **CrewAI Role**: Lead Intelligence Specialist  
+                        **Configuration**: `self.llama_llm` in `crew_config.py` (Llama 3.3 70B)  
+                        **Capabilities**: Customer data analysis, lead scoring, pattern recognition  
+                        **Collaboration**: Can delegate to Revenue Optimization Agent for strategy advice
+                        """)
+                    elif agent_info['agent_type'] == 'revenue_optimization':
+                        st.info("""
+                        **CrewAI Role**: Revenue Optimization Strategist  
+                        **Configuration**: `self.llama3_llm` in `crew_config.py` (Mistral 7B)  
+                        **Capabilities**: Business strategy, ARPU optimization, retention strategies  
+                        **Collaboration**: Can delegate to Lead Intelligence Agent for data analysis
+                        """)
+                    else:
+                        st.info("""
+                        **CrewAI Role**: Collaborative Coordinator  
+                        **Configuration**: Multi-agent orchestration  
+                        **Capabilities**: Workflow coordination, task routing, quality assurance
+                        """)
                     
                     # Artifacts if available
                     artifacts = task_details.get('artifacts', [])
@@ -588,8 +780,26 @@ class AgentCollaborationDashboard:
 
 def main():
     """Main entry point for the dashboard."""
-    dashboard = AgentCollaborationDashboard()
-    dashboard.run()
+    # Initialize model selection state
+    init_model_selection_state()
+    
+    # Check if we should show model status page
+    if should_show_model_status():
+        render_model_status_page()
+        
+        # Back button
+        if st.button("← Back to Dashboard"):
+            hide_model_status()
+            st.rerun()
+    else:
+        # Show normal dashboard
+        dashboard = AgentCollaborationDashboard()
+        
+        # Add model selection to sidebar
+        render_model_selection_sidebar()
+        
+        # Run main dashboard
+        dashboard.run()
 
 if __name__ == "__main__":
     main()

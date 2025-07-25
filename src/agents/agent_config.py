@@ -56,7 +56,7 @@ class AgentConfigManager:
             },
             "llm_config": asdict(LLMConfig(
                 provider="openrouter",
-                model_id="deepseek/deepseek-chat",
+                model_id="qwen/qwen3-coder:free",  # Changed to FREE model
                 base_url="https://openrouter.ai/api/v1",
                 max_tokens=4000,
                 temperature=0.2,  # Lower temperature for analytical precision
@@ -115,7 +115,7 @@ class AgentConfigManager:
             },
             "llm_config": asdict(LLMConfig(
                 provider="openrouter",
-                model_id="meta-llama/llama-3.1-8b-instruct:free",
+                model_id="mistralai/mistral-7b-instruct:free",  # Use working model
                 base_url="https://openrouter.ai/api/v1", 
                 max_tokens=4000,
                 temperature=0.4,  # Moderate temperature for creative strategy

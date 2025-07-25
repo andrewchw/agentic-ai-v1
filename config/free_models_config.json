@@ -1,0 +1,277 @@
+{
+  "qwen25-coder-32b": {
+    "id": "qwen/qwen-2.5-coder-32b-instruct:free",
+    "name": "Qwen2.5 Coder 32B Free",
+    "provider": "Alibaba",
+    "description": "Latest Qwen coder model, excellent for programming tasks",
+    "context_window": 32768,
+    "max_tokens": 4000,
+    "temperature_range": [
+      0.0,
+      1.0
+    ],
+    "good_for": [
+      "code",
+      "programming",
+      "technical",
+      "analysis"
+    ],
+    "rate_limit_info": "VERIFIED WORKING - Latest coder model with excellent performance",
+    "last_used": null,
+    "failure_count": 0,
+    "last_failure": null,
+    "is_available": true
+  },
+  "llama33-70b": {
+    "id": "meta-llama/llama-3.3-70b-instruct:free",
+    "name": "Llama 3.3 70B Instruct Free",
+    "provider": "Meta",
+    "description": "Large Meta model with excellent reasoning capabilities - MOST RELIABLE",
+    "context_window": 131072,
+    "max_tokens": 4000,
+    "temperature_range": [
+      0.0,
+      1.0
+    ],
+    "good_for": [
+      "general",
+      "reasoning",
+      "analysis",
+      "conversation",
+      "complex"
+    ],
+    "rate_limit_info": "VERIFIED WORKING - Most reliable 70B model, excellent stability",
+    "last_used": "2025-07-25T12:27:51.070040",
+    "failure_count": 0,
+    "last_failure": null,
+    "is_available": true
+  },
+  "mistral-small-32": {
+    "id": "mistralai/mistral-small-3.2-24b-instruct:free",
+    "name": "Mistral Small 3.2 24B Free",
+    "provider": "Mistral AI",
+    "description": "Latest Mistral small model with improved performance",
+    "context_window": 32768,
+    "max_tokens": 4000,
+    "temperature_range": [
+      0.0,
+      1.0
+    ],
+    "good_for": [
+      "general",
+      "balanced",
+      "reasoning",
+      "analysis"
+    ],
+    "rate_limit_info": "VERIFIED WORKING - Latest Mistral model with excellent reliability",
+    "last_used": "2025-07-25T15:07:52.149902",
+    "failure_count": 0,
+    "last_failure": null,
+    "is_available": true
+  },
+  "qwen25-vl-32b": {
+    "id": "qwen/qwen2.5-vl-32b-instruct:free",
+    "name": "Qwen2.5 VL 32B Free",
+    "provider": "Alibaba",
+    "description": "Vision-language model for multimodal tasks",
+    "context_window": 32768,
+    "max_tokens": 4000,
+    "temperature_range": [
+      0.0,
+      1.0
+    ],
+    "good_for": [
+      "vision",
+      "multimodal",
+      "analysis",
+      "general"
+    ],
+    "rate_limit_info": "VERIFIED WORKING - Vision-language capabilities",
+    "last_used": null,
+    "failure_count": 0,
+    "last_failure": null,
+    "is_available": true
+  },
+  "mistral-small-31": {
+    "id": "mistralai/mistral-small-3.1-24b-instruct:free",
+    "name": "Mistral Small 3.1 24B Free",
+    "provider": "Mistral AI",
+    "description": "Previous generation Mistral small model",
+    "context_window": 32768,
+    "max_tokens": 4000,
+    "temperature_range": [
+      0.0,
+      1.0
+    ],
+    "good_for": [
+      "general",
+      "balanced",
+      "reasoning"
+    ],
+    "rate_limit_info": "VERIFIED WORKING - Reliable Mistral 3.1 model",
+    "last_used": null,
+    "failure_count": 0,
+    "last_failure": null,
+    "is_available": true
+  },
+  "dolphin-r1-24b": {
+    "id": "cognitivecomputations/dolphin3.0-r1-mistral-24b:free",
+    "name": "Dolphin 3.0 R1 Mistral 24B Free",
+    "provider": "Cognitive Computations",
+    "description": "Uncensored reasoning model based on Mistral",
+    "context_window": 32768,
+    "max_tokens": 4000,
+    "temperature_range": [
+      0.0,
+      1.0
+    ],
+    "good_for": [
+      "reasoning",
+      "uncensored",
+      "general"
+    ],
+    "rate_limit_info": "VERIFIED WORKING - Uncensored model for flexible use",
+    "last_used": null,
+    "failure_count": 0,
+    "last_failure": null,
+    "is_available": true
+  },
+  "qwen25-vl-72b": {
+    "id": "qwen/qwen2.5-vl-72b-instruct:free",
+    "name": "Qwen2.5 VL 72B Free",
+    "provider": "Alibaba",
+    "description": "Large vision-language model",
+    "context_window": 32768,
+    "max_tokens": 4000,
+    "temperature_range": [
+      0.0,
+      1.0
+    ],
+    "good_for": [
+      "vision",
+      "multimodal",
+      "analysis",
+      "complex"
+    ],
+    "rate_limit_info": "VERIFIED WORKING - Large VL model for complex tasks",
+    "last_used": null,
+    "failure_count": 0,
+    "last_failure": null,
+    "is_available": true
+  },
+  "mistral-7b": {
+    "id": "mistralai/mistral-7b-instruct:free",
+    "name": "Mistral 7B Instruct Free",
+    "provider": "Mistral AI",
+    "description": "Balanced model for general purpose tasks",
+    "context_window": 32768,
+    "max_tokens": 4000,
+    "temperature_range": [
+      0.0,
+      1.0
+    ],
+    "good_for": [
+      "general",
+      "balanced",
+      "reasoning",
+      "analysis"
+    ],
+    "rate_limit_info": "VERIFIED WORKING - Reliable with good performance",
+    "last_used": null,
+    "failure_count": 0,
+    "last_failure": null,
+    "is_available": true
+  },
+  "qwen3-coder": {
+    "id": "qwen/qwen3-coder:free",
+    "name": "Qwen3 Coder Free",
+    "provider": "Alibaba",
+    "description": "Excellent for code generation, analysis, and technical tasks",
+    "context_window": 32768,
+    "max_tokens": 4000,
+    "temperature_range": [
+      0.0,
+      1.0
+    ],
+    "good_for": [
+      "code",
+      "analysis",
+      "technical",
+      "structured"
+    ],
+    "rate_limit_info": "RATE LIMITED - High usage periods may have temporary limits",
+    "last_used": null,
+    "failure_count": 0,
+    "last_failure": null,
+    "is_available": false
+  },
+  "llama3-8b": {
+    "id": "meta-llama/llama-3.1-8b-instruct:free",
+    "name": "Llama 3.1 8B Instruct Free",
+    "provider": "Meta",
+    "description": "Powerful general-purpose model with excellent reasoning",
+    "context_window": 131072,
+    "max_tokens": 4000,
+    "temperature_range": [
+      0.0,
+      1.0
+    ],
+    "good_for": [
+      "general",
+      "reasoning",
+      "analysis",
+      "conversation"
+    ],
+    "rate_limit_info": "NOT AVAILABLE - 404 errors on OpenRouter",
+    "last_used": null,
+    "failure_count": 0,
+    "last_failure": null,
+    "is_available": false
+  },
+  "gemma-7b": {
+    "id": "google/gemma-2-7b-it:free",
+    "name": "Gemma 2 7B Instruct Free",
+    "provider": "Google",
+    "description": "Updated Gemma model for instruction following",
+    "context_window": 8192,
+    "max_tokens": 4000,
+    "temperature_range": [
+      0.0,
+      1.0
+    ],
+    "good_for": [
+      "instruction",
+      "general",
+      "chat",
+      "simple"
+    ],
+    "rate_limit_info": "NOT AVAILABLE - Bad Request errors on OpenRouter",
+    "last_used": null,
+    "failure_count": 0,
+    "last_failure": null,
+    "is_available": false
+  },
+  "phi-3": {
+    "id": "microsoft/phi-3-mini-128k-instruct:free",
+    "name": "Phi-3 Mini 128K Free",
+    "provider": "Microsoft",
+    "description": "Efficient model with large context window",
+    "context_window": 128000,
+    "max_tokens": 4000,
+    "temperature_range": [
+      0.0,
+      1.0
+    ],
+    "good_for": [
+      "efficient",
+      "large_context",
+      "general",
+      "analysis"
+    ],
+    "rate_limit_info": "UNTESTED - May have availability issues",
+    "last_used": null,
+    "failure_count": 0,
+    "last_failure": null,
+    "is_available": false
+  }
+}

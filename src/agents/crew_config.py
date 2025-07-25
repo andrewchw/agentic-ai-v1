@@ -22,25 +22,25 @@ class CrewAIConfig:
         if not self.openrouter_api_key:
             raise ValueError("OPENROUTER_API_KEY environment variable is required")
         
-        # Configure DeepSeek LLM for Lead Intelligence Agent
-        self.deepseek_llm = LLM(
-            model="openrouter/deepseek-r1:free",
+        # Configure Llama 3.3 70B LLM for Lead Intelligence Agent (more reliable than DeepSeek R1)
+        self.llama_llm = LLM(
+            model="openrouter/meta-llama/llama-3.3-70b-instruct:free",
             api_key=self.openrouter_api_key,
             base_url="https://openrouter.ai/api/v1",
             temperature=0.2,
             max_tokens=4000
         )
         
-        # Configure Llama3 LLM for Revenue Optimization Agent
+        # Configure Llama3 LLM for Revenue Optimization Agent (using working model)
         self.llama3_llm = LLM(
-            model="openrouter/meta-llama/llama-3.1-8b-instruct:free",
+            model="openrouter/mistralai/mistral-7b-instruct:free",  # Use working model
             api_key=self.openrouter_api_key,
             base_url="https://openrouter.ai/api/v1",
             temperature=0.3,
             max_tokens=4000
         )
         
-        logger.info("CrewAI configuration initialized with DeepSeek and Llama3 LLMs")
+        logger.info("CrewAI configuration initialized with Llama 3.3 70B and Mistral LLMs")
     
     def create_lead_intelligence_agent(self) -> Agent:
         """Create the Lead Intelligence Agent specialized in data analysis"""
@@ -52,7 +52,7 @@ class CrewAIConfig:
             prospects through pattern recognition and statistical analysis. You work collaboratively 
             with the Revenue Optimization Agent to develop comprehensive business strategies.""",
             
-            llm=self.deepseek_llm,
+            llm=self.llama_llm,
             verbose=True,
             allow_delegation=True,  # Can delegate tasks to Revenue Optimization Agent
             

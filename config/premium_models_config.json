@@ -1,0 +1,94 @@
+{
+  "gpt-4o-mini": {
+    "id": "openai/gpt-4o-mini",
+    "name": "GPT-4o Mini",
+    "provider": "OpenAI",
+    "description": "Fast and cost-effective GPT model",
+    "context_window": 128000,
+    "max_tokens": 4000,
+    "temperature_range": [
+      0.0,
+      2.0
+    ],
+    "good_for": [
+      "general",
+      "reasoning",
+      "coding",
+      "analysis"
+    ],
+    "cost_info": "Low cost - $0.15/1M tokens input, $0.60/1M tokens output",
+    "last_used": null,
+    "failure_count": 0,
+    "last_failure": null,
+    "is_available": true
+  },
+  "claude-3-haiku": {
+    "id": "anthropic/claude-3-haiku",
+    "name": "Claude 3 Haiku",
+    "provider": "Anthropic",
+    "description": "Fast and efficient Claude model",
+    "context_window": 200000,
+    "max_tokens": 4000,
+    "temperature_range": [
+      0.0,
+      1.0
+    ],
+    "good_for": [
+      "general",
+      "reasoning",
+      "analysis",
+      "coding"
+    ],
+    "cost_info": "Low cost - $0.25/1M tokens input, $1.25/1M tokens output",
+    "last_used": null,
+    "failure_count": 0,
+    "last_failure": null,
+    "is_available": true
+  },
+  "gemini-flash-15": {
+    "id": "google/gemini-flash-1.5",
+    "name": "Gemini Flash 1.5",
+    "provider": "Google",
+    "description": "Fast Google Gemini model",
+    "context_window": 1000000,
+    "max_tokens": 4000,
+    "temperature_range": [
+      0.0,
+      2.0
+    ],
+    "good_for": [
+      "general",
+      "reasoning",
+      "multimodal",
+      "analysis"
+    ],
+    "cost_info": "Low cost - $0.075/1M tokens input, $0.30/1M tokens output",
+    "last_used": null,
+    "failure_count": 0,
+    "last_failure": null,
+    "is_available": true
+  },
+  "mistral-small": {
+    "id": "mistralai/mistral-small",
+    "name": "Mistral Small",
+    "provider": "Mistral AI",
+    "description": "Efficient Mistral model for various tasks",
+    "context_window": 32768,
+    "max_tokens": 4000,
+    "temperature_range": [
+      0.0,
+      1.0
+    ],
+    "good_for": [
+      "general",
+      "reasoning",
+      "coding",
+      "analysis"
+    ],
+    "cost_info": "Low cost - $0.20/1M tokens input, $0.60/1M tokens output",
+    "last_used": null,
+    "failure_count": 0,
+    "last_failure": null,
+    "is_available": true
+  }
+}

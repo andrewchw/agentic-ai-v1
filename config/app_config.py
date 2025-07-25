@@ -19,8 +19,8 @@ class Config:
     ANTHROPIC_API_KEY: str = os.getenv("ANTHROPIC_API_KEY", "")
     
     # Model Configuration
-    DEFAULT_MODEL: str = os.getenv("DEFAULT_MODEL", "deepseek/deepseek-chat")
-    FALLBACK_MODEL: str = os.getenv("FALLBACK_MODEL", "anthropic/claude-3-haiku-20240307")
+    DEFAULT_MODEL: str = os.getenv("DEFAULT_MODEL", "meta-llama/llama-3.3-70b-instruct:free")  # Primary FREE model (Llama 3.3 70B - most reliable)
+    FALLBACK_MODEL: str = os.getenv("FALLBACK_MODEL", "mistralai/mistral-small-3.2-24b-instruct:free")  # Mistral FREE model for fallback
     MAX_TOKENS: int = int(os.getenv("MAX_TOKENS", "4000"))
     TEMPERATURE: float = float(os.getenv("TEMPERATURE", "0.7"))
     

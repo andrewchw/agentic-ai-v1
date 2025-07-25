@@ -15,6 +15,13 @@ from config.app_config import config
 from src.components.layout import setup_page_config, render_header, render_sidebar
 from src.utils.logger import setup_logging
 
+# Import model selection components
+try:
+    from src.components.model_selection import render_model_status_page, should_show_model_status, hide_model_status
+    MODEL_SELECTION_AVAILABLE = True
+except ImportError:
+    MODEL_SELECTION_AVAILABLE = False
+
 
 def main():
     """Main application function"""
@@ -34,6 +41,16 @@ def main():
         st.error(f"Missing required configuration: {', '.join(missing_config)}")
         st.info("Please check your .env file and ensure all required variables are set.")
         st.stop()
+
+    # Check if we should show model status page
+    if MODEL_SELECTION_AVAILABLE and should_show_model_status():
+        render_model_status_page()
+        
+        # Back button
+        if st.button("← Back to Main App"):
+            hide_model_status()
+            st.rerun()
+        return
 
     # Render main layout
     render_header()

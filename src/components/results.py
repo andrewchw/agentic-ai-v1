@@ -977,7 +977,7 @@ def generate_ai_recommendation_with_debug(customer_name, customer_id, customer_t
             try:
                 config = OpenRouterConfig(
                     api_key=api_key,
-                    default_model="deepseek/deepseek-chat",
+                    default_model="qwen/qwen3-coder:free",  # Changed to FREE model
                     max_tokens=2000,
                     temperature=0.7
                 )
@@ -1094,7 +1094,7 @@ REVENUE CALCULATION GUIDELINES:
             debug_info["api_call_info"] = {
                 "success": True,
                 "duration": api_time,
-                "model": "deepseek/deepseek-chat"
+                "model": "qwen/qwen3-coder:free"  # Changed to FREE model
             }
             
             # Analyze APIResponse object

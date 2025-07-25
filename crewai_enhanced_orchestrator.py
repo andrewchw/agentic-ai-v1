@@ -36,6 +36,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 from src.utils.openrouter_client import OpenRouterClient, OpenRouterConfig
 from src.utils.privacy_pipeline import PrivacyPipeline
 from src.utils.logger import setup_logging
+from src.utils.smart_litellm_client import get_smart_litellm_client
+from src.utils.free_models_manager import get_free_models_manager
 
 # Configure logging
 setup_logging()
@@ -82,64 +84,91 @@ class CrewAIEnhancedOrchestrator:
         logger.info("CrewAI Enhanced Orchestrator initialized with 4+ specialized agents using FREE models only")
     
     def _configure_global_environment(self):
-        """Configure global environment variables to prevent paid model usage"""
-        # Core OpenRouter configuration
-        os.environ["OPENAI_API_KEY"] = self.openrouter_api_key
+        """Configure global environment variables with working free models"""
+        
+        # Use a known stable model instead of smart selection for now
+        # This avoids the complexity of smart switching during initialization
+        working_model = "openrouter/meta-llama/llama-3.3-70b-instruct:free"  # Most reliable based on user feedback
+        fallback_model = "openrouter/mistralai/mistral-small-3.2-24b-instruct:free"  # Backup option
+        
+        # Core OpenRouter configuration - Method 1 from the guide
+        os.environ["OPENAI_API_KEY"] = self.openrouter_api_key  # Use OpenRouter key as OPENAI_API_KEY
         os.environ["OPENAI_API_BASE"] = "https://openrouter.ai/api/v1"
+        os.environ["OPENAI_MODEL_NAME"] = working_model  # Use known working model
         os.environ["OPENROUTER_API_KEY"] = self.openrouter_api_key
         
-        # Force LiteLLM (CrewAI's backend) to use only free models
+        # Force LiteLLM (CrewAI's backend) to use working models
         os.environ["LITELLM_OPENAI_BASE"] = "https://openrouter.ai/api/v1"
-        os.environ["LITELLM_DEFAULT_MODEL"] = "qwen/qwen3-coder:free"
-        os.environ["LITELLM_DISABLE_FALLBACKS"] = "true"
-        os.environ["LITELLM_MODEL_COST_MAP"] = '{"qwen/qwen3-coder:free": {"input_cost_per_token": 0, "output_cost_per_token": 0}}'
+        os.environ["LITELLM_DEFAULT_MODEL"] = working_model  # Use known working model
+        os.environ["LITELLM_FALLBACK_MODEL"] = fallback_model  # Set a fallback
+        os.environ["LITELLM_DISABLE_FALLBACKS"] = "false"  # Enable fallbacks
+        
+        # Configure cost map for free models
+        cost_map = {
+            working_model: {"input_cost_per_token": 0, "output_cost_per_token": 0},
+            fallback_model: {"input_cost_per_token": 0, "output_cost_per_token": 0}
+        }
+        
+        import json
+        os.environ["LITELLM_MODEL_COST_MAP"] = json.dumps(cost_map)
         
         # Prevent any accidental usage of paid models
         os.environ["LITELLM_PREVENT_PAID_MODELS"] = "true"
         
-        logger.info("Global environment configured for FREE models only - zero AI costs guaranteed")
-    
+        logger.info(f"Global environment configured for working FREE models - primary: {working_model}")
+
     def _setup_enhanced_llms(self):
-        """Setup optimized LLMs using FREE OpenRouter models to avoid costs"""
+        """Setup optimized LLMs using working free models"""
         
-        # All agents use the same FREE Qwen3 Coder model to avoid any costs
-        # Other free options include:
-        # - qwen/qwen3-235b-a22b-07-25:free
-        # - moonshotai/kimi-k2:free
-        # - cognitivecomputations/dolphin-mistral-24b-venice-edition:free
-        # - google/gemma-3n-e2b-it:free
-        # - mistralai/mistral-small-3.2-24b-instruct:free
+        # Initialize components for later use but don't use smart selection during setup
+        from src.utils.smart_litellm_client import get_smart_litellm_client
+        from src.utils.free_models_manager import get_free_models_manager
         
-        # Lead Intelligence - Use free Qwen3 Coder model for analytical precision
-        self.deepseek_llm = LLM(
-            model="qwen/qwen3-coder:free",  # Removed openrouter/ prefix
+        self.smart_client = get_smart_litellm_client()
+        self.models_manager = get_free_models_manager()
+        
+        logger.info("Enhanced LLMs configured with working free models - zero AI costs guaranteed")
+        
+        # Get optimal models for different use cases
+        analytical_model = self.models_manager.get_model_for_litellm("analysis")
+        strategic_model = self.models_manager.get_model_for_litellm("general")
+        market_model = self.models_manager.get_model_for_litellm("analysis")
+        creative_model = self.models_manager.get_model_for_litellm("creative")
+        
+        # Lead Intelligence - Optimized for analytical precision (Llama 3.3 70B)
+        self.analytical_llm = LLM(
+            model=analytical_model,
+            base_url="https://openrouter.ai/api/v1",
+            api_key=self.openrouter_api_key,
             temperature=0.1,  # Lower for analytical precision
-            max_tokens=4000,
-            api_base="https://openrouter.ai/api/v1"
+            max_tokens=4000
         )
         
-        # Sales & Strategy - Use free Qwen3 Coder model for strategic thinking
+        # Sales & Strategy - Optimized for strategic thinking
         self.llama3_llm = LLM(
-            model="qwen/qwen3-coder:free",  # Removed openrouter/ prefix
+            model=strategic_model,
+            base_url="https://openrouter.ai/api/v1",
+            api_key=self.openrouter_api_key,
             temperature=0.3,  # Balanced for strategy and creativity
-            max_tokens=4000,
-            api_base="https://openrouter.ai/api/v1"
+            max_tokens=4000
         )
         
-        # Market Intelligence - Use free Qwen3 Coder model for market analysis
+        # Market Intelligence - Optimized for market analysis
         self.claude_llm = LLM(
-            model="qwen/qwen3-coder:free",  # Removed openrouter/ prefix
+            model=market_model,
+            base_url="https://openrouter.ai/api/v1",
+            api_key=self.openrouter_api_key,
             temperature=0.2,  # Low for market analysis accuracy
-            max_tokens=4000,
-            api_base="https://openrouter.ai/api/v1"
+            max_tokens=4000
         )
         
-        # Campaign Management - Use free Qwen3 Coder model for campaign execution
+        # Campaign Management - Optimized for creative campaigns
         self.gpt_llm = LLM(
-            model="qwen/qwen3-coder:free",  # Removed openrouter/ prefix
+            model=creative_model,
+            base_url="https://openrouter.ai/api/v1",
+            api_key=self.openrouter_api_key,
             temperature=0.4,  # Higher for creative campaigns
-            max_tokens=4000,
-            api_base="https://openrouter.ai/api/v1"
+            max_tokens=4000
         )
         
         logger.info("Enhanced LLMs configured for OpenRouter using FREE models only - no costs incurred")
@@ -155,10 +184,12 @@ class CrewAIEnhancedOrchestrator:
         if api_base != "https://openrouter.ai/api/v1":
             logger.warning(f"API base not configured for OpenRouter: {api_base}")
         
-        if default_model != "qwen/qwen3-coder:free":
-            logger.warning(f"Default model not set to free model: {default_model}")
+        # Check if we're using a free model (should contain :free)
+        if default_model and ":free" not in default_model:
+            logger.warning(f"Default model may not be free: {default_model}")
+        else:
+            logger.info(f"✅ Verified: API Base = {api_base}, Default Model = {default_model}")
         
-        logger.info(f"✅ Verified: API Base = {api_base}, Default Model = {default_model}")
         logger.info("✅ Configuration verified: All agents will use FREE models only")
     
     def _create_enhanced_agents(self):
@@ -173,7 +204,7 @@ class CrewAIEnhancedOrchestrator:
             behavioral segmentation, and predictive analytics. You excel at identifying subtle patterns that indicate 
             revenue growth opportunities and churn risks. Your analysis directly feeds strategic decisions that impact 
             millions in revenue.""",
-            llm=self.deepseek_llm,
+            llm=self.analytical_llm,
             tools=[],
             verbose=True,
             allow_delegation=True,  # Can delegate market research tasks
