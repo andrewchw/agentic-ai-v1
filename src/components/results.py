@@ -536,77 +536,83 @@ def render_export_section(results: Dict[str, Any]):
         
         with col1:
             st.markdown("#### 🎁 **Customer Offers**")
-            if st.button("📊 Export Offers CSV", key="export_offers", help="Export personalized customer offers for CRM"):
-                csv_data = export_crewai_offers_csv(results)
-                st.download_button(
-                    label="💾 Download Offers",
-                    data=csv_data,
-                    file_name=f"customer_offers_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
-                    mime="text/csv",
-                    key="download_offers"
-                )
+            # Pre-calculate CSV data to avoid session state reset
+            csv_data = export_crewai_offers_csv(results)
+            st.download_button(
+                label="� Export Offers CSV",
+                data=csv_data,
+                file_name=f"customer_offers_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                mime="text/csv",
+                key="download_offers",
+                help="Export personalized customer offers for CRM"
+            )
         
         with col2:
             st.markdown("#### 📧 **Email Templates**")
-            if st.button("📨 Export Templates", key="export_templates", help="Export email marketing templates"):
-                template_data = export_email_templates_package(results)
-                st.download_button(
-                    label="💾 Download Templates",
-                    data=template_data,
-                    file_name=f"email_templates_{datetime.now().strftime('%Y%m%d_%H%M%S')}.zip",
-                    mime="application/zip",
-                    key="download_templates"
-                )
+            # Pre-calculate template data to avoid session state reset
+            template_data = export_email_templates_package(results)
+            st.download_button(
+                label="� Export Templates",
+                data=template_data,
+                file_name=f"email_templates_{datetime.now().strftime('%Y%m%d_%H%M%S')}.zip",
+                mime="application/zip",
+                key="download_templates",
+                help="Export email marketing templates"
+            )
         
         with col3:
             st.markdown("#### 📋 **Recommendations**")
-            if st.button("🎯 Export Actions CSV", key="export_actions", help="Export customer action recommendations"):
-                csv_data = export_crewai_recommendations_csv(results)
-                st.download_button(
-                    label="💾 Download Actions",
-                    data=csv_data,
-                    file_name=f"customer_actions_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
-                    mime="text/csv",
-                    key="download_actions"
-                )
+            # Pre-calculate CSV data to avoid session state reset
+            csv_data = export_crewai_recommendations_csv(results)
+            st.download_button(
+                label="🎯 Export Actions CSV",
+                data=csv_data,
+                file_name=f"customer_actions_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                mime="text/csv",
+                key="download_actions",
+                help="Export customer action recommendations"
+            )
         
         with col4:
             st.markdown("#### 📦 **Complete Package**")
-            if st.button("🚀 Export All ZIP", key="export_all", help="Export complete business intelligence package"):
-                zip_data = export_complete_business_package(results)
-                st.download_button(
-                    label="💾 Download Package",
-                    data=zip_data,
-                    file_name=f"ai_business_intelligence_{datetime.now().strftime('%Y%m%d_%H%M%S')}.zip",
-                    mime="application/zip",
-                    key="download_package"
-                )
+            # Pre-calculate zip data to avoid session state reset
+            zip_data = export_complete_business_package(results)
+            st.download_button(
+                label="� Export All ZIP",
+                data=zip_data,
+                file_name=f"ai_business_intelligence_{datetime.now().strftime('%Y%m%d_%H%M%S')}.zip",
+                mime="application/zip",
+                key="download_all",
+                help="Export complete business intelligence package"
+            )
         
         # Additional export options
         st.markdown("---")
         col1, col2, col3 = st.columns(3)
         
         with col1:
-            if st.button("📊 Legacy Recommendations CSV", help="Export standard recommendations format"):
-                csv_data = export_recommendations_csv(results)
-                st.download_button(
-                    label="💾 Download Legacy CSV",
-                    data=csv_data,
-                    file_name=f"ai_recommendations_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
-                    mime="text/csv",
-                    key="download_legacy"
-                )
+            # Pre-calculate CSV data to avoid session state reset
+            csv_data = export_recommendations_csv(results)
+            st.download_button(
+                label="� Legacy Recommendations CSV",
+                data=csv_data,
+                file_name=f"ai_recommendations_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                mime="text/csv",
+                key="download_legacy",
+                help="Export standard recommendations format"
+            )
         
         with col2:
-            if st.button("📋 Campaign Summary Report", help="Export executive campaign summary"):
-                summary_data = export_campaign_summary_csv(results)
-                st.download_button(
-                    label="💾 Download Summary",
-                    data=summary_data,
-                    file_name=f"campaign_summary_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
-                    mime="text/csv",
-                    key="download_summary"
-                )
+            # Pre-calculate summary data to avoid session state reset
+            summary_data = export_campaign_summary_csv(results)
+            st.download_button(
+                label="� Campaign Summary Report",
+                data=summary_data,
+                file_name=f"campaign_summary_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                mime="text/csv",
+                key="download_summary",
+                help="Export executive campaign summary"
+            )
         
         with col3:
             if st.button("🔄 Run New Analysis"):
@@ -620,24 +626,26 @@ def render_export_section(results: Dict[str, Any]):
         col1, col2, col3 = st.columns(3)
         
         with col1:
-            if st.button("📊 Export Recommendations CSV"):
-                csv_data = export_recommendations_csv(results)
-                st.download_button(
-                    label="💾 Download CSV",
-                    data=csv_data,
-                    file_name=f"ai_recommendations_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
-                    mime="text/csv"
-                )
+            # Pre-calculate CSV data to avoid session state reset
+            csv_data = export_recommendations_csv(results)
+            st.download_button(
+                label="� Export Recommendations CSV",
+                data=csv_data,
+                file_name=f"ai_recommendations_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                mime="text/csv",
+                key="download_recommendations"
+            )
         
         with col2:
-            if st.button("📋 Export Detailed Report"):
-                json_data = export_detailed_json(results)
-                st.download_button(
-                    label="💾 Download JSON Report",
-                    data=json_data,
-                    file_name=f"ai_analysis_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
-                    mime="application/json"
-                )
+            # Pre-calculate JSON data to avoid session state reset
+            json_data = export_detailed_json(results)
+            st.download_button(
+                label="� Export Detailed Report",
+                data=json_data,
+                file_name=f"ai_analysis_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
+                mime="application/json",
+                key="download_json"
+            )
         
         with col3:
             if st.button("🔄 Run New Analysis"):
