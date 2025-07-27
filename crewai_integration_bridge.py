@@ -83,13 +83,15 @@ class CrewAIIntegrationBridge:
             return False
     
     async def process_enhanced_collaboration(self, lead_intelligence_results: Dict[str, Any], 
-                                           mode: str = "crewai_enhanced") -> Dict[str, Any]:
+                                           mode: str = "crewai_enhanced",
+                                           customer_data: Dict[str, Any] = None) -> Dict[str, Any]:
         """
         Process lead intelligence results with enhanced collaboration.
         
         Args:
             lead_intelligence_results: Results from Lead Intelligence Agent
             mode: Collaboration mode - "standard", "crewai_enhanced", or "hybrid"
+            customer_data: Raw customer data for CrewAI processing
         
         Returns:
             Enhanced collaboration results with business impact analysis
@@ -106,10 +108,10 @@ class CrewAIIntegrationBridge:
                 return await self._process_standard_collaboration(lead_intelligence_results)
             
             elif mode == "crewai_enhanced":
-                return await self._process_crewai_collaboration(lead_intelligence_results)
+                return await self._process_crewai_collaboration(lead_intelligence_results, customer_data)
             
             elif mode == "hybrid":
-                return await self._process_hybrid_collaboration(lead_intelligence_results)
+                return await self._process_hybrid_collaboration(lead_intelligence_results, customer_data)
             
             else:
                 raise ValueError(f"Unknown collaboration mode: {mode}")
@@ -154,7 +156,7 @@ class CrewAIIntegrationBridge:
             logger.error(f"Standard collaboration failed: {e}")
             raise
     
-    async def _process_crewai_collaboration(self, results: Dict[str, Any]) -> Dict[str, Any]:
+    async def _process_crewai_collaboration(self, results: Dict[str, Any], customer_data: Dict[str, Any] = None) -> Dict[str, Any]:
         """Process using the CrewAI enhanced multi-agent system"""
         
         logger.info("🚀 Processing with CrewAI enhanced multi-agent orchestration...")
@@ -164,11 +166,16 @@ class CrewAIIntegrationBridge:
             if not self.crewai_orchestrator:
                 raise Exception("CrewAI orchestrator not available - likely missing API keys")
             
-            # Transform Lead Intelligence results for CrewAI system
-            customer_data = self._transform_for_crewai(results)
+            # Use provided customer data if available, otherwise transform Lead Intelligence results
+            if customer_data:
+                logger.info(f"🔍 Using provided customer data: {len(customer_data) if isinstance(customer_data, (list, dict)) else 'Unknown count'} customers")
+                processed_customer_data = customer_data
+            else:
+                logger.info("🔄 Transforming Lead Intelligence results for CrewAI system...")
+                processed_customer_data = self._transform_for_crewai(results)
             
             # Process through CrewAI enhanced orchestrator
-            crewai_results = await self.crewai_orchestrator.process_enhanced_customer_analysis(customer_data)
+            crewai_results = await self.crewai_orchestrator.process_enhanced_customer_analysis(processed_customer_data)
             
             if crewai_results.get("success"):
                 # Transform CrewAI results back to dashboard format
@@ -192,7 +199,7 @@ class CrewAIIntegrationBridge:
                 # No fallback available
                 raise Exception(f"CrewAI failed and no standard fallback available: {e}")
     
-    async def _process_hybrid_collaboration(self, results: Dict[str, Any]) -> Dict[str, Any]:
+    async def _process_hybrid_collaboration(self, results: Dict[str, Any], customer_data: Dict[str, Any] = None) -> Dict[str, Any]:
         """Process using hybrid approach combining both systems"""
         
         logger.info("⚡ Processing with hybrid collaboration (Standard + CrewAI)...")
@@ -200,7 +207,7 @@ class CrewAIIntegrationBridge:
         try:
             # Run both systems in parallel
             standard_task = asyncio.create_task(self._process_standard_collaboration(results))
-            crewai_task = asyncio.create_task(self._process_crewai_collaboration(results))
+            crewai_task = asyncio.create_task(self._process_crewai_collaboration(results, customer_data))
             
             # Wait for both to complete
             standard_results, crewai_results = await asyncio.gather(
@@ -311,6 +318,9 @@ class CrewAIIntegrationBridge:
             # Enhanced next actions
             "next_actions": self._convert_recommendations_to_actions(strategic_recommendations),
             
+            # Preserve CrewAI deliverables for export functions
+            "deliverables": crewai_results.get("deliverables", {}),
+            
             # CrewAI-specific enhancements
             "crewai_enhancements": {
                 "collaboration_metrics": collaboration_metrics,
@@ -412,7 +422,8 @@ class CrewAIIntegrationBridge:
 
 # Integration function for the dashboard
 def process_agent_collaboration_with_crewai(lead_results: Dict[str, Any], 
-                                          mode: str = "crewai_enhanced") -> Dict[str, Any]:
+                                          mode: str = "crewai_enhanced",
+                                          customer_data: Dict[str, Any] = None) -> Dict[str, Any]:
     """
     Main integration function for the Lead Intelligence Dashboard.
     
@@ -422,6 +433,7 @@ def process_agent_collaboration_with_crewai(lead_results: Dict[str, Any],
     Args:
         lead_results: Results from Lead Intelligence analysis
         mode: "standard", "crewai_enhanced", or "hybrid"
+        customer_data: Raw customer data for CrewAI processing
     
     Returns:
         Enhanced collaboration results
@@ -429,7 +441,7 @@ def process_agent_collaboration_with_crewai(lead_results: Dict[str, Any],
     
     async def run_collaboration():
         bridge = CrewAIIntegrationBridge()
-        return await bridge.process_enhanced_collaboration(lead_results, mode)
+        return await bridge.process_enhanced_collaboration(lead_results, mode, customer_data)
     
     # Run the async collaboration
     loop = asyncio.new_event_loop()

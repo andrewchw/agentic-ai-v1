@@ -1,28 +1,28 @@
 # Core Web Framework
-streamlit>=1.32.0
-fastapi>=0.110.0  # Agent Protocol REST API
-uvicorn>=0.29.0  # ASGI server for FastAPI
+streamlit>=1.47.0
+fastapi>=0.116.0  # Agent Protocol REST API
+uvicorn>=0.35.0  # ASGI server for FastAPI
 
 # Data Processing
-pandas>=2.2.0
-numpy>=1.26.0
+pandas>=2.3.0
+numpy>=2.3.0
 
 # AI/ML and API Integration
-openai>=1.12.0  # For OpenRouter API compatibility
-anthropic>=0.22.0  # Alternative AI provider
-crewai>=0.63.0  # Multi-agent AI framework
-crewai-tools>=0.12.0  # CrewAI tool integrations
-requests>=2.31.0
-urllib3>=1.26.0  # For advanced retry strategies
+openai>=1.97.0  # For OpenRouter API compatibility
+anthropic>=0.59.0  # Alternative AI provider
+crewai>=0.150.0  # Multi-agent AI framework - CONFIRMED INSTALLED
+crewai-tools>=0.58.0  # CrewAI tool integrations - CONFIRMED INSTALLED
+requests>=2.32.0
+urllib3>=2.5.0  # For advanced retry strategies
 
 # Privacy and Security
-cryptography>=42.0.0
+cryptography>=45.0.0
 python-decouple>=3.8  # Environment variable management
 
 # Data Validation and Processing
-pydantic>=2.6.0
-marshmallow>=3.21.0
-jsonschema>=4.21.0
+pydantic>=2.11.0
+marshmallow>=3.26.0
+jsonschema>=4.25.0
 
 # File Processing
 openpyxl>=3.1.0  # Excel file support
@@ -31,23 +31,46 @@ python-dateutil>=2.9.0
 chardet>=5.2.0  # Automatic encoding detection
 
 # Visualization and UI Components
-plotly>=5.19.0
-altair>=5.2.0
+plotly>=6.2.0
+altair>=5.5.0
 
 # Development and Testing
-pytest>=8.1.0
-pytest-cov>=4.0.0
-pytest-asyncio>=0.23.0
-playwright>=1.40.0
-pytest-playwright>=0.4.0
-black>=24.2.0
-flake8>=7.0.0
+pytest>=8.4.0
+pytest-cov>=6.2.0
+pytest-asyncio>=1.1.0
+playwright>=1.54.0
+pytest-playwright>=0.7.0
+black>=25.1.0
+flake8>=7.3.0
 
 # Environment and Configuration
-python-dotenv>=1.0.0
+python-dotenv>=1.1.0
 pyyaml>=6.0.1
 
 # Logging and Monitoring
+loguru>=0.7.0  # Advanced logging
+
+# Additional AI/ML Dependencies (auto-installed with CrewAI)
+tiktoken>=0.9.0  # Token counting for LLMs
+langchain>=0.3.0  # LangChain framework (CrewAI dependency)
+langchain-openai>=0.2.0  # OpenAI integration for LangChain
+langchain-community>=0.3.0  # Community tools for LangChain
+litellm>=1.74.0  # Multi-LLM provider abstraction
+
+# Database and Storage
+chromadb>=0.5.0  # Vector database for embeddings
+lancedb>=0.24.0  # Vector database alternative
+SQLAlchemy>=2.0.0  # SQL toolkit
+
+# Additional Utilities
+typer>=0.16.0  # CLI framework (CrewAI dependency)
+rich>=13.9.0  # Terminal formatting
+tqdm>=4.67.0  # Progress bars
+httpx>=0.28.0  # HTTP client (async support)
+
+# Optional: Advanced Features
+instructor>=1.10.0  # Structured outputs from LLMs
+mem0ai>=0.1.0  # Memory management for AI agents
 loguru>=0.7.2
 
 # System Monitoring

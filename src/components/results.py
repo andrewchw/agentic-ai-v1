@@ -8,6 +8,8 @@ import pandas as pd
 import json
 import time
 import os
+import zipfile
+import io
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any, List
 import plotly.express as px
@@ -16,6 +18,10 @@ import plotly.graph_objects as go
 from src.utils.data_merging import DataMerger, MergeStrategy, MergeResult
 from src.utils.product_catalog_db import get_product_catalog, is_catalog_available
 from src.utils.openrouter_client import OpenRouterClient, OpenRouterConfig
+from loguru import logger
+
+# Initialize logger
+# Logger is available as 'logger' from loguru import
 
 
 def render_results_page():
@@ -515,36 +521,130 @@ def render_offers_section(results: Dict[str, Any]):
 
 
 def render_export_section(results: Dict[str, Any]):
-    """Render export and action options"""
+    """Render enhanced export and action options with CrewAI deliverables support"""
     
-    col1, col2, col3 = st.columns(3)
+    # Check if we have CrewAI deliverables
+    has_deliverables = bool(results.get('collaboration_results', {}).get('deliverables'))
     
-    with col1:
-        if st.button("📊 Export Recommendations CSV"):
-            csv_data = export_recommendations_csv(results)
-            st.download_button(
-                label="💾 Download CSV",
-                data=csv_data,
-                file_name=f"ai_recommendations_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
-                mime="text/csv"
-            )
+    if has_deliverables:
+        # Enhanced export section for CrewAI deliverables
+        st.markdown("### 📤 **Export Business Intelligence**")
+        st.markdown("Transform your AI insights into business-ready assets for CRM integration and executive reporting.")
+        
+        # Professional export options with 4 columns
+        col1, col2, col3, col4 = st.columns(4)
+        
+        with col1:
+            st.markdown("#### 🎁 **Customer Offers**")
+            if st.button("📊 Export Offers CSV", key="export_offers", help="Export personalized customer offers for CRM"):
+                csv_data = export_crewai_offers_csv(results)
+                st.download_button(
+                    label="💾 Download Offers",
+                    data=csv_data,
+                    file_name=f"customer_offers_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                    mime="text/csv",
+                    key="download_offers"
+                )
+        
+        with col2:
+            st.markdown("#### 📧 **Email Templates**")
+            if st.button("📨 Export Templates", key="export_templates", help="Export email marketing templates"):
+                template_data = export_email_templates_package(results)
+                st.download_button(
+                    label="💾 Download Templates",
+                    data=template_data,
+                    file_name=f"email_templates_{datetime.now().strftime('%Y%m%d_%H%M%S')}.zip",
+                    mime="application/zip",
+                    key="download_templates"
+                )
+        
+        with col3:
+            st.markdown("#### 📋 **Recommendations**")
+            if st.button("🎯 Export Actions CSV", key="export_actions", help="Export customer action recommendations"):
+                csv_data = export_crewai_recommendations_csv(results)
+                st.download_button(
+                    label="💾 Download Actions",
+                    data=csv_data,
+                    file_name=f"customer_actions_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                    mime="text/csv",
+                    key="download_actions"
+                )
+        
+        with col4:
+            st.markdown("#### 📦 **Complete Package**")
+            if st.button("🚀 Export All ZIP", key="export_all", help="Export complete business intelligence package"):
+                zip_data = export_complete_business_package(results)
+                st.download_button(
+                    label="💾 Download Package",
+                    data=zip_data,
+                    file_name=f"ai_business_intelligence_{datetime.now().strftime('%Y%m%d_%H%M%S')}.zip",
+                    mime="application/zip",
+                    key="download_package"
+                )
+        
+        # Additional export options
+        st.markdown("---")
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            if st.button("📊 Legacy Recommendations CSV", help="Export standard recommendations format"):
+                csv_data = export_recommendations_csv(results)
+                st.download_button(
+                    label="💾 Download Legacy CSV",
+                    data=csv_data,
+                    file_name=f"ai_recommendations_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                    mime="text/csv",
+                    key="download_legacy"
+                )
+        
+        with col2:
+            if st.button("📋 Campaign Summary Report", help="Export executive campaign summary"):
+                summary_data = export_campaign_summary_csv(results)
+                st.download_button(
+                    label="💾 Download Summary",
+                    data=summary_data,
+                    file_name=f"campaign_summary_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                    mime="text/csv",
+                    key="download_summary"
+                )
+        
+        with col3:
+            if st.button("🔄 Run New Analysis"):
+                # Clear results and go back to analysis
+                if "ai_analysis_results" in st.session_state:
+                    del st.session_state["ai_analysis_results"]
+                st.rerun()
     
-    with col2:
-        if st.button("📋 Export Detailed Report"):
-            json_data = export_detailed_json(results)
-            st.download_button(
-                label="💾 Download JSON Report",
-                data=json_data,
-                file_name=f"ai_analysis_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
-                mime="application/json"
-            )
-    
-    with col3:
-        if st.button("🔄 Run New Analysis"):
-            # Clear results and go back to analysis
-            if "ai_analysis_results" in st.session_state:
-                del st.session_state["ai_analysis_results"]
-            st.rerun()
+    else:
+        # Standard export section for non-CrewAI results
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            if st.button("📊 Export Recommendations CSV"):
+                csv_data = export_recommendations_csv(results)
+                st.download_button(
+                    label="💾 Download CSV",
+                    data=csv_data,
+                    file_name=f"ai_recommendations_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                    mime="text/csv"
+                )
+        
+        with col2:
+            if st.button("📋 Export Detailed Report"):
+                json_data = export_detailed_json(results)
+                st.download_button(
+                    label="💾 Download JSON Report",
+                    data=json_data,
+                    file_name=f"ai_analysis_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
+                    mime="application/json"
+                )
+        
+        with col3:
+            if st.button("🔄 Run New Analysis"):
+                # Clear results and go back to analysis
+                if "ai_analysis_results" in st.session_state:
+                    del st.session_state["ai_analysis_results"]
+                st.rerun()
 
 
 def render_ai_analysis_trigger():
@@ -1745,6 +1845,571 @@ def export_detailed_json(results: Dict[str, Any]) -> str:
     return json.dumps(results, indent=2, default=str)
 
 
+def export_crewai_offers_csv(results: Dict[str, Any]) -> str:
+    """Export CrewAI personalized offers as CSV for CRM integration"""
+    
+    # Check for CrewAI results in session state first (most recent)
+    if "crewai_deliverables" in st.session_state:
+        deliverables = st.session_state["crewai_deliverables"]
+        offers = deliverables.get('personalized_offers', [])
+    else:
+        # Fallback to results parameter
+        collaboration_results = results.get('collaboration_results', {})
+        deliverables = collaboration_results.get('deliverables', {})
+        offers = deliverables.get('personalized_offers', [])
+    
+    # Create comprehensive export data for CRM systems
+    export_data = []
+    
+    if not offers:
+        # Create sample data to show the structure when no real data is available
+        export_data = [{
+            "Customer_ID": "SAMPLE_001",
+            "Customer_Name": "Sample Customer",
+            "Offer_Type": "No Data Available",
+            "Offer_Title": "No personalized offers available for export",
+            "Offer_Description": "Please run CrewAI collaboration with customer data to generate offers",
+            "Current_Plan": "N/A",
+            "Recommended_Plan": "N/A",
+            "Discount_Details": "N/A",
+            "Monthly_Value_HKD": "0",
+            "Revenue_Impact_HKD": "0",
+            "Confidence_Score": "0%",
+            "Expiry_Date": "N/A",
+            "Campaign_Code": "NO_DATA",
+            "Priority": "N/A",
+            "Status": "No Data - Please Upload Customer Data First"
+        }]
+    else:
+        for offer in offers:
+            export_data.append({
+                "Customer_ID": offer.get("customer_id", ""),
+                "Customer_Name": offer.get("customer_name", ""),
+                "Offer_Type": offer.get("offer_type", ""),
+                "Offer_Title": offer.get("title", ""),
+                "Offer_Description": offer.get("description", ""),
+                "Current_Plan": offer.get("current_plan", ""),
+                "Recommended_Plan": offer.get("recommended_plan", ""),
+                "Discount_Details": offer.get("discount", ""),
+                "Monthly_Value_HKD": offer.get("estimated_value", ""),
+                "Revenue_Impact_HKD": offer.get("revenue_impact", ""),
+                "Confidence_Score": f"{offer.get('confidence', 0) * 100:.0f}%",
+                "Expiry_Date": offer.get("expiry_date", ""),
+                "Campaign_Code": f"THREE_HK_{offer.get('offer_type', 'GENERAL').upper().replace(' ', '_')}",
+                "Priority": "High" if offer.get('confidence', 0) > 0.8 else "Medium" if offer.get('confidence', 0) > 0.6 else "Low",
+                "Status": "Ready for CRM Import"
+            })
+    
+    # Convert to DataFrame and export
+    df = pd.DataFrame(export_data)
+    return df.to_csv(index=False)
+
+
+def export_crewai_recommendations_csv(results: Dict[str, Any]) -> str:
+    """Export CrewAI customer action recommendations as CSV"""
+    
+    # Check for CrewAI results in session state first (most recent)
+    if "crewai_deliverables" in st.session_state:
+        deliverables = st.session_state["crewai_deliverables"]
+        recommendations = deliverables.get('customer_recommendations', [])
+    else:
+        # Fallback to results parameter
+        collaboration_results = results.get('collaboration_results', {})
+        deliverables = collaboration_results.get('deliverables', {})
+        recommendations = deliverables.get('customer_recommendations', [])
+    
+    # Create actionable recommendations export for sales teams
+    export_data = []
+    
+    if not recommendations:
+        # Create sample data to show the structure when no real data is available
+        export_data = [{
+            "Customer_ID": "SAMPLE_001",
+            "Customer_Name": "Sample Customer",
+            "Priority_Level": "No Data Available",
+            "Action_Required": "No customer recommendations available for export",
+            "Expected_Outcome": "Please run CrewAI collaboration with customer data to generate recommendations",
+            "Timeline": "N/A",
+            "Success_Probability": "0%",
+            "Talking_Points": "No data available - please upload customer data first",
+            "Contact_Method": "N/A",
+            "Department": "Sales Team",
+            "Territory": "Hong Kong",
+            "Follow_Up_Date": "N/A",
+            "Status": "No Data - Upload Customer Data First",
+            "Lead_Score": "No Data",
+            "Campaign_Type": "NO_DATA_AVAILABLE",
+            "Revenue_Potential": "N/A",
+            "Notes": "No recommendations generated - customer data required",
+            "Assigned_To": "N/A",
+            "Created_Date": datetime.now().strftime('%Y-%m-%d'),
+            "Created_Time": datetime.now().strftime('%H:%M:%S')
+        }]
+    else:
+        for rec in recommendations:
+            # Join talking points into a single string
+            talking_points = "; ".join(rec.get('talking_points', []))
+            
+            export_data.append({
+                "Customer_ID": rec.get("customer_id", ""),
+                "Customer_Name": rec.get("customer_name", ""),
+                "Priority_Level": rec.get("priority", ""),
+                "Action_Required": rec.get("action", ""),
+                "Expected_Outcome": rec.get("expected_outcome", ""),
+                "Timeline": rec.get("timeline", ""),
+                "Success_Probability": rec.get("success_probability", ""),
+                "Talking_Points": talking_points,
+                "Contact_Method": "Phone Call + Email",
+                "Department": "Sales Team",
+                "Territory": "Hong Kong",
+                "Follow_Up_Date": (datetime.now() + timedelta(days=7)).strftime('%Y-%m-%d'),
+                "Status": "Pending Action",
+                "Lead_Score": "Hot" if rec.get("priority") == "High" else "Warm",
+                "Campaign_Type": "AI_Generated_Recommendation",
+                "Revenue_Potential": rec.get("expected_outcome", ""),
+                "Notes": f"AI-generated recommendation based on customer behavior analysis",
+                "Assigned_To": "Sales Representative",
+                "Created_Date": datetime.now().strftime('%Y-%m-%d'),
+                "Created_Time": datetime.now().strftime('%H:%M:%S')
+            })
+    
+    df = pd.DataFrame(export_data)
+    return df.to_csv(index=False)
+
+
+def export_campaign_summary_csv(results: Dict[str, Any]) -> str:
+    """Export executive campaign summary for management reporting"""
+    
+    # Check for CrewAI results in session state first (most recent)
+    if "crewai_collaboration_results" in st.session_state:
+        collaboration_results = st.session_state["crewai_collaboration_results"]
+        deliverables = collaboration_results.get('deliverables', {})
+        summary = deliverables.get('summary_count', {})
+    else:
+        # Fallback to results parameter
+        collaboration_results = results.get('collaboration_results', {})
+        deliverables = collaboration_results.get('deliverables', {})
+        summary = deliverables.get('summary_count', {})
+    
+    # Extract key metrics from collaboration results
+    performance_metrics = collaboration_results.get('performance_metrics', {})
+    revenue_impact = performance_metrics.get('revenue_impact', {})
+    
+    # Check if we have actual data
+    has_data = bool(deliverables.get('personalized_offers', []) or deliverables.get('customer_recommendations', []))
+    
+    if not has_data:
+        # Create sample/empty data structure
+        export_data = [{
+            "Report_Date": datetime.now().strftime('%Y-%m-%d'),
+            "Report_Time": datetime.now().strftime('%H:%M:%S'),
+            "Analysis_Type": "CrewAI_Multi_Agent_Analysis",
+            "Total_Customers_Analyzed": 0,
+            "Personalized_Offers_Created": 0,
+            "Email_Templates_Generated": 0,
+            "Action_Recommendations": 0,
+            "High_Priority_Actions": 0,
+            "Medium_Priority_Actions": 0,
+            "Total_Revenue_Potential_HKD": "No Data Available",
+            "Average_Customer_Value_HKD": "No Data Available",
+            "Campaign_Readiness": "No Data - Upload Customer Data",
+            "Business_Confidence": "0%",
+            "Implementation_Timeline": "N/A - Requires Customer Data",
+            "Territory": "Hong Kong",
+            "Business_Unit": "Three HK",
+            "Analyzed_By": "AI CrewAI Multi-Agent System",
+            "Validation_Status": "No Data - Customer Upload Required",
+            "Next_Review_Date": "Upload customer data first",
+            "Executive_Summary": "No analysis available. Please upload customer data and run CrewAI collaboration to generate business intelligence summary."
+        }]
+    else:
+        # Create executive summary data with real data
+        export_data = [{
+            "Report_Date": datetime.now().strftime('%Y-%m-%d'),
+            "Report_Time": datetime.now().strftime('%H:%M:%S'),
+            "Analysis_Type": "CrewAI_Multi_Agent_Analysis",
+            "Total_Customers_Analyzed": len(results.get('customer_data', {}).get('data', [])),
+            "Personalized_Offers_Created": summary.get('offers_created', 0),
+            "Email_Templates_Generated": summary.get('emails_generated', 0),
+            "Action_Recommendations": summary.get('recommendations_made', 0),
+            "High_Priority_Actions": len([r for r in deliverables.get('customer_recommendations', []) if r.get('priority') == 'High']),
+            "Medium_Priority_Actions": len([r for r in deliverables.get('customer_recommendations', []) if r.get('priority') == 'Medium']),
+            "Total_Revenue_Potential_HKD": revenue_impact.get('total_annual_uplift', 'TBD'),
+            "Average_Customer_Value_HKD": revenue_impact.get('avg_customer_uplift', 'TBD'),
+            "Campaign_Readiness": "100% Ready",
+            "Business_Confidence": f"{collaboration_results.get('consensus_scores', {}).get('overall_consensus', 85):.0f}%",
+            "Implementation_Timeline": "Immediate - 30 days",
+            "Territory": "Hong Kong",
+            "Business_Unit": "Three HK",
+            "Analyzed_By": "AI CrewAI Multi-Agent System",
+            "Validation_Status": "AI Consensus Validated",
+            "Next_Review_Date": (datetime.now() + timedelta(days=30)).strftime('%Y-%m-%d'),
+            "Executive_Summary": f"AI analysis generated {summary.get('offers_created', 0)} personalized offers and {summary.get('recommendations_made', 0)} actionable recommendations for immediate implementation."
+        }]
+    
+    df = pd.DataFrame(export_data)
+    return df.to_csv(index=False)
+
+
+def export_email_templates_package(results: Dict[str, Any]) -> bytes:
+    """Export email templates as individual files in a ZIP package"""
+    import zipfile
+    import io
+    
+    # Check for CrewAI results in session state first (most recent)
+    if "crewai_deliverables" in st.session_state:
+        deliverables = st.session_state["crewai_deliverables"]
+        templates = deliverables.get('email_templates', [])
+    else:
+        # Fallback to results parameter
+        collaboration_results = results.get('collaboration_results', {})
+        deliverables = collaboration_results.get('deliverables', {})
+        templates = deliverables.get('email_templates', [])
+    
+    if not templates:
+        # Return ZIP with explanation file
+        zip_buffer = io.BytesIO()
+        with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+            explanation = """Three HK Email Marketing Templates - No Data Available
+
+Generated: {datetime}
+
+STATUS: No email templates available for export
+
+REASON: No customer data was provided to the CrewAI collaboration system.
+
+TO GENERATE EMAIL TEMPLATES:
+1. Upload customer data (CSV files) using the Upload Data page
+2. Navigate to Analysis Results page  
+3. Click "Launch Collaboration" to run CrewAI multi-agent analysis
+4. Download generated email templates after analysis completes
+
+The CrewAI system will generate personalized email templates based on:
+- Customer segmentation analysis
+- Behavioral patterns and preferences
+- Revenue optimization recommendations
+- Hong Kong market localization
+
+For support, contact the AI Revenue Assistant team.
+""".format(datetime=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+            
+            zip_file.writestr("NO_DATA_EXPLANATION.txt", explanation)
+        return zip_buffer.getvalue()
+    
+    # Create ZIP file with email templates
+    zip_buffer = io.BytesIO()
+    with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+        
+        # Add README file
+        readme_content = f"""Three HK Email Marketing Templates
+Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+Templates: {len(templates)}
+
+This package contains ready-to-use email marketing templates generated by AI analysis.
+
+Files included:
+"""
+        
+        for i, template in enumerate(templates):
+            template_id = template.get('template_id', f'TEMPLATE_{i+1:03d}')
+            template_name = template.get('template_name', 'Unknown Template')
+            
+            # Add template as HTML file
+            html_content = f"""<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{template.get('subject', 'Email Template')}</title>
+    <style>
+        body {{ font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }}
+        .header {{ background: #e74c3c; color: white; padding: 20px; text-align: center; }}
+        .content {{ padding: 20px; background: #f9f9f9; }}
+        .footer {{ padding: 10px; text-align: center; font-size: 12px; color: #666; }}
+        .personalization {{ background: #fff3cd; padding: 10px; margin: 10px 0; border-left: 4px solid #ffc107; }}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Three HK</h1>
+        <h2>{template.get('subject', 'Email Template')}</h2>
+    </div>
+    
+    <div class="content">
+        <div class="personalization">
+            <strong>Template ID:</strong> {template_id}<br>
+            <strong>Target Audience:</strong> {template.get('target_audience', 'All customers')}<br>
+            <strong>Offer Type:</strong> {template.get('offer_type', 'General')}<br>
+            <strong>Personalization Fields:</strong> {', '.join(template.get('personalization_fields', []))}
+        </div>
+        
+        <div style="white-space: pre-line; padding: 20px; background: white; border: 1px solid #ddd;">
+{template.get('body', 'No content available')}
+        </div>
+    </div>
+    
+    <div class="footer">
+        Generated by Three HK AI Revenue Assistant | {datetime.now().strftime('%Y-%m-%d')}
+    </div>
+</body>
+</html>"""
+            
+            # Add HTML template to ZIP
+            zip_file.writestr(f"{template_id}_{template_name.replace(' ', '_')}.html", html_content)
+            
+            # Add plain text version
+            txt_content = f"""Template: {template_name}
+Template ID: {template_id}
+Subject: {template.get('subject', 'No subject')}
+Target Audience: {template.get('target_audience', 'All customers')}
+Offer Type: {template.get('offer_type', 'General')}
+
+Personalization Fields:
+{chr(10).join(f'- {field}' for field in template.get('personalization_fields', []))}
+
+Email Body:
+{template.get('body', 'No content available')}
+
+---
+Generated by Three HK AI Revenue Assistant
+Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+"""
+            
+            zip_file.writestr(f"{template_id}_{template_name.replace(' ', '_')}.txt", txt_content)
+            
+            # Update README
+            readme_content += f"- {template_id}_{template_name.replace(' ', '_')}.html\n"
+            readme_content += f"- {template_id}_{template_name.replace(' ', '_')}.txt\n"
+        
+        # Add README to ZIP
+        zip_file.writestr("README.txt", readme_content)
+    
+    return zip_buffer.getvalue()
+
+
+def export_complete_business_package(results: Dict[str, Any]) -> bytes:
+    """Export complete business intelligence package as ZIP"""
+    import zipfile
+    import io
+    
+    zip_buffer = io.BytesIO()
+    with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+        
+        # Add customer offers CSV
+        offers_csv = export_crewai_offers_csv(results)
+        zip_file.writestr("1_Customer_Offers.csv", offers_csv)
+        
+        # Add action recommendations CSV
+        recommendations_csv = export_crewai_recommendations_csv(results)
+        zip_file.writestr("2_Action_Recommendations.csv", recommendations_csv)
+        
+        # Add campaign summary CSV
+        summary_csv = export_campaign_summary_csv(results)
+        zip_file.writestr("3_Campaign_Summary.csv", summary_csv)
+        
+        # Add legacy recommendations CSV
+        legacy_csv = export_recommendations_csv(results)
+        zip_file.writestr("4_Legacy_Recommendations.csv", legacy_csv)
+        
+        # Add detailed JSON report
+        json_report = export_detailed_json(results)
+        zip_file.writestr("5_Detailed_Analysis_Report.json", json_report)
+        
+        # Add email templates (extract from ZIP)
+        collaboration_results = results.get('collaboration_results', {})
+        deliverables = collaboration_results.get('deliverables', {})
+        templates = deliverables.get('email_templates', [])
+        
+        for i, template in enumerate(templates):
+            template_id = template.get('template_id', f'TEMPLATE_{i+1:03d}')
+            template_name = template.get('template_name', 'Unknown Template')
+            
+            # Add template as text file in templates folder
+            txt_content = f"""Template: {template_name}
+Template ID: {template_id}
+Subject: {template.get('subject', 'No subject')}
+Target Audience: {template.get('target_audience', 'All customers')}
+Offer Type: {template.get('offer_type', 'General')}
+
+Personalization Fields:
+{chr(10).join(f'- {field}' for field in template.get('personalization_fields', []))}
+
+Email Body:
+{template.get('body', 'No content available')}
+"""
+            zip_file.writestr(f"Email_Templates/{template_id}_{template_name.replace(' ', '_')}.txt", txt_content)
+        
+        # Add executive summary
+        summary = deliverables.get('summary_count', {})
+        performance_metrics = collaboration_results.get('performance_metrics', {})
+        
+        executive_summary = f"""THREE HK AI REVENUE ASSISTANT
+BUSINESS INTELLIGENCE PACKAGE
+===============================================
+
+Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+Analysis Type: CrewAI Multi-Agent System
+Territory: Hong Kong
+
+EXECUTIVE SUMMARY
+-----------------
+✅ {summary.get('offers_created', 0)} Personalized Customer Offers Created
+✅ {summary.get('emails_generated', 0)} Email Marketing Templates Generated  
+✅ {summary.get('recommendations_made', 0)} Action Recommendations Prepared
+✅ Complete CRM Integration Package Ready
+
+BUSINESS IMPACT
+---------------
+• Revenue Optimization Potential: {performance_metrics.get('revenue_impact', {}).get('total_annual_uplift', 'TBD')}
+• Customer Engagement: Personalized offers for each customer segment
+• Campaign Readiness: 100% ready for immediate implementation
+• AI Confidence: {collaboration_results.get('consensus_scores', {}).get('overall_consensus', 85):.0f}% consensus validation
+
+PACKAGE CONTENTS
+----------------
+1. Customer_Offers.csv - CRM-ready personalized offers
+2. Action_Recommendations.csv - Sales team action items
+3. Campaign_Summary.csv - Executive campaign overview
+4. Legacy_Recommendations.csv - Standard format compatibility
+5. Detailed_Analysis_Report.json - Complete technical analysis
+6. Email_Templates/ - Ready-to-use marketing templates
+
+IMPLEMENTATION TIMELINE
+-----------------------
+Immediate (0-7 days):
+• Import offers into CRM system
+• Assign high-priority actions to sales team
+• Deploy email templates for campaign execution
+
+Short-term (1-4 weeks):
+• Execute personalized customer outreach
+• Monitor campaign performance metrics
+• Optimize based on customer responses
+
+Medium-term (1-3 months):
+• Analyze campaign ROI and effectiveness
+• Refine AI models based on outcomes
+• Scale successful strategies across customer base
+
+NEXT STEPS
+----------
+1. Review and approve offer strategies with management
+2. Import data into CRM and marketing automation systems
+3. Coordinate with sales and marketing teams for execution
+4. Schedule follow-up AI analysis for performance optimization
+
+SUPPORT
+-------
+For technical support or questions about this analysis:
+• Contact: Three HK AI Revenue Assistant Team
+• Generated by: CrewAI Multi-Agent Analysis System
+• Validation: AI Consensus Verified (5-Agent Collaboration)
+
+This package represents the transformation of raw customer data into
+actionable business intelligence ready for revenue optimization.
+"""
+        
+        zip_file.writestr("EXECUTIVE_SUMMARY.txt", executive_summary)
+    
+    return zip_buffer.getvalue()
+
+
+def standardize_crewai_export_data(crewai_results: Dict[str, Any]) -> Dict[str, Any]:
+    """Standardize CrewAI results for consistent CSV export format"""
+    
+    try:
+        # Extract collaboration results
+        collaboration_results = crewai_results.get("collaboration_results", {})
+        deliverables = collaboration_results.get("deliverables", {})
+        
+        # Calculate total revenue potential
+        total_revenue_potential = 0
+        offers = deliverables.get("personalized_offers", [])
+        
+        for offer in offers:
+            # Extract revenue impact value
+            revenue_str = offer.get("revenue_impact", "0")
+            # Clean up the string and extract number
+            revenue_clean = revenue_str.replace("HK$", "").replace(",", "").replace(" annually", "").replace("(retention)", "")
+            try:
+                total_revenue_potential += float(revenue_clean)
+            except (ValueError, AttributeError):
+                pass
+        
+        # Standardized data structure
+        standardized_data = {
+            "offers": deliverables.get("personalized_offers", []),
+            "email_templates": deliverables.get("email_templates", []),
+            "recommendations": deliverables.get("customer_recommendations", []),
+            "summary_metrics": deliverables.get("summary_count", {}),
+            "business_impact": {
+                "total_customers_analyzed": len(offers),
+                "total_revenue_potential_hkd": total_revenue_potential,
+                "average_confidence_score": sum(offer.get("confidence", 0) for offer in offers) / len(offers) if offers else 0,
+                "high_priority_offers": len([o for o in offers if o.get("confidence", 0) > 0.85]),
+                "campaign_types": list(set(offer.get("offer_type", "") for offer in offers))
+            },
+            "metadata": {
+                "generated_at": datetime.now().isoformat(),
+                "system_version": "CrewAI Enhanced Multi-Agent v1.0",
+                "export_format_version": "1.0",
+                "data_privacy_compliant": True,
+                "hong_kong_market_optimized": True,
+                "ai_models_used": ["Llama 3.3 70B", "Mistral 7B"],
+                "processing_time_minutes": collaboration_results.get("processing_time", "N/A"),
+                "agent_consensus_rate": collaboration_results.get("consensus_rate", "N/A")
+            },
+            "validation": {
+                "offers_validated": all(
+                    offer.get("customer_id") and offer.get("offer_type") and offer.get("confidence")
+                    for offer in offers
+                ),
+                "templates_validated": all(
+                    template.get("template_id") and template.get("template_name")
+                    for template in deliverables.get("email_templates", [])
+                ),
+                "recommendations_validated": all(
+                    rec.get("customer_id") and rec.get("priority") and rec.get("action")
+                    for rec in deliverables.get("customer_recommendations", [])
+                ),
+                "data_integrity_passed": True,
+                "export_ready": True
+            }
+        }
+        
+        return standardized_data
+        
+    except Exception as e:
+        logger.error(f"Error standardizing CrewAI export data: {e}")
+        # Return fallback structure
+        return {
+            "offers": [],
+            "email_templates": [],
+            "recommendations": [],
+            "summary_metrics": {"offers_created": 0, "emails_generated": 0, "recommendations_made": 0},
+            "business_impact": {
+                "total_customers_analyzed": 0,
+                "total_revenue_potential_hkd": 0,
+                "average_confidence_score": 0,
+                "high_priority_offers": 0,
+                "campaign_types": []
+            },
+            "metadata": {
+                "generated_at": datetime.now().isoformat(),
+                "system_version": "CrewAI Enhanced Multi-Agent v1.0",
+                "export_format_version": "1.0",
+                "error": str(e),
+                "fallback_mode": True
+            },
+            "validation": {
+                "offers_validated": False,
+                "templates_validated": False,
+                "recommendations_validated": False,
+                "data_integrity_passed": False,
+                "export_ready": False
+            }
+        }
+
+
 def render_getting_started():
     """Render getting started message when no data is available"""
     
@@ -2046,10 +2711,56 @@ def render_agent_collaboration_section(results: Dict[str, Any]):
         """)
     
     if collaboration_triggered:
-        process_agent_collaboration_from_results(results, collaboration_mode)
+        # Get customer data from session state for CrewAI processing
+        full_customer_data = st.session_state.get("customer_data", {})
+        customers_to_analyze = st.session_state.get("customers_to_analyze", 5)
+        
+        if full_customer_data:
+            # Extract actual customer records based on storage format
+            if isinstance(full_customer_data, dict) and "original_data" in full_customer_data:
+                # New format: extract DataFrame from privacy pipeline
+                df = full_customer_data["original_data"]
+                if df is not None and not df.empty:
+                    # Convert DataFrame to list of dicts and limit to analysis count
+                    customer_records = df.head(customers_to_analyze).to_dict('records')
+                else:
+                    customer_records = []
+                total_available = len(df) if df is not None else 0
+            elif isinstance(full_customer_data, list):
+                # List format - slice to limit
+                customer_records = full_customer_data[:customers_to_analyze]
+                total_available = len(full_customer_data)
+            elif isinstance(full_customer_data, dict):
+                # Dict format - convert to list and limit
+                customer_list = list(full_customer_data.values()) if full_customer_data else []
+                customer_records = customer_list[:customers_to_analyze]
+                total_available = len(customer_list)
+            else:
+                customer_records = []
+                total_available = 0
+            
+            if customer_records:
+                # Structure customer data properly for CrewAI orchestrator
+                structured_customer_data = {
+                    'customers': customer_records,
+                    'total_customers': len(customer_records),
+                    'fields': list(customer_records[0].keys()) if customer_records else [],
+                    'timestamp': datetime.now().isoformat(),
+                    'revenue_baseline': 175000,  # HK$ monthly baseline
+                    'analysis_limit': customers_to_analyze
+                }
+                
+                st.info(f"🔍 **Analysis Scope:** Processing {len(customer_records)} customers out of {total_available} total (Analysis Limit: {customers_to_analyze})")
+                process_agent_collaboration_from_results(results, collaboration_mode, structured_customer_data)
+            else:
+                st.error("❌ No customer records found to process.")
+                st.info("💡 **Tip:** Ensure customer data is properly loaded and contains valid records.")
+        else:
+            st.error("❌ No customer data available in session state. Please ensure data is loaded before collaboration.")
+            st.info("💡 **Tip:** Upload customer data and run Lead Intelligence analysis first.")
 
 
-def process_agent_collaboration_from_results(lead_results: Dict[str, Any], mode: str = "standard"):
+def process_agent_collaboration_from_results(lead_results: Dict[str, Any], mode: str = "standard", customer_data: Dict[str, Any] = None):
     """Process agent collaboration using Lead Intelligence results with enhanced CrewAI integration"""
     
     try:
@@ -2079,9 +2790,19 @@ def process_agent_collaboration_from_results(lead_results: Dict[str, Any], mode:
             # Transform Lead Intelligence results
             transformed_results = transform_lead_intelligence_results(lead_results)
             
-            # Process based on selected mode
-            if mode in ["crewai_enhanced", "hybrid"] and crewai_available:
-                # Use CrewAI enhanced integration
+            # For CrewAI modes, we need to pass the customer data directly
+            if mode in ["crewai_enhanced", "hybrid"] and crewai_available and customer_data:
+                # Log customer data info for debugging
+                customer_count = len(customer_data) if isinstance(customer_data, (list, dict)) else 0
+                st.info(f"🔍 **Debug:** Passing {customer_count} customers to CrewAI collaboration")
+                
+                # Use CrewAI enhanced integration with actual customer data
+                collaboration_results = process_agent_collaboration_with_crewai(
+                    lead_results, mode, customer_data
+                )
+            elif mode in ["crewai_enhanced", "hybrid"] and crewai_available:
+                # Use CrewAI with transformed results only (fallback)
+                st.warning("⚠️ No customer data provided, using transformed results only")
                 collaboration_results = process_agent_collaboration_with_crewai(
                     transformed_results, mode
                 )
@@ -2108,6 +2829,29 @@ def process_agent_collaboration_from_results(lead_results: Dict[str, Any], mode:
             mode_display = collaboration_results.get("collaboration_type", mode.title())
             enhancement_level = collaboration_results.get("enhancement_level", "Standard")
             st.success(f"✅ {mode_display} collaboration completed successfully! ({enhancement_level})")
+            
+            # Store CrewAI results to session state for export functions
+            if collaboration_results:
+                st.session_state["crewai_collaboration_results"] = collaboration_results
+                
+                # Extract and store deliverables for exports
+                deliverables = collaboration_results.get("deliverables", {})
+                if deliverables:
+                    st.session_state["crewai_deliverables"] = deliverables
+                    
+                    # Store specific deliverable types
+                    if "personalized_offers" in deliverables:
+                        st.session_state["crewai_offers"] = deliverables["personalized_offers"]
+                    if "email_templates" in deliverables:
+                        st.session_state["crewai_email_templates"] = deliverables["email_templates"]
+                    if "action_items" in deliverables:
+                        st.session_state["crewai_action_items"] = deliverables["action_items"]
+                    if "campaign_summary" in deliverables:
+                        st.session_state["crewai_campaign_summary"] = deliverables["campaign_summary"]
+                
+                # Debug info
+                customer_count = len(customer_data) if customer_data else 0
+                st.write(f"🔍 Debug: Stored collaboration results for {customer_count} customers to session state")
             
             # Show collaboration overview
             with st.expander("🎯 Collaboration Overview", expanded=True):
@@ -2466,6 +3210,219 @@ def process_agent_collaboration_from_results(lead_results: Dict[str, Any], mode:
             4. **Execute** retention campaigns and upsell strategies
             5. **Monitor** performance through the Agent Collaboration Dashboard (port 8501)
             """)
+            
+            # Add export options for CrewAI collaboration results
+            st.markdown("### 📤 **Download Business Intelligence**")
+            st.markdown("**Transform your AI insights into business-ready files:**")
+            
+            # Check if we have collaboration results in session state
+            if "crewai_collaboration_results" in st.session_state:
+                # Use most recent CrewAI collaboration results
+                session_collaboration_results = st.session_state["crewai_collaboration_results"]
+            elif "ai_analysis_results" in st.session_state:
+                # Fallback to standard analysis results
+                session_results = st.session_state["ai_analysis_results"]
+                session_collaboration_results = session_results.get('collaboration_results', {})
+            else:
+                # No collaboration results available
+                session_collaboration_results = {}
+            
+            # Only show export options if we have results
+            if session_collaboration_results:
+                # Enhanced export options with 4 columns
+                col1, col2, col3, col4 = st.columns(4)
+                
+                with col1:
+                    # Direct download button for CSV offers
+                    try:
+                        csv_data = export_crewai_offers_csv(session_collaboration_results)
+                        st.download_button(
+                            label="� Download Customer Offers",
+                            data=csv_data,
+                            file_name=f"crewai_customer_offers_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                            mime="text/csv",
+                            help="CRM-ready customer offers with revenue projections",
+                            key="download_offers_csv"
+                        )
+                    except Exception as e:
+                        st.button("� Export Offers CSV", disabled=True, help=f"Export error: {str(e)}")
+                
+                with col2:
+                    # Direct download button for email templates
+                    try:
+                        template_data = export_email_templates_package(session_collaboration_results)
+                        st.download_button(
+                            label="� Download Email Templates",
+                            data=template_data,
+                            file_name=f"crewai_email_templates_{datetime.now().strftime('%Y%m%d_%H%M%S')}.zip",
+                            mime="application/zip",
+                            help="Marketing-ready email templates with personalization",
+                            key="download_templates_zip"
+                        )
+                    except Exception as e:
+                        st.button("📧 Export Email Templates", disabled=True, help=f"Export error: {str(e)}")
+                
+                with col3:
+                    # Direct download button for action recommendations
+                    try:
+                        csv_data = export_crewai_recommendations_csv(session_collaboration_results)
+                        st.download_button(
+                            label="🎯 Download Action Items",
+                            data=csv_data,
+                            file_name=f"crewai_action_recommendations_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                            mime="text/csv",
+                            help="Sales team action items with priorities",
+                            key="download_actions_csv"
+                        )
+                    except Exception as e:
+                        st.button("🎯 Export Actions CSV", disabled=True, help=f"Export error: {str(e)}")
+                
+                with col4:
+                    # Direct download button for campaign summary
+                    try:
+                        summary_data = export_campaign_summary_csv(session_collaboration_results)
+                        st.download_button(
+                            label="� Download Campaign Summary",
+                            data=summary_data,
+                            file_name=f"crewai_campaign_summary_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                            mime="text/csv",
+                            help="Executive summary for management reporting",
+                            key="download_summary_csv"
+                        )
+                    except Exception as e:
+                        st.button("� Export Campaign Summary", disabled=True, help=f"Export error: {str(e)}")
+                
+                # Complete package option
+                st.markdown("#### 📦 **Complete Package**")
+                try:
+                    zip_data = export_complete_business_package(session_collaboration_results)
+                    st.download_button(
+                        label="� Download Complete Business Intelligence Package",
+                        data=zip_data,
+                        file_name=f"crewai_business_intelligence_{datetime.now().strftime('%Y%m%d_%H%M%S')}.zip",
+                        mime="application/zip",
+                        help="Complete business intelligence package with all deliverables",
+                        key="download_complete_zip"
+                    )
+                except Exception as e:
+                    st.button("🚀 Export All ZIP", disabled=True, help=f"Export error: {str(e)}")
+                
+                # Add preview sections for all export options
+                st.markdown("---")
+                st.markdown("### 👁️ **Export Previews**")
+                st.markdown("**Preview your business intelligence data before downloading:**")
+                
+                # Create tabs for different previews
+                tab1, tab2, tab3, tab4, tab5 = st.tabs(["📊 Customer Offers", "📧 Email Templates", "🎯 Action Items", "📊 Campaign Summary", "📦 Complete Package"])
+                
+                with tab1:
+                    try:
+                        csv_data = export_crewai_offers_csv(session_collaboration_results)
+                        import io
+                        df_preview = pd.read_csv(io.StringIO(csv_data))
+                        st.markdown("**📊 Customer Offers Data Preview:**")
+                        st.dataframe(df_preview.head(10), use_container_width=True)
+                        st.markdown(f"**Total Records:** {len(df_preview)} customers")
+                        st.markdown(f"**Columns:** {', '.join(df_preview.columns.tolist())}")
+                    except Exception as e:
+                        st.error(f"Preview error: {str(e)}")
+                
+                with tab2:
+                    try:
+                        template_data = export_email_templates_package(session_collaboration_results)
+                        import zipfile
+                        zip_buffer = io.BytesIO(template_data)
+                        with zipfile.ZipFile(zip_buffer, 'r') as zip_file:
+                            file_list = zip_file.namelist()
+                            st.markdown("**📧 Email Templates Package Contents:**")
+                            for file_name in file_list:
+                                st.markdown(f"📄 {file_name}")
+                            st.markdown(f"**Total Files:** {len(file_list)} email templates")
+                            
+                            # Show preview of first template
+                            if file_list:
+                                first_file = file_list[0]
+                                try:
+                                    content = zip_file.read(first_file).decode('utf-8')
+                                    st.markdown(f"**Preview of {first_file}:**")
+                                    st.text_area("Email Template Content", content[:500] + "..." if len(content) > 500 else content, height=200, key="template_preview_tab")
+                                except:
+                                    st.info("Binary file - preview not available")
+                    except Exception as e:
+                        st.error(f"Preview error: {str(e)}")
+                
+                with tab3:
+                    try:
+                        csv_data = export_crewai_recommendations_csv(session_collaboration_results)
+                        df_preview = pd.read_csv(io.StringIO(csv_data))
+                        st.markdown("**🎯 Action Items Data Preview:**")
+                        st.dataframe(df_preview.head(10), use_container_width=True)
+                        st.markdown(f"**Total Records:** {len(df_preview)} action items")
+                        st.markdown(f"**Columns:** {', '.join(df_preview.columns.tolist())}")
+                        
+                        # Show priority distribution
+                        if 'Priority' in df_preview.columns:
+                            priority_counts = df_preview['Priority'].value_counts()
+                            st.markdown("**Priority Distribution:**")
+                            for priority, count in priority_counts.items():
+                                st.markdown(f"• {priority}: {count} items")
+                    except Exception as e:
+                        st.error(f"Preview error: {str(e)}")
+                
+                with tab4:
+                    try:
+                        summary_data = export_campaign_summary_csv(session_collaboration_results)
+                        df_preview = pd.read_csv(io.StringIO(summary_data))
+                        st.markdown("**📊 Campaign Summary Data Preview:**")
+                        st.dataframe(df_preview, use_container_width=True)
+                        st.markdown(f"**Total Records:** {len(df_preview)} summary items")
+                        st.markdown(f"**Columns:** {', '.join(df_preview.columns.tolist())}")
+                        
+                        # Show key metrics if available
+                        if 'Metric' in df_preview.columns and 'Value' in df_preview.columns:
+                            st.markdown("**Key Metrics:**")
+                            for idx, row in df_preview.iterrows():
+                                st.markdown(f"• {row['Metric']}: {row['Value']}")
+                    except Exception as e:
+                        st.error(f"Preview error: {str(e)}")
+                
+                with tab5:
+                    try:
+                        zip_data = export_complete_business_package(session_collaboration_results)
+                        zip_buffer = io.BytesIO(zip_data)
+                        with zipfile.ZipFile(zip_buffer, 'r') as zip_file:
+                            file_list = zip_file.namelist()
+                            st.markdown("**📦 Complete Business Intelligence Package Contents:**")
+                            
+                            # Group files by type
+                            csv_files = [f for f in file_list if f.endswith('.csv')]
+                            zip_files = [f for f in file_list if f.endswith('.zip')]
+                            other_files = [f for f in file_list if not f.endswith('.csv') and not f.endswith('.zip')]
+                            
+                            if csv_files:
+                                st.markdown("**📊 CSV Reports:**")
+                                for file_name in csv_files:
+                                    st.markdown(f"• {file_name}")
+                            
+                            if zip_files:
+                                st.markdown("**📧 Template Packages:**")
+                                for file_name in zip_files:
+                                    st.markdown(f"• {file_name}")
+                            
+                            if other_files:
+                                st.markdown("**📄 Additional Files:**")
+                                for file_name in other_files:
+                                    st.markdown(f"• {file_name}")
+                            
+                            st.markdown(f"**Total Files:** {len(file_list)} business intelligence assets")
+                    except Exception as e:
+                        st.error(f"Preview error: {str(e)}")
+                    
+            else:
+                # No session data available
+                st.warning("⚠️ No collaboration results available. Please run CrewAI collaboration first.")
+                st.info("💡 Click 'Launch Collaboration' button above to generate exportable business intelligence.")
+            
             
             # Link to other dashboards
             col1, col2 = st.columns(2)

@@ -28,30 +28,84 @@ def setup_page_config():
         },
     )
 
-    # Apply Three HK color scheme
+    # Apply Three HK color scheme with explicit text colors
     st.markdown(
         f"""
     <style>
+        /* Global app styling */
         .stApp {{
-            background-color: {config.ACCENT_COLOR};
+            background-color: {config.ACCENT_COLOR} !important;
+            color: {config.SECONDARY_COLOR} !important;
         }}
+        
+        /* Main content area */
+        .main .block-container {{
+            background-color: {config.ACCENT_COLOR} !important;
+            color: {config.SECONDARY_COLOR} !important;
+        }}
+        
+        /* Force text color for ALL text elements */
+        .stApp *, .main *, .block-container *, 
+        .stMarkdown, .stMarkdown *, .stText, .stCaption, .stWrite, 
+        p, div, span, h1, h2, h3, h4, h5, h6, 
+        .stSelectbox label, .stTextInput label,
+        .element-container *, .stDataFrame *, .stTable *,
+        .stMetric *, .stInfo *, .stSuccess *, .stWarning *, .stError * {{
+            color: {config.SECONDARY_COLOR} !important;
+        }}
+        
+        /* Header styling */
         .main-header {{
-            color: {config.SECONDARY_COLOR};
-            background-color: {config.ACCENT_COLOR};
+            color: {config.SECONDARY_COLOR} !important;
+            background-color: {config.ACCENT_COLOR} !important;
             padding: 20px;
             border-bottom: 3px solid {config.PRIMARY_COLOR};
         }}
+        
+        /* Sidebar styling */
         .sidebar .sidebar-content {{
-            background-color: #f8f9fa;
+            background-color: #f8f9fa !important;
+            color: {config.SECONDARY_COLOR} !important;
         }}
+        
+        /* Button styling */
         .stButton > button {{
-            background-color: {config.PRIMARY_COLOR};
-            color: {config.SECONDARY_COLOR};
-            border: none;
-            border-radius: 5px;
+            background-color: {config.PRIMARY_COLOR} !important;
+            color: {config.SECONDARY_COLOR} !important;
+            border: none !important;
+            border-radius: 5px !important;
         }}
+        
+        /* Input field styling */
         .stSelectbox > div > div {{
-            background-color: {config.ACCENT_COLOR};
+            background-color: {config.ACCENT_COLOR} !important;
+            color: {config.SECONDARY_COLOR} !important;
+        }}
+        
+        .stTextInput > div > div > input, .stSelectbox > div > div > select {{
+            color: {config.SECONDARY_COLOR} !important;
+            background-color: {config.ACCENT_COLOR} !important;
+        }}
+        
+        /* Streamlit specific element overrides */
+        .stMarkdown p, .stMarkdown div, .stMarkdown span {{
+            color: {config.SECONDARY_COLOR} !important;
+        }}
+        
+        /* Data display elements */
+        .stDataFrame, .stTable, .dataframe {{
+            color: {config.SECONDARY_COLOR} !important;
+        }}
+        
+        /* Metrics and status boxes */
+        .stMetric > div, .stInfo > div, .stSuccess > div, .stWarning > div, .stError > div {{
+            color: {config.SECONDARY_COLOR} !important;
+        }}
+        
+        /* Ensure high contrast for readability */
+        .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {{
+            color: {config.SECONDARY_COLOR} !important;
+            font-weight: bold !important;
         }}
     </style>
     """,

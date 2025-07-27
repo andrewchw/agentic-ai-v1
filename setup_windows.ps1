@@ -66,7 +66,7 @@ Write-Host ""
 Write-Host "🎉 Setup complete! Next steps:" -ForegroundColor Green
 Write-Host "1. Edit .env file with your OpenRouter API key" -ForegroundColor Cyan
 Write-Host "2. Test the app: python run_tests.py check" -ForegroundColor Cyan
-Write-Host "3. Run the app: streamlit run src/main.py" -ForegroundColor Cyan
+Write-Host "3. Run the app: streamlit run src/main.py --server.port 8502" -ForegroundColor Cyan
 Write-Host "4. Run full tests: python run_tests.py all" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "📚 For more information, see README.md" -ForegroundColor Yellow 

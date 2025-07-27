@@ -37,7 +37,8 @@ except Exception as e:
 
 if ($LASTEXITCODE -eq 0) {
     Write-Host "🎯 Starting Streamlit application with CrewAI support..." -ForegroundColor Green
-    streamlit run src/main.py --server.port 8501 --server.address localhost
+    Write-Host "📊 Lead Intelligence Agent will run on port 8502" -ForegroundColor Cyan
+    streamlit run src/main.py --server.port 8502 --server.address localhost
 } else {
     Write-Host "❌ CrewAI verification failed. Please check installation." -ForegroundColor Red
     pause

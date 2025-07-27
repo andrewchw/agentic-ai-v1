@@ -164,10 +164,12 @@ For issues or questions:
 **Built with privacy-first principles for Hong Kong telecom companies** 🇭🇰 
 
 ## Agent Protocol
-C:/Python313/python.exe src/agents/agent_protocol.py --host .1 --port 8080
+python src/agents/agent_protocol.py --host 127.0.0.1 --port 8080
 
 ## Lead Intelligent Agent
 C:\Users\deencat\Dropbox\agentic-ai-v1\venv\Scripts\activate..ps1;
+
+.\venv\Scripts\Activate.ps1
 python -m streamlit run src/main.py --server.port 8502
 
 ## Agent Collaboration Agent

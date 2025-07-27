@@ -17,7 +17,7 @@
       "analysis"
     ],
     "rate_limit_info": "VERIFIED WORKING - Latest coder model with excellent performance",
-    "last_used": null,
+    "last_used": "2025-07-27T22:16:10.111678",
     "failure_count": 0,
     "last_failure": null,
     "is_available": true
@@ -41,9 +41,9 @@
       "complex"
     ],
     "rate_limit_info": "VERIFIED WORKING - Most reliable 70B model, excellent stability",
-    "last_used": "2025-07-25T16:37:23.991928",
-    "failure_count": 0,
-    "last_failure": "2025-07-25T16:24:52.363715",
+    "last_used": "2025-07-27T22:13:17.752110",
+    "failure_count": 3,
+    "last_failure": "2025-07-27T22:13:54.973375",
     "is_available": true
   },
   "mistral-small-32": {
@@ -64,9 +64,9 @@
       "analysis"
     ],
     "rate_limit_info": "VERIFIED WORKING - Latest Mistral model with excellent reliability",
-    "last_used": "2025-07-25T18:58:05.052668",
+    "last_used": "2025-07-27T23:06:00.575760",
     "failure_count": 0,
-    "last_failure": "2025-07-25T16:24:50.852717",
+    "last_failure": "2025-07-27T22:13:02.737677",
     "is_available": true
   },
   "qwen25-vl-32b": {
