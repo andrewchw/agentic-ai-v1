@@ -1,0 +1,762 @@
+{
+  "timestamp": "2025-07-28T14:36:51.211263",
+  "ai_analysis_results": {
+    "success": true,
+    "processing_time": 1.5,
+    "recommendations": {
+      "recommendations": [
+        {
+          "customer_id": "ACC614603",
+          "customer_name": "Chan",
+          "recommendation_id": "AI_REC_20250728_142046_ACC614603",
+          "priority": "medium",
+          "action_type": "offer_upgrade",
+          "title": "Upgrade to 5G Standard 50GB Plan with Roaming Pack",
+          "description": "Customer Chan is on the Basic_Mobile plan with medium churn risk. Given their standard spending tier and active contract, upgrading to a higher-tier mobile plan with added value-added services would enhance satisfaction and reduce churn risk while increasing revenue potential. The recommended upgrade targets better data allocation and mainland China roaming benefits, aligning with Three HK's strengths.",
+          "expected_revenue": 23400.0,
+          "conversion_probability": 0.6,
+          "urgency_score": 0.7,
+          "business_impact_score": 0.65,
+          "next_steps": [
+            "Identify customer's data usage patterns",
+            "Present 5G Standard 50GB Plan with Asia Roaming Pack",
+            "Highlight cost savings and benefits over competitors"
+          ],
+          "talking_points": [
+            "Your current plan may limit data usage and international roaming capabilities. The 5G Standard 50GB Plan offers 50GB of high-speed data, ideal for streaming and work.",
+            "With Three HK's superior mainland China connectivity, you'll enjoy seamless roaming with our Asia Roaming Pack, perfect for travel.",
+            "This plan provides better value for your current spending tier, with competitive pricing and added benefits like faster 5G speeds."
+          ],
+          "objection_handling": {
+            "price_concern": "The upgrade adds only HK$200/month but provides 50GB of data and roaming benefits, offering better value for your usage. Long-term savings on roaming fees alone may offset the cost.",
+            "competitor_comparison": "Three HK offers the best mainland China roaming speeds and coverage, plus competitive pricing with no hidden fees. Our 5G network is consistently ranked as one of the fastest in Hong Kong.",
+            "timing_concern": "Upgrading now ensures you get full value from the plan before your contract renewal. Early adoption also locks in current promotional rates."
+          },
+          "recommended_offers": [
+            {
+              "name": "5G Standard 50GB Plan",
+              "monthly_value": 600,
+              "category": "mobile"
+            },
+            {
+              "name": "Asia Roaming Pack",
+              "monthly_value": 150,
+              "category": "vas"
+            }
+          ],
+          "explanation": {
+            "primary_reason": "Balanced revenue potential and churn mitigation with a moderate probability of conversion.",
+            "supporting_factors": [
+              "Customer Type: Individual",
+              "Spending Tier: Standard",
+              "AI Confidence: 80.0%"
+            ],
+            "risk_factors": [],
+            "confidence_score": 0.8,
+            "data_sources": [
+              "AI Analysis",
+              "Customer Profile",
+              "Product Catalog"
+            ]
+          },
+          "created_at": "2025-07-28T14:20:46.279557",
+          "expires_at": "2025-08-04T14:20:46.279557",
+          "tags": [
+            "individual",
+            "standard",
+            "standard",
+            "ai_generated"
+          ]
+        },
+        {
+          "customer_id": "ACC880659",
+          "customer_name": "Lam",
+          "recommendation_id": "AI_REC_20250728_142104_ACC880659",
+          "priority": "high",
+          "action_type": "offer_upgrade",
+          "title": "Upgrade Lam to 5G Unlimited Plus with Value-Added Services",
+          "description": "Lam is a high-spending customer on a basic plan with medium churn risk. Upgrading to 5G Unlimited Plus with Asia Roaming Pack and Premium Support will increase engagement and revenue while leveraging Three HK's strengths in mainland China connectivity and enterprise support.",
+          "expected_revenue": 25200.0,
+          "conversion_probability": 0.7,
+          "urgency_score": 0.7,
+          "business_impact_score": 0.8,
+          "next_steps": [
+            "Review Lam's usage data for the last 3 months",
+            "Prepare a customized upgrade proposal with 5G Unlimited Plus + Asia Roaming Pack + Premium Support",
+            "Schedule a call to present the offer and address objections"
+          ],
+          "talking_points": [
+            "You're currently on Basic_Mobile, but we've noticed high data usage patterns that could benefit from unlimited 5G data",
+            "Three HK offers superior mainland China connectivity\u2014ideal for business and personal travel",
+            "Our Premium Support ensures 24/7 assistance, and the Asia Roaming Pack provides seamless travel across Asia"
+          ],
+          "objection_handling": {
+            "price_concern": "The upgrade increases your monthly fee by HK$500, but you'll save on roaming fees and enjoy faster, unlimited 5G speeds. The Premium Support also provides priority service for business needs.",
+            "competitor_comparison": "Three HK's mainland China coverage is unmatched, and our unlimited 5G plans are competitively priced with no hidden fees.",
+            "timing_concern": "Now is the best time to upgrade\u2014we can lock in this rate for the next 24 months, and you'll avoid any potential price increases later."
+          },
+          "recommended_offers": [
+            {
+              "name": "5G Unlimited Plus",
+              "monthly_value": 800,
+              "category": "mobile"
+            },
+            {
+              "name": "Asia Roaming Pack",
+              "monthly_value": 200,
+              "category": "vas"
+            },
+            {
+              "name": "Premium Support",
+              "monthly_value": 100,
+              "category": "vas"
+            }
+          ],
+          "explanation": {
+            "primary_reason": "High-spending customer with medium churn risk; upgrade aligns with usage patterns and leverages Three HK's strengths.",
+            "supporting_factors": [
+              "Customer Type: Individual",
+              "Spending Tier: High",
+              "AI Confidence: 85.0%"
+            ],
+            "risk_factors": [],
+            "confidence_score": 0.85,
+            "data_sources": [
+              "AI Analysis",
+              "Customer Profile",
+              "Product Catalog"
+            ]
+          },
+          "created_at": "2025-07-28T14:21:04.214341",
+          "expires_at": "2025-08-04T14:21:04.214341",
+          "tags": [
+            "individual",
+            "standard",
+            "high",
+            "ai_generated"
+          ]
+        },
+        {
+          "customer_id": "ACC030306",
+          "customer_name": "Wong",
+          "recommendation_id": "REC_20250728_142119_ACC030306_2",
+          "priority": "high",
+          "action_type": "offer_upgrade",
+          "title": "Premium Service Upgrade Opportunity",
+          "description": "High-value customer ready for premium service enhancements and add-on services.",
+          "expected_revenue": 18480.0,
+          "conversion_probability": 0.5,
+          "urgency_score": 0.5,
+          "business_impact_score": 0.8,
+          "next_steps": [
+            "Contact customer within 1 week",
+            "Present suitable upgrade options",
+            "Explain value proposition and benefits",
+            "Follow up within 3 days of initial contact"
+          ],
+          "talking_points": [
+            "Three HK's superior 5G network coverage in Hong Kong",
+            "Competitive pricing with best value propositions",
+            "Excellent customer service and technical support",
+            "Seamless mainland China connectivity options"
+          ],
+          "objection_handling": {
+            "price_concern": "Our plans offer exceptional value with ROI typically seen within 6 months",
+            "competitor_comparison": "Three HK provides superior network quality and mainland connectivity",
+            "contract_length": "Flexible terms available with performance guarantees and early upgrade options"
+          },
+          "recommended_offers": [
+            {
+              "name": "5G Premium Family Plan",
+              "monthly_value": 268,
+              "category": "family"
+            },
+            {
+              "name": "Device Protection",
+              "monthly_value": 35,
+              "category": "insurance"
+            }
+          ],
+          "explanation": {
+            "primary_reason": "High Priority Customer",
+            "supporting_factors": [
+              "Customer Type: Individual",
+              "Spending Tier: High",
+              "Current Plan: Basic_Mobile",
+              "Monthly Value: HK$550"
+            ],
+            "risk_factors": [],
+            "confidence_score": 0.85,
+            "data_sources": [
+              "Customer Profile",
+              "Plan Analysis",
+              "Risk Assessment"
+            ]
+          },
+          "created_at": "2025-07-28T14:21:19.958696",
+          "expires_at": "2025-08-04T14:21:19.958696",
+          "tags": [
+            "individual",
+            "standard",
+            "high",
+            "offer_upgrade"
+          ]
+        },
+        {
+          "customer_id": "ACC742294",
+          "customer_name": "Cheung",
+          "recommendation_id": "AI_REC_20250728_142131_ACC742294",
+          "priority": "high",
+          "action_type": "offer_upgrade",
+          "title": "Upgrade to 5G Unlimited Plus with Roaming for High-Spending Customer",
+          "description": "Cheung (ACC742294) is a high-spending standard customer on the Basic_Mobile plan. With medium churn risk and 5G capabilities likely underutilized, upgrading to the 5G Unlimited Plus plan (with Asia Roaming) aligns with spending tier and leverages Three HK's superior mainland China connectivity. The upgrade addresses unmet needs while increasing loyalty.",
+          "expected_revenue": 38400.0,
+          "conversion_probability": 0.7,
+          "urgency_score": 0.8,
+          "business_impact_score": 0.9,
+          "next_steps": [
+            "Review Cheung's call records for pain points",
+            "Prepare customized upgrade proposal with roaming benefits",
+            "Schedule call within 48 hours to present offer"
+          ],
+          "talking_points": [
+            "Your current plan limits mainland China roaming at peak travel times\u20145G Unlimited Plus includes Asia Roaming with no daily caps",
+            "Three's network coverage in China is 40% more reliable than competitors per OpenSignal"
+          ],
+          "objection_handling": {
+            "price_concern": "The HK$400 increase unlocks unlimited data and mainland roaming\u2014your current plan would cost HK$800/month in China roaming fees alone during a 2-week trip",
+            "competitor_comparison": "Our mainland China speeds are 35% faster than CSL/HKBN with 80% fewer dropped calls in Shenzhen/Guangzhou",
+            "timing_concern": "With your current contract ending in 12 months, locking in this rate now ensures price protection against future increases"
+          },
+          "recommended_offers": [
+            {
+              "name": "5G Unlimited Plus",
+              "monthly_value": 1000,
+              "category": "mobile"
+            },
+            {
+              "name": "Asia Roaming Pack",
+              "monthly_value": 200,
+              "category": "vas"
+            }
+          ],
+          "explanation": {
+            "primary_reason": "High-spending customer underutilizing 5G capabilities with unmet roaming needs",
+            "supporting_factors": [
+              "Customer Type: Individual",
+              "Spending Tier: High",
+              "AI Confidence: 85.0%"
+            ],
+            "risk_factors": [],
+            "confidence_score": 0.85,
+            "data_sources": [
+              "AI Analysis",
+              "Customer Profile",
+              "Product Catalog"
+            ]
+          },
+          "created_at": "2025-07-28T14:21:31.165019",
+          "expires_at": "2025-08-04T14:21:31.165019",
+          "tags": [
+            "individual",
+            "standard",
+            "high",
+            "ai_generated"
+          ]
+        },
+        {
+          "customer_id": "ACC554066",
+          "customer_name": "Lee",
+          "recommendation_id": "AI_REC_20250728_142142_ACC554066",
+          "priority": "high",
+          "action_type": "offer_upgrade",
+          "title": "Upgrade Lee to 5G Unlimited Plus for Higher Revenue and Retention",
+          "description": "Lee is a high-spending standard customer on the Basic_Mobile plan, presenting a medium churn risk. Given his high spending tier and active contract, upgrading to a premium mobile plan (5G Unlimited Plus) would increase his engagement and revenue potential while mitigating churn. The upgrade aligns with Three HK's strengths in superior mainland China connectivity and competitive pricing.",
+          "expected_revenue": 22800.0,
+          "conversion_probability": 0.7,
+          "urgency_score": 0.8,
+          "business_impact_score": 0.9,
+          "next_steps": [
+            "Prepare a personalized upgrade proposal highlighting 5G Unlimited Plus benefits",
+            "Contact Lee via phone or email to discuss the upgrade",
+            "Follow up within 3 days if no immediate response"
+          ],
+          "talking_points": [
+            "Enjoy unlimited data and superior mainland China connectivity with 5G Unlimited Plus",
+            "Upgrade to save on potential overage charges and enhance your experience",
+            "Three HK offers the best pricing and coverage for high-spending customers like you"
+          ],
+          "objection_handling": {
+            "price_concern": "The upgrade provides unlimited data and better mainland connectivity, avoiding overage fees and offering superior service quality at a competitive price.",
+            "competitor_comparison": "Three HK offers the best mainland China coverage and pricing compared to competitors, ensuring seamless roaming and data usage.",
+            "timing_concern": "Now is the best time to upgrade to lock in current promotional rates and avoid potential future price increases."
+          },
+          "recommended_offers": [
+            {
+              "name": "5G Unlimited Plus",
+              "monthly_value": 1200,
+              "category": "mobile"
+            },
+            {
+              "name": "Asia Roaming Pack",
+              "monthly_value": 300,
+              "category": "vas"
+            }
+          ],
+          "explanation": {
+            "primary_reason": "High-spending customer with medium churn risk and potential for significant revenue increase through plan upgrade.",
+            "supporting_factors": [
+              "Customer Type: Individual",
+              "Spending Tier: High",
+              "AI Confidence: 85.0%"
+            ],
+            "risk_factors": [],
+            "confidence_score": 0.85,
+            "data_sources": [
+              "AI Analysis",
+              "Customer Profile",
+              "Product Catalog"
+            ]
+          },
+          "created_at": "2025-07-28T14:21:42.421174",
+          "expires_at": "2025-08-04T14:21:42.421174",
+          "tags": [
+            "individual",
+            "standard",
+            "high",
+            "ai_generated"
+          ]
+        },
+        {
+          "customer_id": "ACC242054",
+          "customer_name": "Cheng",
+          "recommendation_id": "AI_REC_20250728_142154_ACC242054",
+          "priority": "high",
+          "action_type": "offer_upgrade",
+          "title": "Upgrade Cheng to 5G Unlimited Plus with Asia Roaming Pack",
+          "description": "Cheng is a high-spending standard customer on a basic plan with medium churn risk. Given their spending tier and current plan underutilization, upgrading to 5G Unlimited Plus (HK$1,200) with Asia Roaming Pack (HK$200) would significantly enhance their experience while increasing revenue. This aligns with Three HK's strengths in mainland China connectivity and competitive pricing.",
+          "expected_revenue": 49200.0,
+          "conversion_probability": 0.7,
+          "urgency_score": 0.8,
+          "business_impact_score": 0.9,
+          "next_steps": [
+            "Identify Cheng's data usage patterns to confirm upgrade suitability",
+            "Prepare customized offer with 3-month discount promotion",
+            "Schedule immediate outreach via preferred contact channel (call/email)"
+          ],
+          "talking_points": [
+            "Your current Basic_Mobile plan limits your mainland China connectivity - our 5G Unlimited Plus offers superior coverage",
+            "With your high usage pattern, you'll save on overage fees while gaining unlimited data",
+            "Exclusive offer: 3 months at 10% discount for loyal customers like you"
+          ],
+          "objection_handling": {
+            "price_concern": "Our competitive pricing includes mainland China coverage that competitors charge extra for, plus you'll avoid overage fees with unlimited data",
+            "competitor_comparison": "Three HK offers the most reliable mainland China connectivity at this price point, with no throttling",
+            "timing_concern": "This upgrade can be implemented immediately without contract changes, and we're offering a special 3-month discount"
+          },
+          "recommended_offers": [
+            {
+              "name": "5G Unlimited Plus",
+              "monthly_value": 1200,
+              "category": "mobile"
+            },
+            {
+              "name": "Asia Roaming Pack",
+              "monthly_value": 200,
+              "category": "vas"
+            }
+          ],
+          "explanation": {
+            "primary_reason": "High spending tier with basic plan indicates underutilization of potential value, coupled with medium churn risk",
+            "supporting_factors": [
+              "Customer Type: Individual",
+              "Spending Tier: High",
+              "AI Confidence: 85.0%"
+            ],
+            "risk_factors": [],
+            "confidence_score": 0.85,
+            "data_sources": [
+              "AI Analysis",
+              "Customer Profile",
+              "Product Catalog"
+            ]
+          },
+          "created_at": "2025-07-28T14:21:54.162611",
+          "expires_at": "2025-08-04T14:21:54.162611",
+          "tags": [
+            "individual",
+            "standard",
+            "high",
+            "ai_generated"
+          ]
+        },
+        {
+          "customer_id": "ACC673082",
+          "customer_name": "Leung",
+          "recommendation_id": "AI_REC_20250728_142207_ACC673082",
+          "priority": "high",
+          "action_type": "offer_upgrade",
+          "title": "Upgrade Leung to 5G Unlimited Plus with Premium Support",
+          "description": "Leung is a high-spending standard customer on a Basic_Mobile plan, presenting medium churn risk. Given their spending tier and current plan limitations, upgrading to 5G Unlimited Plus (with Premium Support) would better align with their usage patterns and reduce churn risk. The offer leverages Three HK's superior mainland China connectivity and enterprise support capabilities.",
+          "expected_revenue": 28500.0,
+          "conversion_probability": 0.75,
+          "urgency_score": 0.8,
+          "business_impact_score": 0.85,
+          "next_steps": [
+            "Prepare personalized upgrade offer with 5G Unlimited Plus and Premium Support",
+            "Highlight mainland China roaming benefits and superior network performance",
+            "Address potential price objections with cost-justification based on usage patterns"
+          ],
+          "talking_points": [
+            "Your current plan may limit your mainland China usage - 5G Unlimited Plus offers seamless connectivity",
+            "Premium Support ensures dedicated assistance for your high usage needs",
+            "Three HK's network provides the fastest speeds in Hong Kong and China"
+          ],
+          "objection_handling": {
+            "price_concern": "The premium features justify the price increase, especially for business users needing reliable mainland connectivity. The additional HK$550/month represents only ~73% of your current spending but provides unlimited data and priority support",
+            "competitor_comparison": "Three HK offers superior mainland China coverage and competitive pricing compared to competitors. Our 5G network is the most extensive in Hong Kong",
+            "timing_concern": "This upgrade will lock in your current rate for the full contract term. Waiting may result in higher future pricing or potential service disruptions"
+          },
+          "recommended_offers": [
+            {
+              "name": "5G Unlimited Plus",
+              "monthly_value": 1200,
+              "category": "mobile"
+            },
+            {
+              "name": "Premium Support",
+              "monthly_value": 150,
+              "category": "vas"
+            }
+          ],
+          "explanation": {
+            "primary_reason": "High spending tier with basic plan indicates untapped potential and churn risk mitigation opportunity",
+            "supporting_factors": [
+              "Customer Type: Individual",
+              "Spending Tier: High",
+              "AI Confidence: 85.0%"
+            ],
+            "risk_factors": [],
+            "confidence_score": 0.85,
+            "data_sources": [
+              "AI Analysis",
+              "Customer Profile",
+              "Product Catalog"
+            ]
+          },
+          "created_at": "2025-07-28T14:22:07.452032",
+          "expires_at": "2025-08-04T14:22:07.452032",
+          "tags": [
+            "individual",
+            "standard",
+            "high",
+            "ai_generated"
+          ]
+        },
+        {
+          "customer_id": "ACC190881",
+          "customer_name": "Ho",
+          "recommendation_id": "AI_REC_20250728_142219_ACC190881",
+          "priority": "high",
+          "action_type": "offer_upgrade",
+          "title": "Upgrade to 5G Unlimited Plus for High-Spending Customer",
+          "description": "Customer Ho (ACC190881) is a high-spending individual on a Basic_Mobile plan with medium churn risk. Given their high spending tier and active contract, an upgrade to a premium 5G plan with additional value-added services would increase satisfaction, reduce churn risk, and maximize revenue potential.",
+          "expected_revenue": 25200.0,
+          "conversion_probability": 0.7,
+          "urgency_score": 0.8,
+          "business_impact_score": 0.9,
+          "next_steps": [
+            "Identify current data usage patterns to tailor recommendations",
+            "Present 5G Unlimited Plus with Asia Roaming Pack as bundled offer",
+            "Highlight cost savings from competitive pricing and superior mainland China connectivity"
+          ],
+          "talking_points": [
+            "You currently use 30GB+ monthly; our 5G Unlimited Plus provides unlimited data with mainland China roaming at no extra cost.",
+            "Our 5G network offers the fastest speeds in Hong Kong, perfect for streaming and business use.",
+            "This upgrade includes premium support, ensuring you have 24/7 assistance for any connectivity needs."
+          ],
+          "objection_handling": {
+            "price_concern": "The additional HK$550/month (HK$1200 vs. your current HK$800) provides unlimited data, mainland roaming, and premium support\u2014saving you from potential overage fees and offering better value for your usage patterns.",
+            "competitor_comparison": "We offer superior mainland China connectivity with no roaming limits, and our premium support ensures enterprise-grade service quality that competitors can't match at this price point.",
+            "timing_concern": "Upgrading now locks in your current promotional rates and ensures seamless coverage for any upcoming travel to mainland China. The offer is available for immediate activation."
+          },
+          "recommended_offers": [
+            {
+              "name": "5G Unlimited Plus",
+              "monthly_value": 1200,
+              "category": "mobile"
+            },
+            {
+              "name": "Asia Roaming Pack",
+              "monthly_value": 200,
+              "category": "vas"
+            },
+            {
+              "name": "Premium Support",
+              "monthly_value": 150,
+              "category": "vas"
+            }
+          ],
+          "explanation": {
+            "primary_reason": "High-value customer with untapped potential for premium plan adoption, especially given their high data usage and spending tier.",
+            "supporting_factors": [
+              "Customer Type: Individual",
+              "Spending Tier: High",
+              "AI Confidence: 85.0%"
+            ],
+            "risk_factors": [],
+            "confidence_score": 0.85,
+            "data_sources": [
+              "AI Analysis",
+              "Customer Profile",
+              "Product Catalog"
+            ]
+          },
+          "created_at": "2025-07-28T14:22:19.521970",
+          "expires_at": "2025-08-04T14:22:19.521970",
+          "tags": [
+            "individual",
+            "standard",
+            "high",
+            "ai_generated"
+          ]
+        },
+        {
+          "customer_id": "ACC959866",
+          "customer_name": "Ng",
+          "recommendation_id": "AI_REC_20250728_142230_ACC959866",
+          "priority": "high",
+          "action_type": "offer_upgrade",
+          "title": "Upgrade to 5G Unlimited Pro with Roaming for High-Spending Customer",
+          "description": "Customer Ng is a high-spending individual on the Basic_Mobile plan, indicating potential dissatisfaction with limited data. Given their high spending tier and medium churn risk, upgrading to a premium plan with international roaming and superior mainland China connectivity aligns with Three HK's strengths. The 5G Unlimited Pro plan offers superior network performance and value-added services that cater to frequent travelers or heavy data users.",
+          "expected_revenue": 36000.0,
+          "conversion_probability": 0.7,
+          "urgency_score": 0.8,
+          "business_impact_score": 0.9,
+          "next_steps": [
+            "Identify customer's main pain points with current plan",
+            "Highlight 5G Unlimited Pro benefits (unlimited data, mainland China connectivity, roaming)",
+            "Bundle with Premium Support or Device Insurance for additional value"
+          ],
+          "talking_points": [
+            "Your current plan limits data usage, but 5G Unlimited Pro offers seamless connectivity with no data caps.",
+            "Enjoy superior mainland China roaming with Three HK's extensive network coverage.",
+            "As a high-spending customer, you qualify for exclusive offers like Premium Support for faster assistance."
+          ],
+          "objection_handling": {
+            "price_concern": "The additional cost is offset by unlimited data, avoiding overage fees and ensuring seamless connectivity across Hong Kong and mainland China. We can also explore bundled offers with device insurance or premium support for better value.",
+            "competitor_comparison": "Three HK offers superior mainland China coverage and competitive pricing compared to competitors. Our 5G network ensures faster speeds and reliability for both local and international usage.",
+            "timing_concern": "Upgrading now ensures you lock in the current promotional rate before any potential price adjustments. Additionally, the 5G Unlimited Pro plan provides immediate benefits like unlimited data and roaming, which are valuable for frequent travelers."
+          },
+          "recommended_offers": [
+            {
+              "name": "5G Unlimited Pro",
+              "monthly_value": 1200,
+              "category": "mobile"
+            },
+            {
+              "name": "Asia Roaming Pack",
+              "monthly_value": 200,
+              "category": "vas"
+            }
+          ],
+          "explanation": {
+            "primary_reason": "High-spending customer on a basic plan with medium churn risk, indicating potential dissatisfaction and opportunity to upsell to a premium plan with superior features.",
+            "supporting_factors": [
+              "Customer Type: Individual",
+              "Spending Tier: High",
+              "AI Confidence: 85.0%"
+            ],
+            "risk_factors": [],
+            "confidence_score": 0.85,
+            "data_sources": [
+              "AI Analysis",
+              "Customer Profile",
+              "Product Catalog"
+            ]
+          },
+          "created_at": "2025-07-28T14:22:30.427420",
+          "expires_at": "2025-08-04T14:22:30.427420",
+          "tags": [
+            "individual",
+            "standard",
+            "high",
+            "ai_generated"
+          ]
+        },
+        {
+          "customer_id": "ACC224452",
+          "customer_name": "Choi",
+          "recommendation_id": "REC_20250728_142245_ACC224452_9",
+          "priority": "high",
+          "action_type": "offer_upgrade",
+          "title": "Premium Service Upgrade Opportunity",
+          "description": "High-value customer ready for premium service enhancements and add-on services.",
+          "expected_revenue": 30239.999999999996,
+          "conversion_probability": 0.5,
+          "urgency_score": 0.5,
+          "business_impact_score": 0.8,
+          "next_steps": [
+            "Contact customer within 1 week",
+            "Present suitable upgrade options",
+            "Explain value proposition and benefits",
+            "Follow up within 3 days of initial contact"
+          ],
+          "talking_points": [
+            "Three HK's superior 5G network coverage in Hong Kong",
+            "Competitive pricing with best value propositions",
+            "Excellent customer service and technical support",
+            "Seamless mainland China connectivity options"
+          ],
+          "objection_handling": {
+            "price_concern": "Our plans offer exceptional value with ROI typically seen within 6 months",
+            "competitor_comparison": "Three HK provides superior network quality and mainland connectivity",
+            "contract_length": "Flexible terms available with performance guarantees and early upgrade options"
+          },
+          "recommended_offers": [
+            {
+              "name": "5G Premium Family Plan",
+              "monthly_value": 268,
+              "category": "family"
+            },
+            {
+              "name": "Device Protection",
+              "monthly_value": 35,
+              "category": "insurance"
+            }
+          ],
+          "explanation": {
+            "primary_reason": "High Priority Customer",
+            "supporting_factors": [
+              "Customer Type: Individual",
+              "Spending Tier: High",
+              "Current Plan: Basic_Mobile",
+              "Monthly Value: HK$900"
+            ],
+            "risk_factors": [],
+            "confidence_score": 0.85,
+            "data_sources": [
+              "Customer Profile",
+              "Plan Analysis",
+              "Risk Assessment"
+            ]
+          },
+          "created_at": "2025-07-28T14:22:45.732450",
+          "expires_at": "2025-08-04T14:22:45.732450",
+          "tags": [
+            "individual",
+            "standard",
+            "high",
+            "offer_upgrade"
+          ]
+        }
+      ],
+      "summary": {
+        "total_recommendations": 10,
+        "total_expected_revenue": 297420.0,
+        "average_conversion_probability": 0.655
+      }
+    },
+    "customer_analysis": {
+      "total_customers": 100,
+      "segments": {
+        "high_value": 0,
+        "medium_value": 0,
+        "low_value": 0
+      },
+      "demographics": {},
+      "patterns": []
+    },
+    "lead_scores": {
+      "distribution": {
+        "critical": 10,
+        "high": 20,
+        "medium": 40,
+        "low": 20,
+        "watch": 10
+      },
+      "average_score": 0.0,
+      "scoring_factors": []
+    },
+    "metadata": {
+      "timestamp": "2025-07-28T14:22:45.736096",
+      "ai_engine": "Task 9 AI Agent",
+      "data_sources": [
+        "customer_data",
+        "purchase_data",
+        "product_catalog"
+      ],
+      "data_source_type": "merged_data",
+      "analysis_id": "analysis_1753683765",
+      "has_product_catalog": true,
+      "catalog_plans_count": 39
+    },
+    "collaboration_results": {
+      "success": true,
+      "mode": "standard",
+      "collaboration_type": "2-Agent Standard",
+      "agents_involved": [
+        "Lead Intelligence Agent",
+        "Sales Optimization Agent"
+      ],
+      "workflow_steps": [
+        {
+          "step": 1,
+          "action": "Validate Lead Intelligence Results",
+          "status": "failed",
+          "details": {
+            "valid": false,
+            "issues": [
+              "Missing required field: customer_segments",
+              "Missing required field: revenue_insights",
+              "No customers found in segments"
+            ],
+            "data_quality_score": 0
+          }
+        }
+      ],
+      "business_impact": {},
+      "collaboration_results": {},
+      "next_actions": [],
+      "processing_time": 0,
+      "enhancement_level": "Standard",
+      "fallback_used": true,
+      "fallback_reason": "CrewAI processing failed: litellm.Timeout: Timeout Error: OpenrouterException - {\"error\":{\"message\":\"Timed out. Please try again.\",\"code\":408}}"
+    }
+  },
+  "crewai_collaboration_results": {
+    "success": true,
+    "mode": "standard",
+    "collaboration_type": "2-Agent Standard",
+    "agents_involved": [
+      "Lead Intelligence Agent",
+      "Sales Optimization Agent"
+    ],
+    "workflow_steps": [
+      {
+        "step": 1,
+        "action": "Validate Lead Intelligence Results",
+        "status": "failed",
+        "details": {
+          "valid": false,
+          "issues": [
+            "Missing required field: customer_segments",
+            "Missing required field: revenue_insights",
+            "No customers found in segments"
+          ],
+          "data_quality_score": 0
+        }
+      }
+    ],
+    "business_impact": {},
+    "collaboration_results": {},
+    "next_actions": [],
+    "processing_time": 0,
+    "enhancement_level": "Standard",
+    "fallback_used": true,
+    "fallback_reason": "CrewAI processing failed: litellm.Timeout: Timeout Error: OpenrouterException - {\"error\":{\"message\":\"Timed out. Please try again.\",\"code\":408}}"
+  },
+  "crewai_deliverables": null,
+  "customer_data": "   Account_ID Family_Name Given_Name  ... Spending_Tier Churn_Risk Last_Login_Date\n0   ACC614603        Chan   Michelle  ...       Premium        Low       17/7/2025\n1   ACC880659         Lam      Susan  ...      Standard     Medium        7/7/2025\n2   ACC030306        Wong     Philip  ...      Standard     Medium       29/6/2025\n3   ACC742294      Cheung  Stephanie  ...       Premium        Low       19/7/2025\n4   ACC554066         Lee      Janet  ...      Standard     Medium        1/7/2025\n..        ...         ...        ...  ...           ...        ...             ...\n95  ACC413175       Leung     Philip  ...      Standard     Medium        7/7/2025\n96  ACC797388        Choi     Samuel  ...       Premium        Low        5/7/2025\n97  ACC180002       Leung      Karen  ...      Standard     Medium        8/7/2025\n98  ACC795845       Tsang     Philip  ...       Premium        Low       24/6/2025\n99  ACC420974        Wong      Susan  ...      Standard     Medium       24/6/2025\n\n[100 rows x 24 columns]",
+  "product_catalog": "                 Plan_ID                      Plan_Name  ...      Target_Segment Roaming_Included\n0       5G_UNLIMITED_PRO               5G Unlimited Pro  ...             Premium     Asia_Pacific\n1      5G_UNLIMITED_PLUS              5G Unlimited Plus  ...             Premium        Worldwide\n2        MOBILE_5G_BASIC                  5G Basic Plan  ...            Standard       Local_Only\n3         FIBER_1000_BIZ           Business Fiber 1000M  ...          Enterprise              NaN\n4       OFFICE_FIBER_500              Office Fiber 500M  ...                 SME              NaN\n5         HOME_FIBER_300                Home Fiber 300M  ...            Consumer              NaN\n6       VAS_ROAMING_ASIA              Asia Roaming Pack  ...                 All     Asia_Pacific\n7    VAS_PREMIUM_SUPPORT                Premium Support  ...             Premium              NaN\n8   VAS_DEVICE_INSURANCE               Device Insurance  ...                 All              NaN\n9       VAS_CLOUD_BACKUP             Cloud Backup 100GB  ...                 All              NaN\n10         5G_BASIC_30GB             5G Basic 30GB Plan  ...            Standard      China_Macau\n11      5G_STANDARD_50GB          5G Standard 50GB Plan  ...            Standard      China_Macau\n12          5G_PLUS_60GB              5G Plus 60GB Plan  ...            Standard      China_Macau\n13      5G_PREMIUM_100GB          5G Premium 100GB Plan  ...             Premium      China_Macau\n14         4G5_BASIC_5GB                 4.5G Basic 5GB  ...            Standard       Local_Only\n15     4G5_STANDARD_10GB             4.5G Standard 10GB  ...            Standard       Local_Only\n16         4G5_PLUS_15GB                 4.5G Plus 15GB  ...             Premium       Local_Only\n17      4G5_PREMIUM_25GB              4.5G Premium 25GB  ...             Premium       Local_Only\n18          BIZ_5G_BASIC              Business 5G Basic  ...          Enterprise       Local_Only\n19         5G_MULTI_60GB              5G Multi-SIM 60GB  ...              Family      China_Macau\n20        5G_MULTI_100GB             5G Multi-SIM 100GB  ...              Family      China_Macau\n21            5G_STUDENT                5G Student Plan  ...             Student      China_Macau\n22           5G_BB_BASIC             5G Broadband Basic  ...            Consumer              NaN\n23       5G_BB_UNLIMITED         5G Broadband Unlimited  ...            Consumer              NaN\n24             BIZ_5G_BB          Business 5G Broadband  ...          Enterprise              NaN\n25      VAS_APAC_UPGRADE      Asia Pacific Data Upgrade  ...                 All     Asia_Pacific\n26      VAS_VIDEO_STREAM  Infinite Video Streaming Pack  ...                 All              NaN\n27        VAS_CHINA_ROAM     China & Macau Data Roaming  ...                 All      China_Macau\n28    VAS_HANDSET_SWITCH         Handset Switch Service  ...                 All              NaN\n29       VAS_DEVICE_PLUS         Device Protection Plus  ...                 All              NaN\n30       VAS_CLOUD_200GB            Cloud Storage 200GB  ...                 All              NaN\n31     PREPAID_LOCAL_168          Local Prepaid SIM 1GB  ...             Tourist       Local_Only\n32     PREPAID_LOCAL_248          Local Prepaid SIM 2GB  ...             Tourist       Local_Only\n33     PREPAID_LOCAL_298          Local Prepaid SIM 3GB  ...             Tourist       Local_Only\n34    PREPAID_TRAVEL_268        Travel SIM Multi-Region  ...              Travel     Multi_Region\n35    SMARTWATCH_ESIM_18    Smart Watch eSIM Individual  ...                 All       Local_Only\n36    SMARTWATCH_ESIM_22        Smart Watch eSIM Family  ...              Family       Local_Only\n37    VAS_DEVICE_UPGRADE         Device Upgrade Service  ...  Existing_Customers              NaN\n38          VAS_TRADE_IN        Device Trade-in Service  ...                 All              NaN\n\n[39 rows x 13 columns]"
+}

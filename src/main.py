@@ -29,6 +29,28 @@ def main():
     # Setup logging
     setup_logging()
 
+    # URL-based state persistence for export functionality
+    query_params = st.query_params
+    
+    # Restore collaboration state from URL if available
+    if "collab_state" in query_params and "collab_state" not in st.session_state:
+        try:
+            import base64
+            import json
+            encoded_state = query_params["collab_state"]
+            decoded_state = base64.b64decode(encoded_state.encode()).decode()
+            collaboration_data = json.loads(decoded_state)
+            
+            # Restore session state
+            st.session_state["ai_analysis_results"] = collaboration_data.get("ai_results", {})
+            st.session_state["crewai_collaboration_results"] = collaboration_data.get("collab_results", {})
+            st.session_state["crewai_deliverables"] = collaboration_data.get("deliverables", {})
+            
+            # Don't automatically set page - let user navigate normally
+            
+        except Exception as e:
+            st.warning(f"Could not restore collaboration state: {e}")
+
     # Setup page configuration
     setup_page_config()
 

@@ -185,6 +185,20 @@ def render_sidebar():
 
         st.markdown("---")
 
+        # Session management
+        st.markdown("### Session Management")
+        if st.button("🔄 Reset Session", help="Clear all data and return to Home page"):
+            # Clear all session state
+            for key in list(st.session_state.keys()):
+                if key not in ['page_selector']:  # Keep navigation selector
+                    del st.session_state[key]
+            # Set to home page
+            st.session_state.current_page = "Home"
+            st.success("Session reset! Redirecting to Home...")
+            st.rerun()
+
+        st.markdown("---")
+
         # Privacy notice
         st.markdown("### 🔒 Privacy Notice")
         st.info(

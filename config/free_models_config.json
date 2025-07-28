@@ -64,9 +64,9 @@
       "analysis"
     ],
     "rate_limit_info": "VERIFIED WORKING - Latest Mistral model with excellent reliability",
-    "last_used": "2025-07-28T00:44:16.430587",
+    "last_used": "2025-07-28T16:47:09.906318",
     "failure_count": 0,
-    "last_failure": "2025-07-27T22:13:02.737677",
+    "last_failure": "2025-07-28T16:46:20.857798",
     "is_available": true
   },
   "qwen25-vl-32b": {

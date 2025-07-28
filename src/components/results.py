@@ -24,10 +24,112 @@ from loguru import logger
 # Logger is available as 'logger' from loguru import
 
 
+def create_session_backup():
+    """Create a file-based backup of current session state for recovery"""
+    try:
+        backup_dir = "data/session_backups"
+        os.makedirs(backup_dir, exist_ok=True)
+        
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        backup_file = os.path.join(backup_dir, f"session_backup_{timestamp}.json")
+        
+        # Create backup data from session state
+        backup_data = {
+            "timestamp": datetime.now().isoformat(),
+            "ai_analysis_results": st.session_state.get("ai_analysis_results"),
+            "crewai_collaboration_results": st.session_state.get("crewai_collaboration_results"),
+            "crewai_deliverables": st.session_state.get("crewai_deliverables"),
+            "customer_data": st.session_state.get("customer_data", {}).get("original_data") if st.session_state.get("customer_data") else None,
+            "product_catalog": st.session_state.get("product_catalog", {}).get("original_data") if st.session_state.get("product_catalog") else None
+        }
+        
+        # Save to file
+        with open(backup_file, 'w') as f:
+            json.dump(backup_data, f, default=str, indent=2)
+        
+        logger.info(f"Session backup created: {backup_file}")
+        
+    except Exception as e:
+        logger.error(f"Failed to create session backup: {e}")
+
+
+def attempt_session_recovery():
+    """Attempt to recover session state from file backups"""
+    try:
+        backup_dir = "data/session_backups"
+        if not os.path.exists(backup_dir):
+            return False
+        
+        # Find all backup files within the last hour
+        current_time = datetime.now()
+        recent_backups = []
+        
+        for filename in os.listdir(backup_dir):
+            if filename.startswith("session_backup_") and filename.endswith(".json"):
+                try:
+                    # Extract timestamp from filename
+                    timestamp_str = filename[15:-5]  # Remove "session_backup_" and ".json"
+                    backup_time = datetime.strptime(timestamp_str, '%Y%m%d_%H%M%S')
+                    
+                    # Check if backup is within last hour
+                    if current_time - backup_time <= timedelta(hours=1):
+                        recent_backups.append((backup_time, os.path.join(backup_dir, filename)))
+                except:
+                    continue
+        
+        if not recent_backups:
+            return False
+        
+        # Use most recent backup
+        recent_backups.sort(reverse=True)
+        backup_file = recent_backups[0][1]
+        
+        # Load backup data
+        with open(backup_file, 'r') as f:
+            backup_data = json.load(f)
+        
+        # Restore to session state
+        if backup_data.get("ai_analysis_results"):
+            st.session_state["ai_analysis_results"] = backup_data["ai_analysis_results"]
+        
+        if backup_data.get("crewai_collaboration_results"):
+            st.session_state["crewai_collaboration_results"] = backup_data["crewai_collaboration_results"]
+        
+        if backup_data.get("crewai_deliverables"):
+            st.session_state["crewai_deliverables"] = backup_data["crewai_deliverables"]
+        
+        # Restore data if available
+        if backup_data.get("customer_data"):
+            st.session_state["customer_data"] = {
+                "original_data": pd.DataFrame(backup_data["customer_data"]),
+                "metadata": {"recovered_from_backup": True}
+            }
+        
+        if backup_data.get("product_catalog"):
+            st.session_state["product_catalog"] = {
+                "original_data": pd.DataFrame(backup_data["product_catalog"]),
+                "catalog_data": pd.DataFrame(backup_data["product_catalog"]),
+                "metadata": {"recovered_from_backup": True}
+            }
+        
+        logger.info(f"Session recovered from backup: {backup_file}")
+        return True
+        
+    except Exception as e:
+        logger.error(f"Failed to recover session from backup: {e}")
+        return False
+
+
 def render_results_page():
     """Render the enhanced analysis results page with AI recommendations"""
 
     st.markdown("## 📊 AI Revenue Assistant - Analysis Results")
+    
+    # CRITICAL: Attempt to recover session state from file backups if session is empty
+    if "ai_analysis_results" not in st.session_state and "crewai_collaboration_results" not in st.session_state:
+        if attempt_session_recovery():
+            st.success("🔄 Session state recovered from backup!")
+            st.rerun()  # Refresh to show recovered data
 
     # Auto-load persistent product catalog into session if available
     if is_catalog_available() and "product_catalog" not in st.session_state:
@@ -131,11 +233,15 @@ def render_results_page():
                             for error in debug_info["errors"]:
                                 st.error(f"❌ {error}")
 
-    # Check for AI analysis results first
+    # Check for AI analysis results first - with file-based recovery
     has_ai_results = "ai_analysis_results" in st.session_state
     has_customer_data = "customer_data" in st.session_state
     has_purchase_data = "purchase_data" in st.session_state
 
+    # CRITICAL: If session state is completely cleared, try to recover from file backup
+    if not has_ai_results:
+        has_ai_results = attempt_session_recovery()
+    
     if has_ai_results:
         render_ai_analysis_dashboard()
     elif has_customer_data and has_purchase_data:
@@ -148,10 +254,90 @@ def render_results_page():
     st.markdown("---")
 
 
+def attempt_session_recovery() -> bool:
+    """Attempt to recover session state from file-based backup"""
+    import os
+    import json
+    from datetime import datetime, timedelta
+    
+    try:
+        # Look for recent backup files (within last hour)
+        backup_dir = "data/session_backups"
+        if not os.path.exists(backup_dir):
+            return False
+            
+        backup_files = []
+        cutoff_time = datetime.now() - timedelta(hours=1)
+        
+        for filename in os.listdir(backup_dir):
+            if filename.startswith("session_backup_") and filename.endswith(".json"):
+                file_path = os.path.join(backup_dir, filename)
+                file_time = datetime.fromtimestamp(os.path.getmtime(file_path))
+                if file_time > cutoff_time:
+                    backup_files.append((file_time, file_path))
+        
+        if not backup_files:
+            return False
+            
+        # Get the most recent backup
+        backup_files.sort(key=lambda x: x[0], reverse=True)
+        latest_backup = backup_files[0][1]
+        
+        # Load the backup
+        with open(latest_backup, 'r', encoding='utf-8') as f:
+            backup_data = json.load(f)
+        
+        # Restore session state
+        if "ai_analysis_results" in backup_data:
+            st.session_state["ai_analysis_results"] = backup_data["ai_analysis_results"]
+            
+        if "customer_data" in backup_data:
+            st.session_state["customer_data"] = backup_data["customer_data"]
+            
+        if "purchase_data" in backup_data:
+            st.session_state["purchase_data"] = backup_data["purchase_data"]
+            
+        # Restore CrewAI specific states
+        if "crewai_collaboration_results" in backup_data:
+            st.session_state["crewai_collaboration_results"] = backup_data["crewai_collaboration_results"]
+            
+        if "crewai_deliverables" in backup_data:
+            st.session_state["crewai_deliverables"] = backup_data["crewai_deliverables"]
+        
+        st.success("🔄 Session recovered from backup! Your collaboration results have been restored.")
+        return True
+        
+    except Exception as e:
+        st.warning(f"⚠️ Session recovery attempted but failed: {e}")
+        return False
+
+
 def render_ai_analysis_dashboard():
     """Render the main AI analysis dashboard with recommendations"""
     
     results = st.session_state["ai_analysis_results"]
+    
+    # CRITICAL: Restore collaboration results if they exist but are not in main results
+    # This handles the case where session state variables get cleared during downloads
+    if "collaboration_results" not in results:
+        if "crewai_collaboration_results" in st.session_state:
+            # Restore from backup session state
+            results["collaboration_results"] = st.session_state["crewai_collaboration_results"]
+            # Update the main session state object
+            st.session_state["ai_analysis_results"] = results
+            st.success("🔄 Restored collaboration results from session backup")
+        elif "crewai_deliverables" in st.session_state:
+            # Reconstruct from deliverables
+            results["collaboration_results"] = {
+                "deliverables": st.session_state["crewai_deliverables"],
+                "collaboration_type": "Restored from session state",
+                "agents_involved": ["Lead Intelligence", "Market Intelligence", "Revenue Optimization", "Retention Specialist", "Campaign Manager"],
+                "processing_time": 0,
+                "success": True
+            }
+            # Update the main session state object
+            st.session_state["ai_analysis_results"] = results
+            st.success("🔄 Reconstructed collaboration results from deliverables backup")
     
     # Dashboard header with key metrics
     render_dashboard_metrics(results)
@@ -522,6 +708,51 @@ def render_offers_section(results: Dict[str, Any]):
 
 def render_export_section(results: Dict[str, Any]):
     """Render enhanced export and action options with CrewAI deliverables support"""
+    
+    # CRITICAL: Ensure collaboration results are restored if missing from main results
+    # This prevents session state loss issues during downloads
+    if "collaboration_results" not in results:
+        if "crewai_collaboration_results" in st.session_state:
+            # Restore from backup session state
+            results["collaboration_results"] = st.session_state["crewai_collaboration_results"]
+            # Update the main session state object
+            st.session_state["ai_analysis_results"] = results
+            st.info("🔄 Restored collaboration results for export functionality")
+        elif "latest_crewai_backup_key" in st.session_state:
+            # Try to restore from timestamp-based backup
+            backup_key = st.session_state["latest_crewai_backup_key"]
+            if backup_key in st.session_state:
+                results["collaboration_results"] = st.session_state[backup_key]
+                # Update all session state locations
+                st.session_state["ai_analysis_results"] = results
+                st.session_state["crewai_collaboration_results"] = results["collaboration_results"]
+                st.info(f"🔄 Restored collaboration results from timestamp backup ({backup_key})")
+        elif "crewai_deliverables" in st.session_state:
+            # Reconstruct from deliverables
+            results["collaboration_results"] = {
+                "deliverables": st.session_state["crewai_deliverables"],
+                "collaboration_type": "Restored from session state",
+                "agents_involved": ["Lead Intelligence", "Market Intelligence", "Revenue Optimization", "Retention Specialist", "Campaign Manager"],
+                "processing_time": 0,
+                "success": True
+            }
+            # Update the main session state object
+            st.session_state["ai_analysis_results"] = results
+            st.info("🔄 Reconstructed collaboration results for export functionality")
+        else:
+            # Last resort: search for any timestamp backup keys
+            backup_keys = [key for key in st.session_state.keys() if key.startswith("crewai_backup_")]
+            if backup_keys:
+                # Use the most recent backup
+                latest_key = max(backup_keys)
+                results["collaboration_results"] = st.session_state[latest_key]
+                # Update all session state locations
+                st.session_state["ai_analysis_results"] = results
+                st.session_state["crewai_collaboration_results"] = results["collaboration_results"]
+                st.session_state["latest_crewai_backup_key"] = latest_key
+                st.info(f"🔄 Restored collaboration results from emergency backup ({latest_key})")
+            else:
+                st.warning("⚠️ No collaboration results found. Please run 'Launch Collaboration' first.")
     
     # Check if we have CrewAI deliverables
     has_deliverables = bool(results.get('collaboration_results', {}).get('deliverables'))
@@ -2868,10 +3099,47 @@ def process_agent_collaboration_from_results(lead_results: Dict[str, Any], mode:
                     if deliverables:
                         st.session_state["ai_analysis_results"]["crewai_deliverables"] = deliverables
                 
+                # ADDITIONAL PERSISTENCE: Store with timestamp-based keys for absolute persistence
+                timestamp_key = f"crewai_backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+                st.session_state[timestamp_key] = collaboration_results
+                st.session_state["latest_crewai_backup_key"] = timestamp_key
+                
+                # URL PARAMETER PERSISTENCE: Generate stateful URL for robust persistence
+                try:
+                    import base64
+                    import json
+                    
+                    # Create state data for URL encoding
+                    state_data = {
+                        "ai_analysis_results": st.session_state.get("ai_analysis_results", {}),
+                        "crewai_collaboration_results": collaboration_results,
+                        "crewai_deliverables": collaboration_results.get("deliverables", {})
+                    }
+                    
+                    # Encode state to base64 for URL parameter
+                    state_json = json.dumps(state_data, default=str)
+                    state_encoded = base64.b64encode(state_json.encode()).decode()
+                    
+                    # Get current URL and add state parameter
+                    current_url = st.query_params.get("collaboration_state", "")
+                    if current_url != state_encoded:
+                        st.query_params["collaboration_state"] = state_encoded
+                        
+                    st.info("💾 Session state preserved - your results are now download-safe!")
+                    
+                except Exception as e:
+                    st.warning(f"URL persistence setup failed: {e}")
+                    # Continue with file backup as fallback
+                
+                # CRITICAL: Create file-based backup to survive complete session resets
+                create_session_backup()
+                
                 # Extract and store deliverables for exports
                 deliverables = collaboration_results.get("deliverables", {})
                 if deliverables:
                     st.session_state["crewai_deliverables"] = deliverables
+                    # Backup deliverables with timestamp too
+                    st.session_state[f"deliverables_{timestamp_key}"] = deliverables
                     
                     # Store specific deliverable types
                     if "personalized_offers" in deliverables:
@@ -2885,7 +3153,7 @@ def process_agent_collaboration_from_results(lead_results: Dict[str, Any], mode:
                 
                 # Debug info
                 customer_count = len(customer_data) if customer_data else 0
-                st.write(f"🔍 Debug: Stored collaboration results for {customer_count} customers to session state + main results")
+                st.write(f"🔍 Debug: Stored collaboration results for {customer_count} customers to session state + main results + timestamp backup + file backup ({timestamp_key})")
             
             # Show collaboration overview
             with st.expander("🎯 Collaboration Overview", expanded=True):

@@ -170,7 +170,7 @@ python src/agents/agent_protocol.py --host 127.0.0.1 --port 8080
 C:\Users\deencat\Dropbox\agentic-ai-v1\venv\Scripts\activate..ps1;
 
 .\venv\Scripts\Activate.ps1
-python -m streamlit run src/main.py --server.port 8502
+streamlit run src/main.py --server.port 8502
 
 ## Agent Collaboration Agent
 streamlit run agent_collaboration_dashboard.py --server.port 8501
