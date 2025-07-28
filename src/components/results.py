@@ -1860,6 +1860,10 @@ def export_crewai_offers_csv(results: Dict[str, Any]) -> str:
     if "crewai_deliverables" in st.session_state:
         deliverables = st.session_state["crewai_deliverables"]
         offers = deliverables.get('personalized_offers', [])
+    elif "ai_analysis_results" in st.session_state and "crewai_deliverables" in st.session_state["ai_analysis_results"]:
+        # Backup location in main results
+        deliverables = st.session_state["ai_analysis_results"]["crewai_deliverables"]
+        offers = deliverables.get('personalized_offers', [])
     else:
         # Fallback to results parameter
         collaboration_results = results.get('collaboration_results', {})
@@ -1919,6 +1923,10 @@ def export_crewai_recommendations_csv(results: Dict[str, Any]) -> str:
     # Check for CrewAI results in session state first (most recent)
     if "crewai_deliverables" in st.session_state:
         deliverables = st.session_state["crewai_deliverables"]
+        recommendations = deliverables.get('customer_recommendations', [])
+    elif "ai_analysis_results" in st.session_state and "crewai_deliverables" in st.session_state["ai_analysis_results"]:
+        # Backup location in main results
+        deliverables = st.session_state["ai_analysis_results"]["crewai_deliverables"]
         recommendations = deliverables.get('customer_recommendations', [])
     else:
         # Fallback to results parameter
@@ -1991,6 +1999,11 @@ def export_campaign_summary_csv(results: Dict[str, Any]) -> str:
     # Check for CrewAI results in session state first (most recent)
     if "crewai_collaboration_results" in st.session_state:
         collaboration_results = st.session_state["crewai_collaboration_results"]
+        deliverables = collaboration_results.get('deliverables', {})
+        summary = deliverables.get('summary_count', {})
+    elif "ai_analysis_results" in st.session_state and "collaboration_results" in st.session_state["ai_analysis_results"]:
+        # Backup location in main results
+        collaboration_results = st.session_state["ai_analysis_results"]["collaboration_results"]
         deliverables = collaboration_results.get('deliverables', {})
         summary = deliverables.get('summary_count', {})
     else:
@@ -2067,6 +2080,10 @@ def export_email_templates_package(results: Dict[str, Any]) -> bytes:
     # Check for CrewAI results in session state first (most recent)
     if "crewai_deliverables" in st.session_state:
         deliverables = st.session_state["crewai_deliverables"]
+        templates = deliverables.get('email_templates', [])
+    elif "ai_analysis_results" in st.session_state and "crewai_deliverables" in st.session_state["ai_analysis_results"]:
+        # Backup location in main results
+        deliverables = st.session_state["ai_analysis_results"]["crewai_deliverables"]
         templates = deliverables.get('email_templates', [])
     else:
         # Fallback to results parameter
@@ -2842,6 +2859,15 @@ def process_agent_collaboration_from_results(lead_results: Dict[str, Any], mode:
             if collaboration_results:
                 st.session_state["crewai_collaboration_results"] = collaboration_results
                 
+                # CRITICAL: Also store collaboration results in the main ai_analysis_results
+                # This ensures persistence across downloads and page reloads
+                if "ai_analysis_results" in st.session_state:
+                    st.session_state["ai_analysis_results"]["collaboration_results"] = collaboration_results
+                    # Also store deliverables directly in main results for double backup
+                    deliverables = collaboration_results.get("deliverables", {})
+                    if deliverables:
+                        st.session_state["ai_analysis_results"]["crewai_deliverables"] = deliverables
+                
                 # Extract and store deliverables for exports
                 deliverables = collaboration_results.get("deliverables", {})
                 if deliverables:
@@ -2859,7 +2885,7 @@ def process_agent_collaboration_from_results(lead_results: Dict[str, Any], mode:
                 
                 # Debug info
                 customer_count = len(customer_data) if customer_data else 0
-                st.write(f"🔍 Debug: Stored collaboration results for {customer_count} customers to session state")
+                st.write(f"🔍 Debug: Stored collaboration results for {customer_count} customers to session state + main results")
             
             # Show collaboration overview
             with st.expander("🎯 Collaboration Overview", expanded=True):
