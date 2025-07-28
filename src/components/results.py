@@ -33,15 +33,30 @@ def create_session_backup():
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         backup_file = os.path.join(backup_dir, f"session_backup_{timestamp}.json")
         
-        # Create backup data from session state
+        # Create backup data from session state - only include non-None values
         backup_data = {
             "timestamp": datetime.now().isoformat(),
-            "ai_analysis_results": st.session_state.get("ai_analysis_results"),
-            "crewai_collaboration_results": st.session_state.get("crewai_collaboration_results"),
-            "crewai_deliverables": st.session_state.get("crewai_deliverables"),
-            "customer_data": st.session_state.get("customer_data", {}).get("original_data") if st.session_state.get("customer_data") else None,
-            "product_catalog": st.session_state.get("product_catalog", {}).get("original_data") if st.session_state.get("product_catalog") else None
         }
+        
+        # Only backup valid, non-None session state values
+        if "ai_analysis_results" in st.session_state and st.session_state["ai_analysis_results"] is not None:
+            backup_data["ai_analysis_results"] = st.session_state["ai_analysis_results"]
+            
+        if "crewai_collaboration_results" in st.session_state and st.session_state["crewai_collaboration_results"] is not None:
+            backup_data["crewai_collaboration_results"] = st.session_state["crewai_collaboration_results"]
+            
+        if "crewai_deliverables" in st.session_state and st.session_state["crewai_deliverables"] is not None:
+            backup_data["crewai_deliverables"] = st.session_state["crewai_deliverables"]
+            
+        # Handle complex nested customer data
+        customer_data = st.session_state.get("customer_data")
+        if customer_data and isinstance(customer_data, dict) and customer_data.get("original_data") is not None:
+            backup_data["customer_data"] = customer_data["original_data"]
+            
+        # Handle complex nested product catalog
+        product_catalog = st.session_state.get("product_catalog")
+        if product_catalog and isinstance(product_catalog, dict) and product_catalog.get("original_data") is not None:
+            backup_data["product_catalog"] = product_catalog["original_data"]
         
         # Save to file
         with open(backup_file, 'w') as f:
@@ -233,6 +248,9 @@ def render_results_page():
                             for error in debug_info["errors"]:
                                 st.error(f"❌ {error}")
 
+    # Clean up any corrupted session state first to prevent AttributeError issues
+    validate_and_clean_session_state()
+
     # Check for AI analysis results first - with file-based recovery
     has_ai_results = "ai_analysis_results" in st.session_state
     has_customer_data = "customer_data" in st.session_state
@@ -287,21 +305,21 @@ def attempt_session_recovery() -> bool:
         with open(latest_backup, 'r', encoding='utf-8') as f:
             backup_data = json.load(f)
         
-        # Restore session state
-        if "ai_analysis_results" in backup_data:
+        # Restore session state with null safety checks
+        if "ai_analysis_results" in backup_data and backup_data["ai_analysis_results"] is not None:
             st.session_state["ai_analysis_results"] = backup_data["ai_analysis_results"]
             
-        if "customer_data" in backup_data:
+        if "customer_data" in backup_data and backup_data["customer_data"] is not None:
             st.session_state["customer_data"] = backup_data["customer_data"]
             
-        if "purchase_data" in backup_data:
+        if "purchase_data" in backup_data and backup_data["purchase_data"] is not None:
             st.session_state["purchase_data"] = backup_data["purchase_data"]
             
-        # Restore CrewAI specific states
-        if "crewai_collaboration_results" in backup_data:
+        # Restore CrewAI specific states with null safety
+        if "crewai_collaboration_results" in backup_data and backup_data["crewai_collaboration_results"] is not None:
             st.session_state["crewai_collaboration_results"] = backup_data["crewai_collaboration_results"]
             
-        if "crewai_deliverables" in backup_data:
+        if "crewai_deliverables" in backup_data and backup_data["crewai_deliverables"] is not None:
             st.session_state["crewai_deliverables"] = backup_data["crewai_deliverables"]
         
         st.success("🔄 Session recovered from backup! Your collaboration results have been restored.")
@@ -312,8 +330,53 @@ def attempt_session_recovery() -> bool:
         return False
 
 
+def validate_and_clean_session_state():
+    """Validate and clean corrupted session state data to prevent AttributeError issues"""
+    try:
+        # Clean up None values that can cause AttributeError
+        keys_to_check = [
+            "ai_analysis_results", 
+            "crewai_collaboration_results", 
+            "crewai_deliverables",
+            "customer_data",
+            "purchase_data"
+        ]
+        
+        cleaned_count = 0
+        for key in keys_to_check:
+            if key in st.session_state and st.session_state[key] is None:
+                del st.session_state[key]
+                cleaned_count += 1
+        
+        # Validate nested session state structures
+        if "ai_analysis_results" in st.session_state:
+            ai_results = st.session_state["ai_analysis_results"]
+            if not isinstance(ai_results, dict):
+                del st.session_state["ai_analysis_results"]
+                cleaned_count += 1
+            elif "collaboration_results" in ai_results and ai_results["collaboration_results"] is None:
+                del ai_results["collaboration_results"]
+                cleaned_count += 1
+        
+        # Validate CrewAI deliverables structure  
+        if "crewai_deliverables" in st.session_state:
+            deliverables = st.session_state["crewai_deliverables"]
+            if not isinstance(deliverables, dict):
+                del st.session_state["crewai_deliverables"]
+                cleaned_count += 1
+        
+        if cleaned_count > 0:
+            st.info(f"🧹 Cleaned {cleaned_count} corrupted session state entries to prevent errors.")
+            
+    except Exception as e:
+        st.warning(f"⚠️ Session state validation error: {e}")
+
+
 def render_ai_analysis_dashboard():
     """Render the main AI analysis dashboard with recommendations"""
+    
+    # Clean up any corrupted session state first
+    validate_and_clean_session_state()
     
     results = st.session_state["ai_analysis_results"]
     
@@ -2090,16 +2153,19 @@ def export_crewai_offers_csv(results: Dict[str, Any]) -> str:
     # Check for CrewAI results in session state first (most recent)
     if "crewai_deliverables" in st.session_state:
         deliverables = st.session_state["crewai_deliverables"]
-        offers = deliverables.get('personalized_offers', [])
+        # Add null safety check for persistent state corruption
+        offers = deliverables.get('personalized_offers', []) if deliverables else []
     elif "ai_analysis_results" in st.session_state and "crewai_deliverables" in st.session_state["ai_analysis_results"]:
         # Backup location in main results
         deliverables = st.session_state["ai_analysis_results"]["crewai_deliverables"]
-        offers = deliverables.get('personalized_offers', [])
+        # Add null safety check for persistent state corruption
+        offers = deliverables.get('personalized_offers', []) if deliverables else []
     else:
         # Fallback to results parameter
         collaboration_results = results.get('collaboration_results', {})
         deliverables = collaboration_results.get('deliverables', {})
-        offers = deliverables.get('personalized_offers', [])
+        # Add null safety check
+        offers = deliverables.get('personalized_offers', []) if deliverables else []
     
     # Create comprehensive export data for CRM systems
     export_data = []
@@ -2154,16 +2220,19 @@ def export_crewai_recommendations_csv(results: Dict[str, Any]) -> str:
     # Check for CrewAI results in session state first (most recent)
     if "crewai_deliverables" in st.session_state:
         deliverables = st.session_state["crewai_deliverables"]
-        recommendations = deliverables.get('customer_recommendations', [])
+        # Add null safety check for persistent state corruption
+        recommendations = deliverables.get('customer_recommendations', []) if deliverables else []
     elif "ai_analysis_results" in st.session_state and "crewai_deliverables" in st.session_state["ai_analysis_results"]:
         # Backup location in main results
         deliverables = st.session_state["ai_analysis_results"]["crewai_deliverables"]
-        recommendations = deliverables.get('customer_recommendations', [])
+        # Add null safety check for persistent state corruption
+        recommendations = deliverables.get('customer_recommendations', []) if deliverables else []
     else:
         # Fallback to results parameter
         collaboration_results = results.get('collaboration_results', {})
         deliverables = collaboration_results.get('deliverables', {})
-        recommendations = deliverables.get('customer_recommendations', [])
+        # Add null safety check
+        recommendations = deliverables.get('customer_recommendations', []) if deliverables else []
     
     # Create actionable recommendations export for sales teams
     export_data = []
@@ -2230,25 +2299,28 @@ def export_campaign_summary_csv(results: Dict[str, Any]) -> str:
     # Check for CrewAI results in session state first (most recent)
     if "crewai_collaboration_results" in st.session_state:
         collaboration_results = st.session_state["crewai_collaboration_results"]
-        deliverables = collaboration_results.get('deliverables', {})
-        summary = deliverables.get('summary_count', {})
+        # Add null safety check for persistent state corruption
+        deliverables = collaboration_results.get('deliverables', {}) if collaboration_results else {}
+        summary = deliverables.get('summary_count', {}) if deliverables else {}
     elif "ai_analysis_results" in st.session_state and "collaboration_results" in st.session_state["ai_analysis_results"]:
         # Backup location in main results
         collaboration_results = st.session_state["ai_analysis_results"]["collaboration_results"]
-        deliverables = collaboration_results.get('deliverables', {})
-        summary = deliverables.get('summary_count', {})
+        # Add null safety check for persistent state corruption
+        deliverables = collaboration_results.get('deliverables', {}) if collaboration_results else {}
+        summary = deliverables.get('summary_count', {}) if deliverables else {}
     else:
         # Fallback to results parameter
         collaboration_results = results.get('collaboration_results', {})
-        deliverables = collaboration_results.get('deliverables', {})
-        summary = deliverables.get('summary_count', {})
+        # Add null safety check
+        deliverables = collaboration_results.get('deliverables', {}) if collaboration_results else {}
+        summary = deliverables.get('summary_count', {}) if deliverables else {}
     
     # Extract key metrics from collaboration results
-    performance_metrics = collaboration_results.get('performance_metrics', {})
+    performance_metrics = collaboration_results.get('performance_metrics', {}) if collaboration_results else {}
     revenue_impact = performance_metrics.get('revenue_impact', {})
     
-    # Check if we have actual data
-    has_data = bool(deliverables.get('personalized_offers', []) or deliverables.get('customer_recommendations', []))
+    # Check if we have actual data - add null safety
+    has_data = bool((deliverables.get('personalized_offers', []) if deliverables else []) or (deliverables.get('customer_recommendations', []) if deliverables else []))
     
     if not has_data:
         # Create sample/empty data structure
@@ -2284,8 +2356,8 @@ def export_campaign_summary_csv(results: Dict[str, Any]) -> str:
             "Personalized_Offers_Created": summary.get('offers_created', 0),
             "Email_Templates_Generated": summary.get('emails_generated', 0),
             "Action_Recommendations": summary.get('recommendations_made', 0),
-            "High_Priority_Actions": len([r for r in deliverables.get('customer_recommendations', []) if r.get('priority') == 'High']),
-            "Medium_Priority_Actions": len([r for r in deliverables.get('customer_recommendations', []) if r.get('priority') == 'Medium']),
+            "High_Priority_Actions": len([r for r in (deliverables.get('customer_recommendations', []) if deliverables else []) if r.get('priority') == 'High']),
+            "Medium_Priority_Actions": len([r for r in (deliverables.get('customer_recommendations', []) if deliverables else []) if r.get('priority') == 'Medium']),
             "Total_Revenue_Potential_HKD": revenue_impact.get('total_annual_uplift', 'TBD'),
             "Average_Customer_Value_HKD": revenue_impact.get('avg_customer_uplift', 'TBD'),
             "Campaign_Readiness": "100% Ready",
@@ -2311,16 +2383,19 @@ def export_email_templates_package(results: Dict[str, Any]) -> bytes:
     # Check for CrewAI results in session state first (most recent)
     if "crewai_deliverables" in st.session_state:
         deliverables = st.session_state["crewai_deliverables"]
-        templates = deliverables.get('email_templates', [])
+        # Add null safety check for persistent state corruption
+        templates = deliverables.get('email_templates', []) if deliverables else []
     elif "ai_analysis_results" in st.session_state and "crewai_deliverables" in st.session_state["ai_analysis_results"]:
         # Backup location in main results
         deliverables = st.session_state["ai_analysis_results"]["crewai_deliverables"]
-        templates = deliverables.get('email_templates', [])
+        # Add null safety check for persistent state corruption
+        templates = deliverables.get('email_templates', []) if deliverables else []
     else:
         # Fallback to results parameter
         collaboration_results = results.get('collaboration_results', {})
         deliverables = collaboration_results.get('deliverables', {})
-        templates = deliverables.get('email_templates', [])
+        # Add null safety check
+        templates = deliverables.get('email_templates', []) if deliverables else []
     
     if not templates:
         # Return ZIP with explanation file
@@ -2472,8 +2547,8 @@ def export_complete_business_package(results: Dict[str, Any]) -> bytes:
         
         # Add email templates (extract from ZIP)
         collaboration_results = results.get('collaboration_results', {})
-        deliverables = collaboration_results.get('deliverables', {})
-        templates = deliverables.get('email_templates', [])
+        deliverables = collaboration_results.get('deliverables', {}) if collaboration_results else {}
+        templates = deliverables.get('email_templates', []) if deliverables else []
         
         for i, template in enumerate(templates):
             template_id = template.get('template_id', f'TEMPLATE_{i+1:03d}')
@@ -2495,8 +2570,8 @@ Email Body:
             zip_file.writestr(f"Email_Templates/{template_id}_{template_name.replace(' ', '_')}.txt", txt_content)
         
         # Add executive summary
-        summary = deliverables.get('summary_count', {})
-        performance_metrics = collaboration_results.get('performance_metrics', {})
+        summary = deliverables.get('summary_count', {}) if deliverables else {}
+        performance_metrics = collaboration_results.get('performance_metrics', {}) if collaboration_results else {}
         
         executive_summary = f"""THREE HK AI REVENUE ASSISTANT
 BUSINESS INTELLIGENCE PACKAGE
@@ -2575,11 +2650,11 @@ def standardize_crewai_export_data(crewai_results: Dict[str, Any]) -> Dict[str, 
     try:
         # Extract collaboration results
         collaboration_results = crewai_results.get("collaboration_results", {})
-        deliverables = collaboration_results.get("deliverables", {})
+        deliverables = collaboration_results.get("deliverables", {}) if collaboration_results else {}
         
         # Calculate total revenue potential
         total_revenue_potential = 0
-        offers = deliverables.get("personalized_offers", [])
+        offers = deliverables.get("personalized_offers", []) if deliverables else []
         
         for offer in offers:
             # Extract revenue impact value
@@ -2593,10 +2668,10 @@ def standardize_crewai_export_data(crewai_results: Dict[str, Any]) -> Dict[str, 
         
         # Standardized data structure
         standardized_data = {
-            "offers": deliverables.get("personalized_offers", []),
-            "email_templates": deliverables.get("email_templates", []),
-            "recommendations": deliverables.get("customer_recommendations", []),
-            "summary_metrics": deliverables.get("summary_count", {}),
+            "offers": deliverables.get("personalized_offers", []) if deliverables else [],
+            "email_templates": deliverables.get("email_templates", []) if deliverables else [],
+            "recommendations": deliverables.get("customer_recommendations", []) if deliverables else [],
+            "summary_metrics": deliverables.get("summary_count", {}) if deliverables else {},
             "business_impact": {
                 "total_customers_analyzed": len(offers),
                 "total_revenue_potential_hkd": total_revenue_potential,
