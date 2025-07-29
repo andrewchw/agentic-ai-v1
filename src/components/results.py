@@ -140,11 +140,37 @@ def render_results_page():
 
     st.markdown("## 📊 AI Revenue Assistant - Analysis Results")
     
-    # CRITICAL: Attempt to recover session state from file backups if session is empty
-    if "ai_analysis_results" not in st.session_state and "crewai_collaboration_results" not in st.session_state:
+    # Add clear all data option in sidebar for debugging/testing
+    with st.sidebar:
+        st.markdown("---")
+        st.markdown("### 🔧 **Debug Options**")
+        if st.button("🗑️ **Clear All Persistent Data**", help="Clear all session data and file backups"):
+            clear_all_persistent_data()
+            st.success("✅ All persistent data cleared!")
+            st.rerun()
+        
+        if st.button("📊 **Show Session Debug**", help="Show current session state"):
+            show_session_debug_info()
+    
+    # CRITICAL: Only attempt recovery if we have NO customer data AND NO results
+    # This prevents auto-loading old results when there's no actual data uploaded
+    has_customer_data = "customer_data" in st.session_state
+    has_purchase_data = "purchase_data" in st.session_state
+    has_ai_results = "ai_analysis_results" in st.session_state
+    has_collaboration_results = "crewai_collaboration_results" in st.session_state
+    
+    # Only auto-recover if we have results but lost customer data (legitimate recovery scenario)
+    if (has_ai_results or has_collaboration_results) and not has_customer_data:
+        st.info("🔄 Detected analysis results without customer data. Attempting to recover customer data...")
         if attempt_session_recovery():
-            st.success("🔄 Session state recovered from backup!")
-            st.rerun()  # Refresh to show recovered data
+            st.success("🔄 Customer data recovered from backup!")
+            st.rerun()
+        else:
+            st.warning("⚠️ Could not recover customer data. Analysis results may be from previous sessions.")
+            # Offer to clear stale data
+            if st.button("🗑️ Clear Stale Analysis Results"):
+                clear_analysis_results_only()
+                st.rerun()
 
     # Auto-load persistent product catalog into session if available
     if is_catalog_available() and "product_catalog" not in st.session_state:
@@ -251,17 +277,40 @@ def render_results_page():
     # Clean up any corrupted session state first to prevent AttributeError issues
     validate_and_clean_session_state()
 
-    # Check for AI analysis results first - with file-based recovery
+    # Check current session state
     has_ai_results = "ai_analysis_results" in st.session_state
     has_customer_data = "customer_data" in st.session_state
     has_purchase_data = "purchase_data" in st.session_state
 
-    # CRITICAL: If session state is completely cleared, try to recover from file backup
-    if not has_ai_results:
-        has_ai_results = attempt_session_recovery()
-    
-    if has_ai_results:
+    # CRITICAL: Improved logic - only show results if we have BOTH analysis AND customer data
+    # This prevents showing stale analysis results from previous sessions
+    if has_ai_results and has_customer_data:
+        # Valid scenario: we have both analysis and customer data
         render_ai_analysis_dashboard()
+    elif has_ai_results and not has_customer_data:
+        # Problematic scenario: we have analysis results but no customer data (stale data)
+        st.warning("⚠️ **Stale Analysis Detected**: Found analysis results but no customer data.")
+        st.info("This usually happens when analysis results are loaded from old session backups.")
+        
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            if st.button("🔄 **Try Data Recovery**"):
+                if attempt_session_recovery():
+                    st.success("✅ Customer data recovered!")
+                    st.rerun()
+                else:
+                    st.error("❌ Could not recover customer data")
+        
+        with col2:
+            if st.button("🗑️ **Clear Stale Results**"):
+                clear_analysis_results_only()
+                st.success("✅ Stale analysis results cleared!")
+                st.rerun()
+        
+        with col3:
+            if st.button("📤 **Go to Upload**"):
+                st.switch_page("pages/1_📤_Upload_Data.py")
+        
     elif has_customer_data and has_purchase_data:
         # Show data merging and offer to run AI analysis
         render_data_merging_section()
@@ -910,10 +959,26 @@ def render_export_section(results: Dict[str, Any]):
         
         with col3:
             if st.button("🔄 Run New Analysis"):
-                # Clear results and go back to analysis
-                if "ai_analysis_results" in st.session_state:
-                    del st.session_state["ai_analysis_results"]
-                st.rerun()
+                # Clear all analysis results
+                clear_analysis_results_only()
+                
+                # Check if we have customer data to rerun analysis
+                if "customer_data" in st.session_state and "purchase_data" in st.session_state:
+                    st.success("✅ Analysis cleared! Customer data preserved. Page will refresh...")
+                    st.rerun()
+                else:
+                    # Try to recover customer data
+                    st.info("🔄 No customer data found. Attempting recovery...")
+                    if attempt_session_recovery():
+                        if "customer_data" in st.session_state:
+                            st.success("✅ Customer data recovered! Rerunning analysis...")
+                            st.rerun()
+                        else:
+                            st.warning("⚠️ Recovery found old data but no customer data. Please upload new files.")
+                    else:
+                        st.warning("⚠️ No customer data found. Please go to Upload Data page.")
+                        if st.button("📤 Go to Upload Data"):
+                            st.switch_page("pages/1_📤_Upload_Data.py")
     
     else:
         # Standard export section for non-CrewAI results
@@ -943,10 +1008,26 @@ def render_export_section(results: Dict[str, Any]):
         
         with col3:
             if st.button("🔄 Run New Analysis"):
-                # Clear results and go back to analysis
-                if "ai_analysis_results" in st.session_state:
-                    del st.session_state["ai_analysis_results"]
-                st.rerun()
+                # Clear all analysis results
+                clear_analysis_results_only()
+                
+                # Check if we have customer data to rerun analysis
+                if "customer_data" in st.session_state and "purchase_data" in st.session_state:
+                    st.success("✅ Analysis cleared! Customer data preserved. Page will refresh...")
+                    st.rerun()
+                else:
+                    # Try to recover customer data
+                    st.info("🔄 No customer data found. Attempting recovery...")
+                    if attempt_session_recovery():
+                        if "customer_data" in st.session_state:
+                            st.success("✅ Customer data recovered! Rerunning analysis...")
+                            st.rerun()
+                        else:
+                            st.warning("⚠️ Recovery found old data but no customer data. Please upload new files.")
+                    else:
+                        st.warning("⚠️ No customer data found. Please go to Upload Data page.")
+                        if st.button("📤 Go to Upload Data"):
+                            st.switch_page("pages/1_📤_Upload_Data.py")
 
 
 def render_ai_analysis_trigger():
@@ -2744,6 +2825,20 @@ def standardize_crewai_export_data(crewai_results: Dict[str, Any]) -> Dict[str, 
 def render_getting_started():
     """Render getting started message when no data is available"""
     
+    # Check if this might be due to session loss after download
+    if any(key.startswith("crewai_backup_") for key in st.session_state.keys()):
+        st.warning("🔄 **Session Reset Detected:** It looks like your session was reset after downloading files.")
+        
+        # Try automatic recovery
+        if st.button("🔄 **Recover Previous Analysis**", type="primary"):
+            if attempt_session_recovery():
+                st.success("✅ Analysis recovered! Refreshing page...")
+                st.rerun()
+            else:
+                st.error("❌ Could not recover previous analysis. Please re-upload your data.")
+        
+        st.markdown("---")
+    
     st.info("📤 **Getting Started:** Upload customer and purchase data to begin AI analysis.")
     
     st.markdown("""
@@ -2760,6 +2855,25 @@ def render_getting_started():
     - 📈 Revenue projections
     - 💬 Sales talking points
     """)
+    
+    # Quick recovery options
+    if st.button("🔄 **Try Session Recovery**"):
+        if attempt_session_recovery():
+            st.success("✅ Session recovered! Refreshing...")
+            st.rerun()
+        else:
+            st.warning("⚠️ No recent session backups found. Please re-upload your data.")
+    
+    # Show available backup info
+    try:
+        import os
+        backup_dir = "data/session_backups"
+        if os.path.exists(backup_dir):
+            backup_files = [f for f in os.listdir(backup_dir) if f.startswith("session_backup_")]
+            if backup_files:
+                st.info(f"💾 Found {len(backup_files)} recent session backups available for recovery.")
+    except Exception:
+        pass  # Silently ignore backup check errors
 
 
 def render_data_merging_section():
@@ -3178,6 +3292,9 @@ def process_agent_collaboration_from_results(lead_results: Dict[str, Any], mode:
                 timestamp_key = f"crewai_backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
                 st.session_state[timestamp_key] = collaboration_results
                 st.session_state["latest_crewai_backup_key"] = timestamp_key
+                
+                # CRITICAL FIX: Create Agent Protocol tasks for dashboard visibility
+                create_agent_protocol_tasks_for_collaboration(collaboration_results, mode)
                 
                 # URL PARAMETER PERSISTENCE: Generate stateful URL for robust persistence
                 try:
@@ -3911,3 +4028,166 @@ def transform_lead_intelligence_results(results: Dict[str, Any]) -> Dict[str, An
     with col3:
         if st.button("🔧 View Metadata"):
             st.json(metadata)
+
+
+def create_agent_protocol_tasks_for_collaboration(collaboration_results: Dict, mode: str):
+    """Create Agent Protocol tasks so Dashboard can see collaboration activity"""
+    import requests
+    import time
+    
+    # Agent Protocol server URL
+    AGENT_PROTOCOL_URL = "http://127.0.0.1:8080"
+    API_BASE = f"{AGENT_PROTOCOL_URL}/ap/v1"
+    
+    try:
+        # Create a task for the Lead Intelligence Agent analysis
+        lead_task_input = f"Lead Intelligence Analysis Completed - Mode: {mode}"
+        if collaboration_results.get("deliverables", {}).get("lead_intelligence_findings"):
+            findings = collaboration_results["deliverables"]["lead_intelligence_findings"]
+            lead_task_input += f"\nCustomer Analysis: {len(findings.get('customer_insights', []))} insights generated"
+        
+        lead_task_response = requests.post(
+            f"{API_BASE}/agent/tasks",
+            json={
+                "input": lead_task_input,
+                "additional_input": {
+                    "task_type": "lead_intelligence_analysis",
+                    "timestamp": time.time(),
+                    "agent_system": "Lead Intelligence Agent",
+                    "mode": mode,
+                    "collaboration_id": collaboration_results.get("collaboration_id", "unknown")
+                }
+            },
+            timeout=10
+        )
+        
+        if lead_task_response.status_code == 200:
+            st.success("✅ Lead Intelligence task registered with Agent Protocol Dashboard")
+        
+        # Create a task for Revenue Optimization if available
+        if collaboration_results.get("deliverables", {}).get("revenue_optimization_strategies"):
+            revenue_task_input = f"Revenue Optimization Analysis Completed - Mode: {mode}"
+            strategies = collaboration_results["deliverables"]["revenue_optimization_strategies"]
+            revenue_task_input += f"\nStrategies Generated: {len(strategies.get('optimization_strategies', []))}"
+            
+            revenue_task_response = requests.post(
+                f"{API_BASE}/agent/tasks", 
+                json={
+                    "input": revenue_task_input,
+                    "additional_input": {
+                        "task_type": "revenue_optimization_analysis",
+                        "timestamp": time.time(),
+                        "agent_system": "Revenue Optimization Agent",
+                        "mode": mode,
+                        "collaboration_id": collaboration_results.get("collaboration_id", "unknown")
+                    }
+                },
+                timeout=10
+            )
+            
+            if revenue_task_response.status_code == 200:
+                st.success("✅ Revenue Optimization task registered with Agent Protocol Dashboard")
+        
+        # Create a multi-agent collaboration summary task
+        if mode in ["crewai_enhanced", "hybrid"]:
+            collab_task_input = f"Multi-Agent Collaboration Completed - {mode.upper()}"
+            agents_involved = collaboration_results.get("agents_involved", [])
+            collab_task_input += f"\nAgents: {', '.join(agents_involved)}"
+            
+            collaboration_response = requests.post(
+                f"{API_BASE}/agent/tasks",
+                json={
+                    "input": collab_task_input,
+                    "additional_input": {
+                        "task_type": "crewai_multi_agent_collaboration",
+                        "timestamp": time.time(),
+                        "agent_system": "CrewAI",
+                        "mode": mode,
+                        "agents_involved": agents_involved,
+                        "collaboration_id": collaboration_results.get("collaboration_id", "unknown"),
+                        "deliverables_count": len(collaboration_results.get("deliverables", {}))
+                    }
+                },
+                timeout=10
+            )
+            
+            if collaboration_response.status_code == 200:
+                st.success("✅ Multi-Agent collaboration registered with Agent Protocol Dashboard")
+        
+        st.info("🎯 **View Live Collaboration:** Open http://localhost:8501 to see real-time agent activity")
+        
+    except requests.exceptions.RequestException as e:
+        st.warning(f"⚠️ Could not register with Agent Protocol Dashboard: {e}")
+        st.info("💡 Make sure Agent Protocol server is running on port 8080")
+    except Exception as e:
+        st.warning(f"⚠️ Agent Protocol registration error: {e}")
+
+
+def clear_all_persistent_data():
+    """Clear all persistent session data and file backups"""
+    import os
+    import shutil
+    
+    # Clear all session state
+    keys_to_remove = []
+    for key in st.session_state.keys():
+        if key in ["ai_analysis_results", "crewai_collaboration_results", "crewai_deliverables", 
+                  "customer_data", "purchase_data", "product_catalog"] or key.startswith("crewai_backup_"):
+            keys_to_remove.append(key)
+    
+    for key in keys_to_remove:
+        del st.session_state[key]
+    
+    # Clear file backups
+    try:
+        backup_dir = "data/session_backups"
+        if os.path.exists(backup_dir):
+            shutil.rmtree(backup_dir)
+            os.makedirs(backup_dir, exist_ok=True)
+    except Exception:
+        pass  # Ignore file cleanup errors
+
+
+def clear_analysis_results_only():
+    """Clear only analysis results but preserve customer data"""
+    keys_to_remove = []
+    for key in st.session_state.keys():
+        if key in ["ai_analysis_results", "crewai_collaboration_results", "crewai_deliverables"] or key.startswith("crewai_backup_"):
+            keys_to_remove.append(key)
+    
+    for key in keys_to_remove:
+        del st.session_state[key]
+
+
+def show_session_debug_info():
+    """Show current session state for debugging"""
+    st.markdown("### 🔍 **Current Session State**")
+    
+    important_keys = [
+        "ai_analysis_results", "crewai_collaboration_results", "crewai_deliverables",
+        "customer_data", "purchase_data", "product_catalog"
+    ]
+    
+    for key in important_keys:
+        if key in st.session_state:
+            value = st.session_state[key]
+            if isinstance(value, dict):
+                st.success(f"✅ **{key}**: {len(value)} items")
+            elif hasattr(value, '__len__'):
+                st.success(f"✅ **{key}**: {len(value)} records")
+            else:
+                st.success(f"✅ **{key}**: Present")
+        else:
+            st.error(f"❌ **{key}**: Missing")
+    
+    # Show backup keys
+    backup_keys = [key for key in st.session_state.keys() if key.startswith("crewai_backup_")]
+    if backup_keys:
+        st.info(f"💾 **Backup Keys**: {len(backup_keys)} found")
+        for key in backup_keys:
+            st.write(f"  - {key}")
+    else:
+        st.warning("💾 **Backup Keys**: None found")
+    
+    # Show total session state size
+    st.info(f"📊 **Total Session Keys**: {len(st.session_state.keys())}")

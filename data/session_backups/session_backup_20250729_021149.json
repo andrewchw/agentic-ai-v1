@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-07-28T22:08:00.559456",
+  "timestamp": "2025-07-29T02:11:49.797762",
   "ai_analysis_results": {
     "success": true,
     "processing_time": 1.5,
@@ -8,34 +8,34 @@
         {
           "customer_id": "ACC614603",
           "customer_name": "Chan",
-          "recommendation_id": "AI_REC_20250728_215702_ACC614603",
-          "priority": "medium",
+          "recommendation_id": "AI_REC_20250729_000535_ACC614603",
+          "priority": "high",
           "action_type": "offer_upgrade",
-          "title": "Upgrade to 5G Standard 50GB Plan with Roaming Add-On",
-          "description": "Chan is on the Basic_Mobile plan with medium churn risk. Given their standard spending tier and active contract, an upgrade to the 5G Standard 50GB Plan with an Asia Roaming Pack would better align with their potential needs. This leverages Three HK's strengths in mainland China connectivity and competitive pricing.",
-          "expected_revenue": 22200.0,
-          "conversion_probability": 0.65,
-          "urgency_score": 0.5,
-          "business_impact_score": 0.7,
+          "title": "Upgrade Chan to 5G Unlimited Plus with Asia Roaming Pack",
+          "description": "Chan is currently on the Basic_Mobile plan at HK$450/month with medium churn risk. Given their standard spending tier and contract status, they are a good candidate for an upgrade to a higher-tier mobile plan that aligns with Three HK's strengths in mainland China connectivity and competitive pricing. The 5G Unlimited Plus plan would provide more data and better roaming options, reducing churn risk while increasing revenue.",
+          "expected_revenue": 21600.0,
+          "conversion_probability": 0.7,
+          "urgency_score": 0.7,
+          "business_impact_score": 0.8,
           "next_steps": [
-            "Identify Chan's usage patterns (data, roaming, etc.)",
-            "Prepare customized upgrade proposal with 5G Standard 50GB + Asia Roaming Pack",
-            "Schedule a retention outreach call within 7 days"
+            "Identify Chan's current data usage patterns",
+            "Prepare a personalized upgrade offer with 5G Unlimited Plus (HK$750/month) and Asia Roaming Pack (HK$150/month)",
+            "Contact Chan within 48 hours to discuss the benefits"
           ],
           "talking_points": [
-            "Three HK offers superior mainland China connectivity with our 5G network.",
-            "The 5G Standard 50GB Plan provides more data at a competitive price compared to competitors.",
-            "Adding the Asia Roaming Pack ensures seamless travel experiences across Asia."
+            "Highlight Three HK's superior mainland China connectivity for business travelers",
+            "Emphasize the unlimited data and premium support included in the upgrade",
+            "Offer a limited-time discount or bundle incentive to sweeten the deal"
           ],
           "objection_handling": {
-            "price_concern": "The upgrade provides significant data increases and roaming benefits at a competitive rate. We can also explore bundled discounts or promotional offers.",
-            "competitor_comparison": "Three HK's 5G network coverage in mainland China is unmatched, and our pricing remains highly competitive in the market.",
-            "timing_concern": "Now is the ideal time to upgrade to lock in current promotional rates and avoid potential future price increases."
+            "price_concern": "Emphasize the long-term cost savings from unlimited data and better roaming rates, especially for mainland China travel. Offer a 3-month discount or waive activation fees.",
+            "competitor_comparison": "Highlight Three HK's superior network coverage in China and our competitive pricing compared to rivals like CSL and HKT.",
+            "timing_concern": "Position this as a proactive upgrade to avoid future price increases and ensure seamless connectivity for business needs."
           },
           "recommended_offers": [
             {
-              "name": "5G Standard 50GB Plan",
-              "monthly_value": 650,
+              "name": "5G Unlimited Plus",
+              "monthly_value": 750,
               "category": "mobile"
             },
             {
@@ -45,22 +45,22 @@
             }
           ],
           "explanation": {
-            "primary_reason": "Medium churn risk with potential for higher-value plan that aligns with Three HK's competitive advantages.",
+            "primary_reason": "Medium churn risk and potential for significant revenue increase through plan upgrade and value-added services",
             "supporting_factors": [
               "Customer Type: Individual",
               "Spending Tier: Standard",
-              "AI Confidence: 75.0%"
+              "AI Confidence: 85.0%"
             ],
             "risk_factors": [],
-            "confidence_score": 0.75,
+            "confidence_score": 0.85,
             "data_sources": [
               "AI Analysis",
               "Customer Profile",
               "Product Catalog"
             ]
           },
-          "created_at": "2025-07-28T21:57:02.778672",
-          "expires_at": "2025-08-04T21:57:02.778672",
+          "created_at": "2025-07-29T00:05:35.159241",
+          "expires_at": "2025-08-05T00:05:35.159241",
           "tags": [
             "individual",
             "standard",
@@ -71,49 +71,44 @@
         {
           "customer_id": "ACC880659",
           "customer_name": "Lam",
-          "recommendation_id": "AI_REC_20250728_215714_ACC880659",
+          "recommendation_id": "AI_REC_20250729_000552_ACC880659",
           "priority": "high",
           "action_type": "offer_upgrade",
-          "title": "Upgrade Lam to 5G Unlimited Plus with Roaming Pack",
-          "description": "Lam is a high-spending customer on a basic plan with medium churn risk. Given their spending tier and likely data needs, upgrading to 5G Unlimited Plus (HK$750/month) with the Asia Roaming Pack (HK$100/month) would significantly improve retention and ARPU while leveraging Three HK's superior mainland China connectivity.",
-          "expected_revenue": 22500.0,
-          "conversion_probability": 0.7,
+          "title": "Upgrade to 5G Unlimited Plus with Asia Roaming Pack",
+          "description": "Customer Lam (ACC880659) is a high-spending individual on a Basic_Mobile plan (HK$500/month) with medium churn risk. Given their high spending tier and active contract, this is an ideal opportunity to upgrade to a premium plan (5G Unlimited Plus) and add value-added services (Asia Roaming Pack). The upgrade aligns with Three HK's strengths in mainland China connectivity and competitive pricing.",
+          "expected_revenue": 25200.0,
+          "conversion_probability": 0.75,
           "urgency_score": 0.8,
           "business_impact_score": 0.9,
           "next_steps": [
-            "Review Lam's recent usage data to confirm data consumption patterns",
-            "Propose 5G Unlimited Plus + Asia Roaming Pack bundle with 10% first-month discount",
-            "Position against competitors' pricier roaming solutions"
+            "Prepare personalized upgrade proposal with 5G Unlimited Plus + Asia Roaming Pack",
+            "Highlight cost savings and added benefits during outreach",
+            "Schedule follow-up within 3 business days post-initial contact"
           ],
           "talking_points": [
-            "Your current plan limits your mainland China roaming opportunities - our 5G Unlimited Plus with Asia Roaming gives you seamless connectivity across 22 countries",
-            "As a high-value customer, you qualify for our premium support and device insurance at no additional cost during the upgrade period",
-            "Three HK's network is the most reliable for China connectivity, especially for business travelers"
+            "Your current Basic_Mobile plan may limit your mainland China roaming experience. Our 5G Unlimited Plus with Asia Roaming Pack offers seamless connectivity across China at no extra cost.",
+            "Three HK's network is optimized for mainland China travel - no data throttling or hidden roaming fees.",
+            "For just HK$600/month (only HK$100 more), you'll get unlimited data, premium support, and full mainland coverage."
           ],
           "objection_handling": {
-            "price_concern": "We can offer a 10% discount on the first 3 months, and the roaming capabilities alone save you 40% compared to competitor pay-as-you-go rates in China",
-            "competitor_comparison": "Our mainland China coverage is superior to competitors, with 50% better speeds in key business hubs according to recent tests",
-            "timing_concern": "This upgrade secures your preferential rates before our September price adjustment for new customers, and includes immediate activation of roaming benefits"
+            "price_concern": "The HK$100 upgrade fee unlocks unlimited data and provides significant savings on roaming charges. Many customers find they save money overall by avoiding per-GB roaming fees.",
+            "competitor_comparison": "Our mainland China connectivity is superior to competitors, with dedicated infrastructure and no data throttling. Plus, our premium support team is available 24/7 for travel assistance.",
+            "timing_concern": "Now is the perfect time to upgrade - you'll lock in our current promotional rates and won't face any contract disruption. This plan also includes priority access to new 5G+ services when they launch."
           },
           "recommended_offers": [
             {
               "name": "5G Unlimited Plus",
-              "monthly_value": 750,
+              "monthly_value": 600,
               "category": "mobile"
             },
             {
               "name": "Asia Roaming Pack",
               "monthly_value": 100,
               "category": "vas"
-            },
-            {
-              "name": "Premium Support",
-              "monthly_value": 0,
-              "category": "vas"
             }
           ],
           "explanation": {
-            "primary_reason": "High spending potential not being fully monetized with current basic plan",
+            "primary_reason": "High spending tier with underutilized plan capabilities and medium churn risk",
             "supporting_factors": [
               "Customer Type: Individual",
               "Spending Tier: High",
@@ -127,8 +122,8 @@
               "Product Catalog"
             ]
           },
-          "created_at": "2025-07-28T21:57:14.135944",
-          "expires_at": "2025-08-04T21:57:14.135944",
+          "created_at": "2025-07-29T00:05:52.869517",
+          "expires_at": "2025-08-05T00:05:52.869517",
           "tags": [
             "individual",
             "standard",
@@ -139,49 +134,50 @@
         {
           "customer_id": "ACC030306",
           "customer_name": "Wong",
-          "recommendation_id": "AI_REC_20250728_215726_ACC030306",
+          "recommendation_id": "AI_REC_20250729_000611_ACC030306",
           "priority": "high",
           "action_type": "offer_upgrade",
-          "title": "Upgrade to 5G Unlimited Pro for High-Spending Customer",
-          "description": "Wong is a high-spending standard customer on the Basic_Mobile plan (HK$550/month) with medium churn risk. Given the spending tier and potential for higher usage, upgrading to the 5G Unlimited Pro plan (HK$850/month) aligns with their needs, particularly leveraging Three HK's superior mainland China connectivity and enterprise support. This upgrade offers unlimited data, premium roaming, and enhanced customer support, addressing potential pain points while increasing revenue.",
-          "expected_revenue": 29100.0,
+          "title": "Upgrade Wong to 5G Unlimited Plus with Premium Support",
+          "description": "Wong is a high-spending standard customer on the Basic_Mobile plan with medium churn risk. Given their spending tier and potential for increased engagement, upgrading to a higher-tier mobile plan with value-added services will improve retention and revenue while leveraging Three HK's superior mainland China connectivity and enterprise support.",
+          "expected_revenue": 22800.0,
           "conversion_probability": 0.7,
-          "urgency_score": 0.8,
-          "business_impact_score": 0.9,
+          "urgency_score": 0.7,
+          "business_impact_score": 0.8,
           "next_steps": [
-            "Prepare personalized upgrade proposal highlighting mainland China roaming and enterprise support benefits",
-            "Contact Wong via phone to discuss plan limitations and new features",
-            "Offer a 2-month discount or free Premium Support as an incentive"
+            "Prepare upgrade proposal with 5G Unlimited Plus and Premium Support",
+            "Contact Wong to discuss benefits and address any concerns",
+            "Follow up within 3 days to close the deal"
           ],
           "talking_points": [
-            "Your current plan may limit your mainland China roaming experience\u20145G Unlimited Pro offers seamless connectivity with no data caps",
-            "As a high-spending customer, you qualify for exclusive offers like Premium Support at no additional cost for the first 2 months",
-            "Three HK's network is designed for business reliability, ensuring uninterrupted service for your professional needs"
+            "Three HK's unmatched mainland China roaming coverage for business and personal travel",
+            "Unlimited data with 5G speeds for seamless streaming and productivity",
+            "Premium Support for faster issue resolution and priority assistance",
+            "Competitive pricing with no hidden fees and flexible contract options"
           ],
           "objection_handling": {
-            "price_concern": "The HK$300/month increase unlocks unlimited data, priority customer support, and better mainland China roaming\u2014saving you costs on overage fees and enhancing productivity. We can offer a 2-month discount to ease the transition.",
-            "competitor_comparison": "Three HK provides superior mainland China coverage with no roaming restrictions, unlike competitors. Our enterprise support ensures faster issue resolution and dedicated account management.",
-            "timing_concern": "Now is ideal as we're offering a limited-time waiver of the Premium Support fee. The upgrade also aligns with your contract renewal cycle, avoiding future disruptions."
+            "price_concern": "The additional HK$200 per month unlocks unlimited 5G data, premium support, and roaming benefits that will save you time and money during travel. We can also explore flexible payment options.",
+            "competitor_comparison": "Three HK offers the best mainland China roaming coverage at competitive prices, with no data throttling or hidden fees. Our 5G network is consistently ranked as the fastest in Hong Kong.",
+            "timing_concern": "This is a great time to upgrade as we\u2019re offering a limited-time waiver on activation fees. Plus, your current plan isn\u2019t optimized for your high usage patterns, leading to potential overage charges."
           },
           "recommended_offers": [
             {
-              "name": "5G Unlimited Pro",
-              "monthly_value": 850,
+              "name": "5G Unlimited Plus",
+              "monthly_value": 750,
               "category": "mobile"
             },
             {
               "name": "Premium Support",
-              "monthly_value": 150,
+              "monthly_value": 100,
               "category": "vas"
             },
             {
               "name": "Asia Roaming Pack",
-              "monthly_value": 100,
+              "monthly_value": 150,
               "category": "vas"
             }
           ],
           "explanation": {
-            "primary_reason": "High spending tier and medium churn risk indicate strong potential for upgrade to a premium plan, leveraging Three HK's network strengths and value-added services",
+            "primary_reason": "High-spending customer on a basic plan with potential for significant revenue uplift through premium offerings",
             "supporting_factors": [
               "Customer Type: Individual",
               "Spending Tier: High",
@@ -195,8 +191,8 @@
               "Product Catalog"
             ]
           },
-          "created_at": "2025-07-28T21:57:26.642177",
-          "expires_at": "2025-08-04T21:57:26.642177",
+          "created_at": "2025-07-29T00:06:11.303625",
+          "expires_at": "2025-08-05T00:06:11.303625",
           "tags": [
             "individual",
             "standard",
@@ -207,100 +203,34 @@
         {
           "customer_id": "ACC742294",
           "customer_name": "Cheung",
-          "recommendation_id": "REC_20250728_215741_ACC742294_3",
+          "recommendation_id": "AI_REC_20250729_000626_ACC742294",
           "priority": "high",
           "action_type": "offer_upgrade",
-          "title": "Premium Service Upgrade Opportunity",
-          "description": "High-value customer ready for premium service enhancements and add-on services.",
-          "expected_revenue": 20160.0,
-          "conversion_probability": 0.5,
-          "urgency_score": 0.5,
-          "business_impact_score": 0.8,
-          "next_steps": [
-            "Contact customer within 1 week",
-            "Present suitable upgrade options",
-            "Explain value proposition and benefits",
-            "Follow up within 3 days of initial contact"
-          ],
-          "talking_points": [
-            "Three HK's superior 5G network coverage in Hong Kong",
-            "Competitive pricing with best value propositions",
-            "Excellent customer service and technical support",
-            "Seamless mainland China connectivity options"
-          ],
-          "objection_handling": {
-            "price_concern": "Our plans offer exceptional value with ROI typically seen within 6 months",
-            "competitor_comparison": "Three HK provides superior network quality and mainland connectivity",
-            "contract_length": "Flexible terms available with performance guarantees and early upgrade options"
-          },
-          "recommended_offers": [
-            {
-              "name": "5G Premium Family Plan",
-              "monthly_value": 268,
-              "category": "family"
-            },
-            {
-              "name": "Device Protection",
-              "monthly_value": 35,
-              "category": "insurance"
-            }
-          ],
-          "explanation": {
-            "primary_reason": "High Priority Customer",
-            "supporting_factors": [
-              "Customer Type: Individual",
-              "Spending Tier: High",
-              "Current Plan: Basic_Mobile",
-              "Monthly Value: HK$600"
-            ],
-            "risk_factors": [],
-            "confidence_score": 0.85,
-            "data_sources": [
-              "Customer Profile",
-              "Plan Analysis",
-              "Risk Assessment"
-            ]
-          },
-          "created_at": "2025-07-28T21:57:41.047757",
-          "expires_at": "2025-08-04T21:57:41.047757",
-          "tags": [
-            "individual",
-            "standard",
-            "high",
-            "offer_upgrade"
-          ]
-        },
-        {
-          "customer_id": "ACC554066",
-          "customer_name": "Lee",
-          "recommendation_id": "AI_REC_20250728_215752_ACC554066",
-          "priority": "high",
-          "action_type": "offer_upgrade",
-          "title": "Upgrade Lee to 5G Unlimited Plus with Roaming Pack",
-          "description": "Lee is a high-spending standard customer on a Basic_Mobile plan with medium churn risk. Given their spending tier and current usage, upgrading to a premium 5G plan with roaming capabilities aligns with their needs while mitigating churn risk. The offer leverages Three HK's superior mainland China connectivity and competitive pricing to provide value.",
-          "expected_revenue": 25200.0,
+          "title": "Upgrade Cheung to 5G Unlimited Plus with Asia Roaming Pack",
+          "description": "Cheung is a high-spending standard customer on a Basic Mobile plan with medium churn risk. Given their spending tier and current plan limitations, they are a strong candidate for upgrading to 5G Unlimited Plus with added value from Asia Roaming Pack. This upgrade aligns with Three HK's strengths in mainland China connectivity and competitive pricing.",
+          "expected_revenue": 40800.0,
           "conversion_probability": 0.7,
           "urgency_score": 0.8,
           "business_impact_score": 0.85,
           "next_steps": [
-            "Call Lee to assess interest in plan upgrades",
-            "Present 5G Unlimited Plus with Asia Roaming Pack as a bundled offer",
-            "Address any objections and finalize upgrade within 7 days"
+            "Identify Cheung's specific usage patterns and roaming needs",
+            "Propose 5G Unlimited Plus (HK$900) + Asia Roaming Pack (HK$200) = HK$1,100 total",
+            "Highlight Three HK's superior mainland China coverage and cost savings vs. competitors"
           ],
           "talking_points": [
-            "Our 5G network offers superior coverage and speeds, especially in mainland China",
-            "The Asia Roaming Pack provides seamless connectivity when traveling, perfect for frequent travelers like you",
-            "Competitive pricing with no hidden fees, just straightforward value"
+            "Your current plan limits your data and roaming options - our 5G Unlimited Plus gives you true freedom",
+            "With Three HK's Asia Roaming Pack, you get seamless coverage across China and other key destinations",
+            "Our competitive pricing means you're getting enterprise-grade connectivity at a fraction of the cost of competitors"
           ],
           "objection_handling": {
-            "price_concern": "While there's an increase in monthly fee, the bundled value of unlimited data and roaming access provides significant savings compared to purchasing these separately. Our network quality ensures you get the best experience for your investment.",
-            "competitor_comparison": "Three HK offers the best mainland China connectivity and enterprise-grade support. Our pricing is competitive, and we don't charge extra for essential services like customer support.",
-            "timing_concern": "The sooner you upgrade, the sooner you can enjoy the benefits of unlimited data and seamless roaming. Additionally, this offer is time-sensitive, and we want to ensure you have the best plan for your needs."
+            "price_concern": "The 50% increase in monthly fee gives you 3x the data and unlimited roaming across Asia, which actually represents significant savings compared to pay-as-you-go roaming charges. Our pricing is among the most competitive in the market for this level of service.",
+            "competitor_comparison": "Three HK offers superior mainland China connectivity with our dedicated network infrastructure. Competitors often charge extra for roaming in China or have limited coverage in key cities.",
+            "timing_concern": "This offer is available now with immediate activation. Given your usage patterns, upgrading now would prevent any potential overage charges and provide immediate value."
           },
           "recommended_offers": [
             {
               "name": "5G Unlimited Plus",
-              "monthly_value": 850,
+              "monthly_value": 900,
               "category": "mobile"
             },
             {
@@ -310,7 +240,7 @@
             }
           ],
           "explanation": {
-            "primary_reason": "High spending tier and medium churn risk indicate strong potential for upgrade to a premium plan with added value services.",
+            "primary_reason": "High-spending customer with medium churn risk who would benefit significantly from premium data and roaming capabilities",
             "supporting_factors": [
               "Customer Type: Individual",
               "Spending Tier: High",
@@ -324,8 +254,71 @@
               "Product Catalog"
             ]
           },
-          "created_at": "2025-07-28T21:57:52.848895",
-          "expires_at": "2025-08-04T21:57:52.848895",
+          "created_at": "2025-07-29T00:06:26.528839",
+          "expires_at": "2025-08-05T00:06:26.528839",
+          "tags": [
+            "individual",
+            "standard",
+            "high",
+            "ai_generated"
+          ]
+        },
+        {
+          "customer_id": "ACC554066",
+          "customer_name": "Lee",
+          "recommendation_id": "AI_REC_20250729_000639_ACC554066",
+          "priority": "high",
+          "action_type": "offer_upgrade",
+          "title": "Upgrade Lee to 5G Unlimited Plus with Premium Support",
+          "description": "Lee is a high-spending standard customer on the Basic_Mobile plan with medium churn risk. Given their high spending tier and current plan limitations, upgrading to 5G Unlimited Plus (with superior mainland China connectivity) plus Premium Support aligns with their usage patterns and reduces churn risk. The proposed upgrade leverages Three HK's strengths in network quality and enterprise support.",
+          "expected_revenue": 24500.0,
+          "conversion_probability": 0.65,
+          "urgency_score": 0.7,
+          "business_impact_score": 0.8,
+          "next_steps": [
+            "Identify Lee's specific data and roaming needs",
+            "Propose 5G Unlimited Plus + Premium Support package",
+            "Highlight mainland China connectivity benefits"
+          ],
+          "talking_points": [
+            "Your current Basic_Mobile plan may limit your data usage during peak times. 5G Unlimited Plus offers seamless connectivity, especially for mainland China travel.",
+            "Premium Support ensures prioritized assistance for your high-spending tier, aligning with our commitment to customer service.",
+            "Three HK's network has been ranked #1 for mainland China roaming coverage in recent studies."
+          ],
+          "objection_handling": {
+            "price_concern": "The price difference of HK$200/month provides unlimited data and mainland China roaming at no additional cost, offering better value than competitors. We can also bundle with Premium Support for a small additional fee to ensure seamless service.",
+            "competitor_comparison": "Three HK offers superior mainland China coverage and faster speeds compared to competitors, with more inclusive data at similar pricing.",
+            "timing_concern": "Now is the ideal time to upgrade before potential rate changes and to ensure you're ready for any upcoming travel plans."
+          },
+          "recommended_offers": [
+            {
+              "name": "5G Unlimited Plus",
+              "monthly_value": 850,
+              "category": "mobile"
+            },
+            {
+              "name": "Premium Support",
+              "monthly_value": 50,
+              "category": "vas"
+            }
+          ],
+          "explanation": {
+            "primary_reason": "High-spending customer on a basic plan with medium churn risk; upgrade aligns with usage patterns and business objectives.",
+            "supporting_factors": [
+              "Customer Type: Individual",
+              "Spending Tier: High",
+              "AI Confidence: 75.0%"
+            ],
+            "risk_factors": [],
+            "confidence_score": 0.75,
+            "data_sources": [
+              "AI Analysis",
+              "Customer Profile",
+              "Product Catalog"
+            ]
+          },
+          "created_at": "2025-07-29T00:06:39.706031",
+          "expires_at": "2025-08-05T00:06:39.706031",
           "tags": [
             "individual",
             "standard",
@@ -336,8 +329,8 @@
       ],
       "summary": {
         "total_recommendations": 5,
-        "total_expected_revenue": 119160.0,
-        "average_conversion_probability": 0.65
+        "total_expected_revenue": 134900.0,
+        "average_conversion_probability": 0.7
       }
     },
     "customer_analysis": {
@@ -362,7 +355,7 @@
       "scoring_factors": []
     },
     "metadata": {
-      "timestamp": "2025-07-28T21:57:52.853900",
+      "timestamp": "2025-07-29T00:06:39.708030",
       "ai_engine": "Task 9 AI Agent",
       "data_sources": [
         "customer_data",
@@ -370,7 +363,7 @@
         "product_catalog"
       ],
       "data_source_type": "merged_data",
-      "analysis_id": "analysis_1753711072",
+      "analysis_id": "analysis_1753718799",
       "has_product_catalog": true,
       "catalog_plans_count": 39
     },
@@ -446,31 +439,31 @@
       "collaboration_results": {
         "customer_intelligence": {
           "agent_type": "customer_intelligence",
-          "output": "### Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n1. **High-Value Enterprise Customers**\n   - **Email**: Weekly personalized emails highlighting premium business solutions and dedicated customer support. Timing: Start of the week to capitalize on fresh starts.\n   - **SMS**: Monthly SMS reminders about upcoming service renewals and special offers. Timing: End of the month to prompt timely actions.\n   - **App Notifications**: Push no...",
+          "output": "### Comprehensive Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n**High-Value Customer Retention Campaigns (Immediate Execution)**\n- **Channels**: Email, SMS, App Notifications, Customer Service\n- **Timing**: Monthly, with personalized follow-ups based on usage patterns\n- **Workflow**:\n  1. **Email**: Send personalized data package recommendations and premium content offers.\n  2. **SMS**: Remind customers of exclusive discounts on i...",
           "status": "completed"
         },
         "market_intelligence": {
           "agent_type": "market_intelligence",
-          "output": "### Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n1. **High-Value Enterprise Customers**\n   - **Email**: Weekly personalized emails highlighting premium business solutions and dedicated customer support. Timing: Start of the week to capitalize on fresh starts.\n   - **SMS**: Monthly SMS reminders about upcoming service renewals and special offers. Timing: End of the month to prompt timely actions.\n   - **App Notifications**: Push no...",
+          "output": "### Comprehensive Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n**High-Value Customer Retention Campaigns (Immediate Execution)**\n- **Channels**: Email, SMS, App Notifications, Customer Service\n- **Timing**: Monthly, with personalized follow-ups based on usage patterns\n- **Workflow**:\n  1. **Email**: Send personalized data package recommendations and premium content offers.\n  2. **SMS**: Remind customers of exclusive discounts on i...",
           "status": "completed"
         },
         "revenue_optimization": {
           "agent_type": "revenue_optimization",
-          "output": "### Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n1. **High-Value Enterprise Customers**\n   - **Email**: Weekly personalized emails highlighting premium business solutions and dedicated customer support. Timing: Start of the week to capitalize on fresh starts.\n   - **SMS**: Monthly SMS reminders about upcoming service renewals and special offers. Timing: End of the month to prompt timely actions.\n   - **App Notifications**: Push no...",
+          "output": "### Comprehensive Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n**High-Value Customer Retention Campaigns (Immediate Execution)**\n- **Channels**: Email, SMS, App Notifications, Customer Service\n- **Timing**: Monthly, with personalized follow-ups based on usage patterns\n- **Workflow**:\n  1. **Email**: Send personalized data package recommendations and premium content offers.\n  2. **SMS**: Remind customers of exclusive discounts on i...",
           "status": "completed"
         },
         "retention_strategy": {
           "agent_type": "retention_strategy",
-          "output": "### Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n1. **High-Value Enterprise Customers**\n   - **Email**: Weekly personalized emails highlighting premium business solutions and dedicated customer support. Timing: Start of the week to capitalize on fresh starts.\n   - **SMS**: Monthly SMS reminders about upcoming service renewals and special offers. Timing: End of the month to prompt timely actions.\n   - **App Notifications**: Push no...",
+          "output": "### Comprehensive Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n**High-Value Customer Retention Campaigns (Immediate Execution)**\n- **Channels**: Email, SMS, App Notifications, Customer Service\n- **Timing**: Monthly, with personalized follow-ups based on usage patterns\n- **Workflow**:\n  1. **Email**: Send personalized data package recommendations and premium content offers.\n  2. **SMS**: Remind customers of exclusive discounts on i...",
           "status": "completed"
         },
         "campaign_execution": {
           "agent_type": "campaign_execution",
-          "output": "### Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n1. **High-Value Enterprise Customers**\n   - **Email**: Weekly personalized emails highlighting premium business solutions and dedicated customer support. Timing: Start of the week to capitalize on fresh starts.\n   - **SMS**: Monthly SMS reminders about upcoming service renewals and special offers. Timing: End of the month to prompt timely actions.\n   - **App Notifications**: Push no...",
+          "output": "### Comprehensive Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n**High-Value Customer Retention Campaigns (Immediate Execution)**\n- **Channels**: Email, SMS, App Notifications, Customer Service\n- **Timing**: Monthly, with personalized follow-ups based on usage patterns\n- **Workflow**:\n  1. **Email**: Send personalized data package recommendations and premium content offers.\n  2. **SMS**: Remind customers of exclusive discounts on i...",
           "status": "completed"
         },
         "consensus_validation": {
-          "validation_results": "**Consensus Validation Report**\n\n**Cross-Agent Agreement Scores on Key Recommendations:**\n- Multi-Channel Orchestration Workflows: 95% agreement\n- Timing Optimization: 90% agreement\n- AI-Driven Channel Selection: 85% agreement\n- Phased Implementation: 92% agreement\n\n**Validated Revenue Projections with Confidence Intervals:**\n- High-Value Enterprise Customers: HK$50 million annually (85% confidence)\n- Premium Residential Users: HK$30 million annually (88% confidence)\n- Combined Total: HK$80 million annually (87% confidence)\n\n**Risk Assessment with Mitigation Strategies:**\n1. **Message Overload and Customer Fatigue:**\n   - Mitigation: Implement frequency capping and customer preference settings.\n2. **Technical Integration Challenges:**\n   - Mitigation: Conduct thorough compatibility testing and pilot programs.\n3. **Increased Operational Costs:**\n   - Mitigation: Optimize resource allocation and leverage automation.\n4. **Regulatory Compliance Issues:**\n   - Mitigation: Ensure robust data privacy measures and regular compliance audits.\n5. **Inconsistent User Experiences:**\n   - Mitigation: Develop comprehensive branding and messaging guidelines.\n6. **Customer Resistance:**\n   - Mitigation: Provide extensive customer education and support.\n\n**Implementation Priority Matrix with Resource Requirements:**\n| Priority | Task                                | Resource Requirements                                                                 |\n|----------|-------------------------------------|--------------------------------------------------------------------------------------|\n| 1        | AI and Analytics Tools              | Investment in AI technology, data analytics software, and integration specialists.    |\n| 2        | Third-Party Platform Integration    | Integration specialists, training for customer service teams.                        |\n| 3        | Customer Education and Support      | Customer support staff, educational materials, and training programs.                |\n| 4        | Phased Implementation               | Project management team, phased rollout plan, and monitoring tools.                  |\n| 5        | Ongoing Monitoring and Adjustment   | Performance analytics team, adjustment protocols, and continuous improvement processes. |\n\n**Final Strategic Recommendations with Agent Consensus Scores:**\n1. **Proceed with Multi-Channel Orchestration Workflows:**\n   - Consensus Score: 95%\n2. **Adopt Phased Implementation Approach:**\n   - Consensus Score: 92%\n3. **Invest in AI and Analytics Tools:**\n   - Consensus Score: 85%\n4. **Prioritize Customer Education and Support:**\n   - Consensus Score: 90%\n5. **Monitor Performance Metrics Closely:**\n   - Consensus Score: 88%\n\nBy following these consensus-validated strategic recommendations, Hong Kong Telecom can enhance customer satisfaction, increase revenue, and maintain a competitive edge in the market. The implementation of multi-channel orchestration workflows, combined with timing optimization and AI-driven channel selection, will drive significant business impact and ensure long-term success.",
+          "validation_results": "```\nConsensus Validation Report\n\nCross-Agent Agreement Scores on Key Recommendations:\n- Multi-Channel Orchestration Workflows: 90% agreement\n- Revenue Projections: 85% agreement\n- Churn Reduction Targets: 88% agreement\n- Market Positioning Strategies: 92% agreement\n\nValidated Revenue Projections with Confidence Intervals:\n- High-Value Customer Retention Campaigns: $5M - $7M (80% confidence)\n- Revenue Optimization Campaigns by Segment: $3M - $5M (80% confidence)\n\nRisk Assessment with Mitigation Strategies:\n- Implementation Risks: Potential delays in campaign rollout\n  - Mitigation: Allocate additional resources for campaign management\n- Market Risks: Competitor response to new campaigns\n  - Mitigation: Continuous market monitoring and strategy adjustment\n\nImplementation Priority Matrix with Resource Requirements:\n| Priority | Campaign                          | Resource Requirements                     |\n|----------|------------------------------------|--------------------------------------------|\n| 1        | High-Value Customer Retention     | Marketing team, customer service team      |\n| 2        | Revenue Optimization (Phase 1)    | Data analytics team, marketing team        |\n| 3        | Revenue Optimization (Phase 2)    | Customer service team, data analytics team |\n\nFinal Strategic Recommendations with Agent Consensus Scores:\n1. **High-Value Customer Retention Campaigns (Immediate Execution)**\n   - Consensus Score: 90%\n   - Recommendation: Proceed with immediate execution, focusing on personalized communication and timely follow-ups.\n\n2. **Revenue Optimization Campaigns by Segment (Phased Rollout)**\n   - Consensus Score: 85%\n   - Recommendation: Proceed with phased rollout, starting with high-value data users and expanding based on campaign performance.\n\n3. **Market Positioning Strategies**\n   - Consensus Score: 92%\n   - Recommendation: Implement market positioning strategies to ensure competitive and defensible market presence.\n\n4. **Resource Allocation Priorities**\n   - Consensus Score: 88%\n   - Recommendation: Allocate resources based on ROI-optimized implementation priorities, ensuring sufficient support for high-priority campaigns.\n```",
           "agent_agreement_scores": {
             "revenue_projections": 0.95,
             "customer_segmentation": 0.92,
@@ -731,10 +724,10 @@
         "collaboration_metrics": {
           "agents_participated": 5,
           "tasks_completed": 6,
-          "processing_time": 368.229366,
+          "processing_time": 472.166951,
           "consensus_achieved": true,
           "confidence_level": 0.89,
-          "total_interactions": 19,
+          "total_interactions": 18,
           "consensus_score": 0.87,
           "average_confidence": 0.85,
           "successful_delegations": 5,
@@ -787,7 +780,7 @@
           "execution_feasibility": 0.89
         }
       },
-      "processing_time": 368.229366,
+      "processing_time": 472.166951,
       "enhancement_level": "CrewAI Advanced"
     },
     "crewai_deliverables": {
@@ -1065,31 +1058,31 @@
     "collaboration_results": {
       "customer_intelligence": {
         "agent_type": "customer_intelligence",
-        "output": "### Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n1. **High-Value Enterprise Customers**\n   - **Email**: Weekly personalized emails highlighting premium business solutions and dedicated customer support. Timing: Start of the week to capitalize on fresh starts.\n   - **SMS**: Monthly SMS reminders about upcoming service renewals and special offers. Timing: End of the month to prompt timely actions.\n   - **App Notifications**: Push no...",
+        "output": "### Comprehensive Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n**High-Value Customer Retention Campaigns (Immediate Execution)**\n- **Channels**: Email, SMS, App Notifications, Customer Service\n- **Timing**: Monthly, with personalized follow-ups based on usage patterns\n- **Workflow**:\n  1. **Email**: Send personalized data package recommendations and premium content offers.\n  2. **SMS**: Remind customers of exclusive discounts on i...",
         "status": "completed"
       },
       "market_intelligence": {
         "agent_type": "market_intelligence",
-        "output": "### Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n1. **High-Value Enterprise Customers**\n   - **Email**: Weekly personalized emails highlighting premium business solutions and dedicated customer support. Timing: Start of the week to capitalize on fresh starts.\n   - **SMS**: Monthly SMS reminders about upcoming service renewals and special offers. Timing: End of the month to prompt timely actions.\n   - **App Notifications**: Push no...",
+        "output": "### Comprehensive Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n**High-Value Customer Retention Campaigns (Immediate Execution)**\n- **Channels**: Email, SMS, App Notifications, Customer Service\n- **Timing**: Monthly, with personalized follow-ups based on usage patterns\n- **Workflow**:\n  1. **Email**: Send personalized data package recommendations and premium content offers.\n  2. **SMS**: Remind customers of exclusive discounts on i...",
         "status": "completed"
       },
       "revenue_optimization": {
         "agent_type": "revenue_optimization",
-        "output": "### Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n1. **High-Value Enterprise Customers**\n   - **Email**: Weekly personalized emails highlighting premium business solutions and dedicated customer support. Timing: Start of the week to capitalize on fresh starts.\n   - **SMS**: Monthly SMS reminders about upcoming service renewals and special offers. Timing: End of the month to prompt timely actions.\n   - **App Notifications**: Push no...",
+        "output": "### Comprehensive Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n**High-Value Customer Retention Campaigns (Immediate Execution)**\n- **Channels**: Email, SMS, App Notifications, Customer Service\n- **Timing**: Monthly, with personalized follow-ups based on usage patterns\n- **Workflow**:\n  1. **Email**: Send personalized data package recommendations and premium content offers.\n  2. **SMS**: Remind customers of exclusive discounts on i...",
         "status": "completed"
       },
       "retention_strategy": {
         "agent_type": "retention_strategy",
-        "output": "### Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n1. **High-Value Enterprise Customers**\n   - **Email**: Weekly personalized emails highlighting premium business solutions and dedicated customer support. Timing: Start of the week to capitalize on fresh starts.\n   - **SMS**: Monthly SMS reminders about upcoming service renewals and special offers. Timing: End of the month to prompt timely actions.\n   - **App Notifications**: Push no...",
+        "output": "### Comprehensive Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n**High-Value Customer Retention Campaigns (Immediate Execution)**\n- **Channels**: Email, SMS, App Notifications, Customer Service\n- **Timing**: Monthly, with personalized follow-ups based on usage patterns\n- **Workflow**:\n  1. **Email**: Send personalized data package recommendations and premium content offers.\n  2. **SMS**: Remind customers of exclusive discounts on i...",
         "status": "completed"
       },
       "campaign_execution": {
         "agent_type": "campaign_execution",
-        "output": "### Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n1. **High-Value Enterprise Customers**\n   - **Email**: Weekly personalized emails highlighting premium business solutions and dedicated customer support. Timing: Start of the week to capitalize on fresh starts.\n   - **SMS**: Monthly SMS reminders about upcoming service renewals and special offers. Timing: End of the month to prompt timely actions.\n   - **App Notifications**: Push no...",
+        "output": "### Comprehensive Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n**High-Value Customer Retention Campaigns (Immediate Execution)**\n- **Channels**: Email, SMS, App Notifications, Customer Service\n- **Timing**: Monthly, with personalized follow-ups based on usage patterns\n- **Workflow**:\n  1. **Email**: Send personalized data package recommendations and premium content offers.\n  2. **SMS**: Remind customers of exclusive discounts on i...",
         "status": "completed"
       },
       "consensus_validation": {
-        "validation_results": "**Consensus Validation Report**\n\n**Cross-Agent Agreement Scores on Key Recommendations:**\n- Multi-Channel Orchestration Workflows: 95% agreement\n- Timing Optimization: 90% agreement\n- AI-Driven Channel Selection: 85% agreement\n- Phased Implementation: 92% agreement\n\n**Validated Revenue Projections with Confidence Intervals:**\n- High-Value Enterprise Customers: HK$50 million annually (85% confidence)\n- Premium Residential Users: HK$30 million annually (88% confidence)\n- Combined Total: HK$80 million annually (87% confidence)\n\n**Risk Assessment with Mitigation Strategies:**\n1. **Message Overload and Customer Fatigue:**\n   - Mitigation: Implement frequency capping and customer preference settings.\n2. **Technical Integration Challenges:**\n   - Mitigation: Conduct thorough compatibility testing and pilot programs.\n3. **Increased Operational Costs:**\n   - Mitigation: Optimize resource allocation and leverage automation.\n4. **Regulatory Compliance Issues:**\n   - Mitigation: Ensure robust data privacy measures and regular compliance audits.\n5. **Inconsistent User Experiences:**\n   - Mitigation: Develop comprehensive branding and messaging guidelines.\n6. **Customer Resistance:**\n   - Mitigation: Provide extensive customer education and support.\n\n**Implementation Priority Matrix with Resource Requirements:**\n| Priority | Task                                | Resource Requirements                                                                 |\n|----------|-------------------------------------|--------------------------------------------------------------------------------------|\n| 1        | AI and Analytics Tools              | Investment in AI technology, data analytics software, and integration specialists.    |\n| 2        | Third-Party Platform Integration    | Integration specialists, training for customer service teams.                        |\n| 3        | Customer Education and Support      | Customer support staff, educational materials, and training programs.                |\n| 4        | Phased Implementation               | Project management team, phased rollout plan, and monitoring tools.                  |\n| 5        | Ongoing Monitoring and Adjustment   | Performance analytics team, adjustment protocols, and continuous improvement processes. |\n\n**Final Strategic Recommendations with Agent Consensus Scores:**\n1. **Proceed with Multi-Channel Orchestration Workflows:**\n   - Consensus Score: 95%\n2. **Adopt Phased Implementation Approach:**\n   - Consensus Score: 92%\n3. **Invest in AI and Analytics Tools:**\n   - Consensus Score: 85%\n4. **Prioritize Customer Education and Support:**\n   - Consensus Score: 90%\n5. **Monitor Performance Metrics Closely:**\n   - Consensus Score: 88%\n\nBy following these consensus-validated strategic recommendations, Hong Kong Telecom can enhance customer satisfaction, increase revenue, and maintain a competitive edge in the market. The implementation of multi-channel orchestration workflows, combined with timing optimization and AI-driven channel selection, will drive significant business impact and ensure long-term success.",
+        "validation_results": "```\nConsensus Validation Report\n\nCross-Agent Agreement Scores on Key Recommendations:\n- Multi-Channel Orchestration Workflows: 90% agreement\n- Revenue Projections: 85% agreement\n- Churn Reduction Targets: 88% agreement\n- Market Positioning Strategies: 92% agreement\n\nValidated Revenue Projections with Confidence Intervals:\n- High-Value Customer Retention Campaigns: $5M - $7M (80% confidence)\n- Revenue Optimization Campaigns by Segment: $3M - $5M (80% confidence)\n\nRisk Assessment with Mitigation Strategies:\n- Implementation Risks: Potential delays in campaign rollout\n  - Mitigation: Allocate additional resources for campaign management\n- Market Risks: Competitor response to new campaigns\n  - Mitigation: Continuous market monitoring and strategy adjustment\n\nImplementation Priority Matrix with Resource Requirements:\n| Priority | Campaign                          | Resource Requirements                     |\n|----------|------------------------------------|--------------------------------------------|\n| 1        | High-Value Customer Retention     | Marketing team, customer service team      |\n| 2        | Revenue Optimization (Phase 1)    | Data analytics team, marketing team        |\n| 3        | Revenue Optimization (Phase 2)    | Customer service team, data analytics team |\n\nFinal Strategic Recommendations with Agent Consensus Scores:\n1. **High-Value Customer Retention Campaigns (Immediate Execution)**\n   - Consensus Score: 90%\n   - Recommendation: Proceed with immediate execution, focusing on personalized communication and timely follow-ups.\n\n2. **Revenue Optimization Campaigns by Segment (Phased Rollout)**\n   - Consensus Score: 85%\n   - Recommendation: Proceed with phased rollout, starting with high-value data users and expanding based on campaign performance.\n\n3. **Market Positioning Strategies**\n   - Consensus Score: 92%\n   - Recommendation: Implement market positioning strategies to ensure competitive and defensible market presence.\n\n4. **Resource Allocation Priorities**\n   - Consensus Score: 88%\n   - Recommendation: Allocate resources based on ROI-optimized implementation priorities, ensuring sufficient support for high-priority campaigns.\n```",
         "agent_agreement_scores": {
           "revenue_projections": 0.95,
           "customer_segmentation": 0.92,
@@ -1350,10 +1343,10 @@
       "collaboration_metrics": {
         "agents_participated": 5,
         "tasks_completed": 6,
-        "processing_time": 368.229366,
+        "processing_time": 472.166951,
         "consensus_achieved": true,
         "confidence_level": 0.89,
-        "total_interactions": 19,
+        "total_interactions": 18,
         "consensus_score": 0.87,
         "average_confidence": 0.85,
         "successful_delegations": 5,
@@ -1406,7 +1399,7 @@
         "execution_feasibility": 0.89
       }
     },
-    "processing_time": 368.229366,
+    "processing_time": 472.166951,
     "enhancement_level": "CrewAI Advanced"
   },
   "customer_data": "   Account_ID Family_Name Given_Name Chinese_Given_Name  Gender                         Email  ... Total_Contract_Value Payment_Method Payment_Status Spending_Tier Churn_Risk Last_Login_Date\n0   ACC614603        Chan   Michelle                \u9673\u6d69\u7136    Male     chan.michelle@example.com  ...                 7392  Bank_Transfer        Current       Premium        Low       17/7/2025\n1   ACC880659         Lam      Susan                \u6797\u4fca\u5b87    Male         lam.susan@example.com  ...                 3552       Auto_Pay        Current      Standard     Medium        7/7/2025\n2   ACC030306        Wong     Philip                \u9ec3\u5bb6\u660e  Female       wong.philip@example.com  ...                    0    Credit_Card        Current      Standard     Medium       29/6/2025\n3   ACC742294      Cheung  Stephanie                \u5f35\u4fca\u5b87    Male  cheung.stephanie@example.com  ...                    0  Bank_Transfer        Current       Premium        Low       19/7/2025\n4   ACC554066         Lee      Janet                \u674e\u5b50\u6a02  Female         lee.janet@example.com  ...                    0  Bank_Transfer        Current      Standard     Medium        1/7/2025\n..        ...         ...        ...                ...     ...                           ...  ...                  ...            ...            ...           ...        ...             ...\n95  ACC413175       Leung     Philip                \u6881\u5609\u6b23    Male      leung.philip@example.com  ...                    0    Credit_Card        Current      Standard     Medium        7/7/2025\n96  ACC797388        Choi     Samuel                \u8521\u4fca\u5b87    Male       choi.samuel@example.com  ...                 4704    Credit_Card        Current       Premium        Low        5/7/2025\n97  ACC180002       Leung      Karen                \u6881\u4fca\u5b87    Male       leung.karen@example.com  ...                    0       Auto_Pay        Current      Standard     Medium        8/7/2025\n98  ACC795845       Tsang     Philip                \u66fe\u96c5\u96ef    Male      tsang.philip@example.com  ...                    0    Credit_Card        Current       Premium        Low       24/6/2025\n99  ACC420974        Wong      Susan                \u9ec3\u4fca\u5b87  Female        wong.susan@example.com  ...                    0    Credit_Card        Current      Standard     Medium       24/6/2025\n\n[100 rows x 24 columns]",
