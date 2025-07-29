@@ -10,6 +10,7 @@ import time
 import os
 import zipfile
 import io
+import re
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any, List
 import plotly.express as px
@@ -2598,6 +2599,178 @@ Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
     return zip_buffer.getvalue()
 
 
+# Task 29: Individual Email Template Files Export Functions
+def create_html_template(template: Dict[str, Any]) -> str:
+    """Convert CrewAI template to marketing-platform ready HTML format"""
+    template_id = template.get('template_id', 'UNKNOWN')
+    subject = template.get('subject', 'Three HK Special Offer')
+    body = template.get('body', 'No content available')
+    target = template.get('target', 'general')
+    
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{subject}</title>
+    <style>
+        body {{
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }}
+        .header {{
+            background-color: #0066cc;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }}
+        .content {{
+            padding: 20px;
+            background-color: #f9f9f9;
+        }}
+        .footer {{
+            padding: 15px;
+            text-align: center;
+            background-color: #333;
+            color: white;
+            font-size: 12px;
+        }}
+        .personalization {{
+            color: #0066cc;
+            font-weight: bold;
+        }}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Three HK</h1>
+        <h2>{subject}</h2>
+    </div>
+    
+    <div class="content">
+        <p>Dear <span class="personalization">{{{{customer_name}}}}</span>,</p>
+        
+        {body}
+        
+        <p>Estimated Value: <span class="personalization">{{{{estimated_value}}}}</span></p>
+        <p>Current Plan: <span class="personalization">{{{{current_plan}}}}</span></p>
+        
+        <p>Best regards,<br>
+        <strong>Three HK Team</strong></p>
+    </div>
+    
+    <div class="footer">
+        <p>Three HK Marketing | Template ID: {template_id} | Target: {target}</p>
+        <p>Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
+    </div>
+</body>
+</html>"""
+
+
+def create_txt_template(template: Dict[str, Any]) -> str:
+    """Create plain text version for simple email clients"""
+    template_id = template.get('template_id', 'UNKNOWN')
+    subject = template.get('subject', 'Three HK Special Offer')
+    body = template.get('body', 'No content available')
+    target = template.get('target', 'general')
+    
+    # Strip HTML tags from body if present
+    import re
+    clean_body = re.sub('<[^<]+?>', '', body)
+    
+    return f"""Subject: {subject}
+
+Dear {{{{customer_name}}}},
+
+{clean_body}
+
+Estimated Value: {{{{estimated_value}}}}
+Current Plan: {{{{current_plan}}}}
+
+Best regards,
+Three HK Team
+
+---
+Three HK Marketing
+Template ID: {template_id}
+Target Audience: {target}
+Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
+PERSONALIZATION FIELDS:
+- {{{{customer_name}}}} : Customer's full name
+- {{{{estimated_value}}}} : Projected offer value
+- {{{{current_plan}}}} : Customer's current service plan
+"""
+
+
+def create_json_template(template: Dict[str, Any]) -> str:
+    """Create JSON format for marketing automation platforms"""
+    template_data = {
+        "template_id": template.get('template_id', 'UNKNOWN'),
+        "subject": template.get('subject', 'Three HK Special Offer'),
+        "html_body": template.get('body', 'No content available'),
+        "plain_text_body": re.sub('<[^<]+?>', '', template.get('body', 'No content available')),
+        "target_audience": template.get('target', 'general'),
+        "personalization_fields": [
+            {
+                "field": "customer_name",
+                "type": "string",
+                "description": "Customer's full name"
+            },
+            {
+                "field": "estimated_value", 
+                "type": "currency",
+                "description": "Projected offer value in HKD"
+            },
+            {
+                "field": "current_plan",
+                "type": "string", 
+                "description": "Customer's current service plan"
+            }
+        ],
+        "marketing_platform_compatibility": [
+            "mailchimp",
+            "sendgrid", 
+            "constant_contact",
+            "campaign_monitor",
+            "hubspot"
+        ],
+        "campaign_metadata": {
+            "created_date": datetime.now().isoformat(),
+            "generated_by": "Three HK AI Revenue Assistant",
+            "version": "1.0"
+        },
+        "template_settings": {
+            "autoresponder": False,
+            "tracking_enabled": True,
+            "unsubscribe_link": True,
+            "analytics_tags": ["three_hk", "ai_generated", template.get('target', 'general')]
+        }
+    }
+    
+    return json.dumps(template_data, indent=2, ensure_ascii=False)
+
+
+def get_email_templates_from_session() -> List[Dict[str, Any]]:
+    """Get email templates from session state with multiple fallback locations"""
+    templates = []
+    
+    # Check for CrewAI results in session state first (most recent)
+    if "crewai_deliverables" in st.session_state:
+        deliverables = st.session_state["crewai_deliverables"]
+        templates = deliverables.get('email_templates', []) if deliverables else []
+    elif "ai_analysis_results" in st.session_state and "crewai_deliverables" in st.session_state["ai_analysis_results"]:
+        # Backup location in main results
+        deliverables = st.session_state["ai_analysis_results"]["crewai_deliverables"]
+        templates = deliverables.get('email_templates', []) if deliverables else []
+    
+    return templates if templates else []
+
+
 def export_complete_business_package(results: Dict[str, Any]) -> bytes:
     """Export complete business intelligence package as ZIP"""
     import zipfile
@@ -3800,6 +3973,97 @@ def process_agent_collaboration_from_results(lead_results: Dict[str, Any], mode:
                     )
                 except Exception as e:
                     st.button("🚀 Export All ZIP", disabled=True, help=f"Export error: {str(e)}")
+                
+                # Task 29: Individual Email Template Files Export
+                st.markdown("---")
+                st.markdown("#### 📧 **Individual Email Template Files** (Task 29)")
+                st.markdown("**Download individual template files for marketing platforms:**")
+                
+                # Get email templates from session
+                templates = get_email_templates_from_session()
+                
+                if templates:
+                    st.markdown("🎯 **Marketing Platform Compatible Formats:** MailChimp, SendGrid, Constant Contact, HubSpot")
+                    
+                    for i, template in enumerate(templates, 1):
+                        template_name = template.get('template_name', f'Template {i}')
+                        template_id = template.get('template_id', f'T{i:03d}')
+                        
+                        with st.expander(f"📨 {template_name} - Individual Files", expanded=False):
+                            st.markdown(f"**Template ID:** {template_id}")
+                            st.markdown(f"**Subject:** {template.get('subject', 'N/A')}")
+                            st.markdown(f"**Target:** {template.get('target', 'General')}")
+                            
+                            # Create three columns for different file formats
+                            col1, col2, col3 = st.columns(3)
+                            
+                            with col1:
+                                # HTML format for rich email clients
+                                try:
+                                    html_content = create_html_template(template)
+                                    st.download_button(
+                                        label="🌐 Download HTML",
+                                        data=html_content,
+                                        file_name=f"{template_id}_{template_name.replace(' ', '_')}.html",
+                                        mime="text/html",
+                                        help="Rich HTML format for email marketing platforms",
+                                        key=f"download_html_{template_id}"
+                                    )
+                                except Exception as e:
+                                    st.button("🌐 HTML", disabled=True, help=f"Export error: {str(e)}")
+                            
+                            with col2:
+                                # Plain text format for simple clients
+                                try:
+                                    txt_content = create_txt_template(template)
+                                    st.download_button(
+                                        label="📝 Download TXT",
+                                        data=txt_content,
+                                        file_name=f"{template_id}_{template_name.replace(' ', '_')}.txt",
+                                        mime="text/plain",
+                                        help="Plain text format for simple email clients",
+                                        key=f"download_txt_{template_id}"
+                                    )
+                                except Exception as e:
+                                    st.button("📝 TXT", disabled=True, help=f"Export error: {str(e)}")
+                            
+                            with col3:
+                                # JSON format for marketing automation
+                                try:
+                                    json_content = create_json_template(template)
+                                    st.download_button(
+                                        label="🔧 Download JSON",
+                                        data=json_content,
+                                        file_name=f"{template_id}_{template_name.replace(' ', '_')}.json",
+                                        mime="application/json",
+                                        help="JSON format for marketing automation platforms",
+                                        key=f"download_json_{template_id}"
+                                    )
+                                except Exception as e:
+                                    st.button("🔧 JSON", disabled=True, help=f"Export error: {str(e)}")
+                            
+                            # Show template preview
+                            st.markdown("**📋 Template Preview:**")
+                            preview_col1, preview_col2 = st.columns([1, 2])
+                            with preview_col1:
+                                st.markdown("**Personalization Fields:**")
+                                st.markdown("• `{{customer_name}}`")
+                                st.markdown("• `{{estimated_value}}`") 
+                                st.markdown("• `{{current_plan}}`")
+                            with preview_col2:
+                                st.text_area(
+                                    "Preview",
+                                    value=template.get('body', 'No content available')[:200] + "...",
+                                    height=100,
+                                    disabled=True,
+                                    key=f"preview_{template_id}"
+                                )
+                else:
+                    st.info("🔄 **No email templates available.** Run CrewAI collaboration to generate email templates.")
+                    st.markdown("**To generate templates:**")
+                    st.markdown("1. Upload customer data")
+                    st.markdown("2. Click 'Launch Collaboration' button")
+                    st.markdown("3. Download individual template files after generation")
                 
                 # Add preview sections for all export options
                 st.markdown("---")

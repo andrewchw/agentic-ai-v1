@@ -1,0 +1,2159 @@
+{
+  "timestamp": "2025-07-29T09:52:39.768322",
+  "ai_analysis_results": {
+    "success": true,
+    "processing_time": 1.5,
+    "recommendations": {
+      "recommendations": [
+        {
+          "customer_id": "ACC614603",
+          "customer_name": "Chan",
+          "recommendation_id": "AI_REC_20250729_094203_ACC614603",
+          "priority": "medium",
+          "action_type": "offer_upgrade",
+          "title": "Upgrade Chan to 5G Unlimited Pro with Roaming Pack",
+          "description": "Chan is on the Basic_Mobile plan with medium churn risk. They are a standard spending tier customer with room to upgrade for better value. Given Three HK's strengths in mainland China connectivity and competitive pricing, an upgrade to the 5G Unlimited Pro plan with the Asia Roaming Pack would significantly improve satisfaction and reduce churn risk.",
+          "expected_revenue": 21600.0,
+          "conversion_probability": 0.6,
+          "urgency_score": 0.5,
+          "business_impact_score": 0.7,
+          "next_steps": [
+            "Identify Chan's usage patterns and roaming needs",
+            "Present 5G Unlimited Pro + Asia Roaming Pack as bundled offer",
+            "Highlight Three HK's superior mainland China connectivity and enterprise support"
+          ],
+          "talking_points": [
+            "Three HK offers the best mainland China roaming experience with seamless 5G coverage",
+            "Our 5G Unlimited Pro plan provides unlimited data with no throttling, perfect for business and leisure use",
+            "The Asia Roaming Pack ensures you stay connected across Asia at no extra cost"
+          ],
+          "objection_handling": {
+            "price_concern": "The additional HK$500/month unlocks unlimited data and premium roaming, saving you from overage fees and ensuring seamless connectivity across Asia. Our pricing is competitive, especially considering the included roaming benefits.",
+            "competitor_comparison": "Unlike competitors, Three HK offers superior 5G coverage in mainland China and Hong Kong with no hidden roaming fees. Our enterprise support ensures reliable connectivity for both business and personal use.",
+            "timing_concern": "Now is the perfect time to upgrade as we're offering a limited-time bundle with the Asia Roaming Pack included. This ensures you're fully covered for any upcoming travel plans."
+          },
+          "recommended_offers": [
+            {
+              "name": "5G Unlimited Pro",
+              "monthly_value": 800,
+              "category": "mobile"
+            },
+            {
+              "name": "Asia Roaming Pack",
+              "monthly_value": 150,
+              "category": "vas"
+            }
+          ],
+          "explanation": {
+            "primary_reason": "Chan's current plan is outdated for their needs, and an upgrade would significantly improve satisfaction and reduce churn risk while increasing revenue.",
+            "supporting_factors": [
+              "Customer Type: Individual",
+              "Spending Tier: Standard",
+              "AI Confidence: 75.0%"
+            ],
+            "risk_factors": [],
+            "confidence_score": 0.75,
+            "data_sources": [
+              "AI Analysis",
+              "Customer Profile",
+              "Product Catalog"
+            ]
+          },
+          "created_at": "2025-07-29T09:42:03.639077",
+          "expires_at": "2025-08-05T09:42:03.639077",
+          "tags": [
+            "individual",
+            "standard",
+            "standard",
+            "ai_generated"
+          ]
+        },
+        {
+          "customer_id": "ACC880659",
+          "customer_name": "Lam",
+          "recommendation_id": "AI_REC_20250729_094214_ACC880659",
+          "priority": "high",
+          "action_type": "offer_upgrade",
+          "title": "Prime Upgrade Opportunity: 5G Unlimited Plus for High-Spending Customer",
+          "description": "Lam is a high-spending customer on a Basic_Mobile plan with medium churn risk. Given their spending tier and current plan limitations, upgrading to 5G Unlimited Plus aligns with their usage patterns and reduces churn risk by offering superior value. Highlighting Three HK's competitive pricing and mainland China connectivity can drive conversion.",
+          "expected_revenue": 22800.0,
+          "conversion_probability": 0.7,
+          "urgency_score": 0.8,
+          "business_impact_score": 0.9,
+          "next_steps": [
+            "Review Lam's recent usage data for 5G consumption trends",
+            "Prepare comparison table of current vs. upgraded plan benefits",
+            "Highlight mainland China roaming benefits and enterprise support"
+          ],
+          "talking_points": [
+            "Your current plan may limit your 5G experience\u2014Unlimited Plus offers full 5G access and mainland China roaming",
+            "As a high-value customer, you qualify for priority mainland China connectivity support",
+            "Competitors charge up to 30% more for similar data allowances"
+          ],
+          "objection_handling": {
+            "price_concern": "For just HK$200 more per month, you gain unlimited data and mainland China coverage at no extra roaming fees. Competitors charge HK$800+ for equivalent plans.",
+            "competitor_comparison": "Our mainland China network is 40% more reliable than competitors, with dedicated enterprise support included.",
+            "timing_concern": "Your current plan doesn't support 5G video streaming\u2014this upgrade ensures seamless performance now and protects against future rate increases at renewal."
+          },
+          "recommended_offers": [
+            {
+              "name": "5G Unlimited Plus",
+              "monthly_value": 700,
+              "category": "mobile"
+            },
+            {
+              "name": "Asia Roaming Pack",
+              "monthly_value": 200,
+              "category": "vas"
+            }
+          ],
+          "explanation": {
+            "primary_reason": "High-spending customer on outdated plan with clear upgrade path to higher-value offering",
+            "supporting_factors": [
+              "Customer Type: Individual",
+              "Spending Tier: High",
+              "AI Confidence: 85.0%"
+            ],
+            "risk_factors": [],
+            "confidence_score": 0.85,
+            "data_sources": [
+              "AI Analysis",
+              "Customer Profile",
+              "Product Catalog"
+            ]
+          },
+          "created_at": "2025-07-29T09:42:14.535236",
+          "expires_at": "2025-08-05T09:42:14.535236",
+          "tags": [
+            "individual",
+            "standard",
+            "high",
+            "ai_generated"
+          ]
+        },
+        {
+          "customer_id": "ACC030306",
+          "customer_name": "Wong",
+          "recommendation_id": "AI_REC_20250729_094228_ACC030306",
+          "priority": "high",
+          "action_type": "offer_upgrade",
+          "title": "Upgrade Wong to 5G Unlimited Plus with Premium Support",
+          "description": "Wong is a high-spending customer with medium churn risk on a basic plan. Given their spending tier and contract status, upgrading to a premium plan with superior mainland China connectivity and added value services will increase satisfaction and loyalty while boosting revenue. The 5G Unlimited Plus plan offers unlimited data and faster speeds, complemented by Premium Support for enterprise-level service.",
+          "expected_revenue": 24800.0,
+          "conversion_probability": 0.7,
+          "urgency_score": 0.8,
+          "business_impact_score": 0.9,
+          "next_steps": [
+            "Review customer's recent usage data to confirm 5G and data needs",
+            "Prepare comparison of current vs. proposed plan with cost-benefit analysis",
+            "Schedule a call or visit to present the upgrade offer"
+          ],
+          "talking_points": [
+            "Our 5G Unlimited Plus plan offers superior mainland China connectivity, perfect for frequent travelers or business needs",
+            "Premium Support ensures priority assistance and faster issue resolution, reducing downtime",
+            "With your high usage, this plan provides better value and avoids overage charges"
+          ],
+          "objection_handling": {
+            "price_concern": "The additional HK$350 per month (HK$750 - HK$550) delivers unlimited data and enterprise support, which will save you money in the long run by avoiding overage fees and ensuring reliable connectivity for your needs. Plus, as a valued customer, we can discuss any promotional discounts to make this more attractive.",
+            "competitor_comparison": "Three HK offers the best mainland China coverage and competitive pricing compared to competitors. Our 5G network is consistently ranked top in Hong Kong, and with Premium Support, you get dedicated assistance that competitors can't match.",
+            "timing_concern": "Now is the ideal time to upgrade as we're introducing new benefits for early adopters, such as a free trial of Premium Support. Delaying could mean missing out on these offers and potentially facing higher costs later."
+          },
+          "recommended_offers": [
+            {
+              "name": "5G Unlimited Plus",
+              "monthly_value": 750,
+              "category": "mobile"
+            },
+            {
+              "name": "Premium Support",
+              "monthly_value": 150,
+              "category": "vas"
+            }
+          ],
+          "explanation": {
+            "primary_reason": "High-spending customer on a basic plan with medium churn risk; upgrade opportunity to align plan with usage and spending tier",
+            "supporting_factors": [
+              "Customer Type: Individual",
+              "Spending Tier: High",
+              "AI Confidence: 85.0%"
+            ],
+            "risk_factors": [],
+            "confidence_score": 0.85,
+            "data_sources": [
+              "AI Analysis",
+              "Customer Profile",
+              "Product Catalog"
+            ]
+          },
+          "created_at": "2025-07-29T09:42:28.983266",
+          "expires_at": "2025-08-05T09:42:28.983266",
+          "tags": [
+            "individual",
+            "standard",
+            "high",
+            "ai_generated"
+          ]
+        },
+        {
+          "customer_id": "ACC742294",
+          "customer_name": "Cheung",
+          "recommendation_id": "AI_REC_20250729_094239_ACC742294",
+          "priority": "high",
+          "action_type": "offer_upgrade",
+          "title": "Upgrade to 5G Unlimited Plus with Enhanced China Roaming",
+          "description": "Cheung is a high-spending standard customer on a basic mobile plan with medium churn risk. Given his spending tier and contract status, upgrading to a premium 5G plan with better China roaming benefits would increase satisfaction and reduce churn. The 5G Unlimited Plus plan offers superior mainland China connectivity, a key strength of Three HK, and aligns with his usage patterns.",
+          "expected_revenue": 36000.0,
+          "conversion_probability": 0.7,
+          "urgency_score": 0.8,
+          "business_impact_score": 0.9,
+          "next_steps": [
+            "Review Cheung's recent usage data to confirm data/roaming needs",
+            "Prepare a customized upgrade proposal with 5G Unlimited Plus and Asia Roaming Pack",
+            "Contact Cheung within 48 hours to present the offer"
+          ],
+          "talking_points": [
+            "Three HK offers the best mainland China connectivity with seamless roaming",
+            "The 5G Unlimited Plus plan provides unlimited data and premium support",
+            "Current plan limits your experience - upgrade to enjoy faster speeds and better coverage"
+          ],
+          "objection_handling": {
+            "price_concern": "The small monthly increase unlocks unlimited data and premium China roaming benefits, saving you from potential overage charges. Three HK offers competitive pricing with superior network quality.",
+            "competitor_comparison": "Three HK has the best mainland China roaming coverage and speeds compared to competitors. Our enterprise-grade network ensures reliable connections for both personal and business use.",
+            "timing_concern": "This is an ideal time to upgrade as Three HK is currently offering promotional rates on premium plans. Delaying may result in higher costs later."
+          },
+          "recommended_offers": [
+            {
+              "name": "5G Unlimited Plus",
+              "monthly_value": 999,
+              "category": "mobile"
+            },
+            {
+              "name": "Asia Roaming Pack",
+              "monthly_value": 150,
+              "category": "vas"
+            }
+          ],
+          "explanation": {
+            "primary_reason": "High-spending customer on basic plan with medium churn risk; upgrade opportunity exists for significant revenue increase",
+            "supporting_factors": [
+              "Customer Type: Individual",
+              "Spending Tier: High",
+              "AI Confidence: 85.0%"
+            ],
+            "risk_factors": [],
+            "confidence_score": 0.85,
+            "data_sources": [
+              "AI Analysis",
+              "Customer Profile",
+              "Product Catalog"
+            ]
+          },
+          "created_at": "2025-07-29T09:42:39.513753",
+          "expires_at": "2025-08-05T09:42:39.513753",
+          "tags": [
+            "individual",
+            "standard",
+            "high",
+            "ai_generated"
+          ]
+        },
+        {
+          "customer_id": "ACC554066",
+          "customer_name": "Lee",
+          "recommendation_id": "AI_REC_20250729_094249_ACC554066",
+          "priority": "high",
+          "action_type": "offer_upgrade",
+          "title": "Upgrade Lee to 5G Unlimited Plus with Asia Roaming Pack",
+          "description": "Lee is a high-spending standard customer with a medium churn risk on the Basic_Mobile plan. Given their high spending tier and active contract, upgrading to the 5G Unlimited Plus plan with the Asia Roaming Pack will enhance value, reduce churn risk, and increase revenue. The 5G Unlimited Plus plan offers superior mainland China connectivity and unlimited data, aligning with Three HK's strengths.",
+          "expected_revenue": 21600.0,
+          "conversion_probability": 0.75,
+          "urgency_score": 0.8,
+          "business_impact_score": 0.9,
+          "next_steps": [
+            "Prepare personalized upgrade proposal highlighting mainland China connectivity benefits",
+            "Schedule a call within 48 hours to discuss upgrade options",
+            "Offer a limited-time device upgrade incentive if applicable"
+          ],
+          "talking_points": [
+            "Three HK's superior mainland China connectivity is ideal for frequent travelers",
+            "Unlimited data with 5G Unlimited Plus ensures no overage charges",
+            "Add the Asia Roaming Pack for seamless international travel at a discounted rate"
+          ],
+          "objection_handling": {
+            "price_concern": "The upgrade provides unlimited data and better mainland China connectivity, reducing long-term costs. We can also bundle it with a device upgrade at a special rate.",
+            "competitor_comparison": "Three HK offers the best mainland China roaming experience and competitive pricing compared to competitors like CSL or PCCW.",
+            "timing_concern": "This upgrade ensures uninterrupted service and future-proofs your plan. Limited-time device offers may not be available later."
+          },
+          "recommended_offers": [
+            {
+              "name": "5G Unlimited Plus",
+              "monthly_value": 850,
+              "category": "mobile"
+            },
+            {
+              "name": "Asia Roaming Pack",
+              "monthly_value": 150,
+              "category": "vas"
+            }
+          ],
+          "explanation": {
+            "primary_reason": "High-spending customer on a basic plan with medium churn risk; upgrade aligns with Three HK's strengths and increases revenue potential",
+            "supporting_factors": [
+              "Customer Type: Individual",
+              "Spending Tier: High",
+              "AI Confidence: 85.0%"
+            ],
+            "risk_factors": [],
+            "confidence_score": 0.85,
+            "data_sources": [
+              "AI Analysis",
+              "Customer Profile",
+              "Product Catalog"
+            ]
+          },
+          "created_at": "2025-07-29T09:42:49.210655",
+          "expires_at": "2025-08-05T09:42:49.210655",
+          "tags": [
+            "individual",
+            "standard",
+            "high",
+            "ai_generated"
+          ]
+        },
+        {
+          "customer_id": "ACC242054",
+          "customer_name": "Cheng",
+          "recommendation_id": "AI_REC_20250729_094303_ACC242054",
+          "priority": "high",
+          "action_type": "offer_upgrade",
+          "title": "Upgrade Cheng to 5G Unlimited Plus with Asia Roaming Pack",
+          "description": "Cheng is a high-spending standard customer on a Basic_Mobile plan (HK$700/month) with medium churn risk. Given their spending tier and potential need for premium services, upgrading to a higher-tier mobile plan with roaming capabilities will enhance satisfaction and reduce churn risk. This aligns with Three HK's strengths in mainland China connectivity and competitive pricing.",
+          "expected_revenue": 18150.0,
+          "conversion_probability": 0.6,
+          "urgency_score": 0.7,
+          "business_impact_score": 0.8,
+          "next_steps": [
+            "Contact Cheng within 48 hours to discuss upgrade options",
+            "Highlight cost savings and additional benefits (e.g., mainland roaming)",
+            "Present a bundled offer including device insurance if needed"
+          ],
+          "talking_points": [
+            "Your current plan may limit data usage during travel to mainland China. Our 5G Unlimited Plus includes seamless roaming at no extra cost.",
+            "For a small upgrade, you gain unlimited data and premium support, ensuring reliability for work and leisure.",
+            "Three HK offers the best mainland China coverage\u2014perfect for frequent travelers like yourself."
+          ],
+          "objection_handling": {
+            "price_concern": "The upgrade includes unlimited data and roaming, which saves you money on overage fees and international SIMs. Plus, we offer flexible payment options.",
+            "competitor_comparison": "Three HK provides superior mainland China connectivity with faster speeds and fewer roaming restrictions compared to competitors.",
+            "timing_concern": "This offer is time-sensitive, and upgrading now ensures you won\u2019t face unexpected charges during peak travel seasons."
+          },
+          "recommended_offers": [
+            {
+              "name": "5G Unlimited Plus",
+              "monthly_value": 950,
+              "category": "mobile"
+            },
+            {
+              "name": "Asia Roaming Pack",
+              "monthly_value": 150,
+              "category": "vas"
+            },
+            {
+              "name": "Premium Support",
+              "monthly_value": 100,
+              "category": "vas"
+            }
+          ],
+          "explanation": {
+            "primary_reason": "High-spending customer on a basic plan with potential for increased satisfaction and revenue through an upgrade to a premium mobile plan with roaming benefits.",
+            "supporting_factors": [
+              "Customer Type: Individual",
+              "Spending Tier: High",
+              "AI Confidence: 75.0%"
+            ],
+            "risk_factors": [],
+            "confidence_score": 0.75,
+            "data_sources": [
+              "AI Analysis",
+              "Customer Profile",
+              "Product Catalog"
+            ]
+          },
+          "created_at": "2025-07-29T09:43:03.965038",
+          "expires_at": "2025-08-05T09:43:03.965038",
+          "tags": [
+            "individual",
+            "standard",
+            "high",
+            "ai_generated"
+          ]
+        },
+        {
+          "customer_id": "ACC673082",
+          "customer_name": "Leung",
+          "recommendation_id": "AI_REC_20250729_094318_ACC673082",
+          "priority": "high",
+          "action_type": "offer_upgrade",
+          "title": "Upsell 5G Unlimited Pro with Premium Support",
+          "description": "Leung is a high-spending standard customer with medium churn risk. Upselling to the 5G Unlimited Pro plan with Premium Support leverages Three HK's superior mainland China connectivity and competitive pricing. The customer's high spending tier suggests they value comprehensive services, making this an ideal upgrade opportunity.",
+          "expected_revenue": 28800.0,
+          "conversion_probability": 0.7,
+          "urgency_score": 0.8,
+          "business_impact_score": 0.9,
+          "next_steps": [
+            "Review Leung's current usage data to confirm data consumption patterns",
+            "Prepare a tailored offer combining 5G Unlimited Pro and Premium Support",
+            "Schedule a proactive call within 48 hours to present the offer"
+          ],
+          "talking_points": [
+            "Our 5G Unlimited Pro plan offers seamless mainland China connectivity, perfect for frequent travelers or business users.",
+            "Premium Support ensures priority assistance, reducing downtime and frustration.",
+            "This upgrade is competitively priced, providing better value for your high usage patterns."
+          ],
+          "objection_handling": {
+            "price_concern": "The additional HK$700 monthly cost is offset by unlimited data and premium support, which significantly enhances productivity and convenience. We can also explore bundling options for better value.",
+            "competitor_comparison": "Three HK offers the best mainland China coverage at competitive rates, with no roaming charges in major Asian destinations when paired with the Asia Roaming Pack.",
+            "timing_concern": "Now is the ideal time to upgrade, as the plan includes a 24-month contract lock-in with no early termination fees, securing the current promotional rates."
+          },
+          "recommended_offers": [
+            {
+              "name": "5G Unlimited Pro",
+              "monthly_value": 1200,
+              "category": "mobile"
+            },
+            {
+              "name": "Premium Support",
+              "monthly_value": 250,
+              "category": "vas"
+            }
+          ],
+          "explanation": {
+            "primary_reason": "High spending tier and medium churn risk indicate strong potential for value-added upgrades, particularly in data and support services.",
+            "supporting_factors": [
+              "Customer Type: Individual",
+              "Spending Tier: High",
+              "AI Confidence: 85.0%"
+            ],
+            "risk_factors": [],
+            "confidence_score": 0.85,
+            "data_sources": [
+              "AI Analysis",
+              "Customer Profile",
+              "Product Catalog"
+            ]
+          },
+          "created_at": "2025-07-29T09:43:18.804114",
+          "expires_at": "2025-08-05T09:43:18.804114",
+          "tags": [
+            "individual",
+            "standard",
+            "high",
+            "ai_generated"
+          ]
+        },
+        {
+          "customer_id": "ACC190881",
+          "customer_name": "Ho",
+          "recommendation_id": "AI_REC_20250729_094329_ACC190881",
+          "priority": "high",
+          "action_type": "offer_upgrade",
+          "title": "Upgrade High-Spending Individual Customer to 5G Unlimited Plus",
+          "description": "Customer Ho (ACC190881) is classified as high-spending with a 'medium' churn risk. They are currently on a Basic_Mobile plan (HK$800/month) but could benefit from an upgrade to a 5G Unlimited Plus plan, which offers superior mainland China connectivity and unlimited data. This aligns with Three HK's strengths in connectivity and competitive pricing.",
+          "expected_revenue": 24600.0,
+          "conversion_probability": 0.7,
+          "urgency_score": 0.7,
+          "business_impact_score": 0.8,
+          "next_steps": [
+            "Identify specific usage patterns to tailor the offer",
+            "Prepare a comparison of current vs. proposed plan benefits",
+            "Schedule a call to discuss the upgrade within 48 hours"
+          ],
+          "talking_points": [
+            "Your current plan limits data usage, while 5G Unlimited Plus offers unrestricted data for seamless streaming, gaming, and work.",
+            "Enjoy superior mainland China connectivity with Three HK's extensive network coverage.",
+            "As a high-spending customer, you qualify for exclusive benefits with the upgrade."
+          ],
+          "objection_handling": {
+            "price_concern": "The HK$400 monthly increase unlocks unlimited data and superior mainland China connectivity, which could save you costs from overage fees and improve work efficiency.",
+            "competitor_comparison": "Three HK offers the best mainland China roaming experience at a competitive price, with no extra charges for data in China.",
+            "timing_concern": "Upgrading now ensures you lock in the best rates and avoid potential price increases in the future."
+          },
+          "recommended_offers": [
+            {
+              "name": "5G Unlimited Plus",
+              "monthly_value": 1200,
+              "category": "mobile"
+            },
+            {
+              "name": "Asia Roaming Pack",
+              "monthly_value": 150,
+              "category": "vas"
+            }
+          ],
+          "explanation": {
+            "primary_reason": "High-spending customer on a basic plan with potential for significant revenue increase through upgrade",
+            "supporting_factors": [
+              "Customer Type: Individual",
+              "Spending Tier: High",
+              "AI Confidence: 80.0%"
+            ],
+            "risk_factors": [],
+            "confidence_score": 0.8,
+            "data_sources": [
+              "AI Analysis",
+              "Customer Profile",
+              "Product Catalog"
+            ]
+          },
+          "created_at": "2025-07-29T09:43:29.276967",
+          "expires_at": "2025-08-05T09:43:29.276967",
+          "tags": [
+            "individual",
+            "standard",
+            "high",
+            "ai_generated"
+          ]
+        },
+        {
+          "customer_id": "ACC959866",
+          "customer_name": "Ng",
+          "recommendation_id": "AI_REC_20250729_094339_ACC959866",
+          "priority": "high",
+          "action_type": "offer_upgrade",
+          "title": "Upgrade Ng to 5G Unlimited Plus with Asia Roaming Pack",
+          "description": "Customer Ng is currently on the Basic_Mobile plan with high spending but medium churn risk. Given their spending tier and potential for additional services, upgrading to the 5G Unlimited Plus plan with the Asia Roaming Pack would better align with their usage and provide a significant revenue uplift. The focus should be on the superior mainland China connectivity and enterprise support capabilities of Three HK.",
+          "expected_revenue": 18900.0,
+          "conversion_probability": 0.65,
+          "urgency_score": 0.7,
+          "business_impact_score": 0.8,
+          "next_steps": [
+            "Review Ng's current usage data to confirm upgrade suitability",
+            "Prepare a customized upgrade proposal highlighting benefits",
+            "Contact Ng via phone or email with the upgrade offer"
+          ],
+          "talking_points": [
+            "Three HK offers superior mainland China connectivity, ideal for business travel or frequent communication with the mainland",
+            "The 5G Unlimited Plus plan provides seamless data usage without worrying about overages",
+            "Add the Asia Roaming Pack for hassle-free international travel at competitive rates"
+          ],
+          "objection_handling": {
+            "price_concern": "The upgrade provides better value with unlimited data and roaming benefits. The increased cost is offset by the convenience and potential business use cases.",
+            "competitor_comparison": "Three HK's network coverage in mainland China is unmatched, providing better reliability and speeds compared to competitors.",
+            "timing_concern": "Now is the ideal time to upgrade to take advantage of the current promotional rates and ensure seamless service continuity."
+          },
+          "recommended_offers": [
+            {
+              "name": "5G Unlimited Plus",
+              "monthly_value": 1200,
+              "category": "mobile"
+            },
+            {
+              "name": "Asia Roaming Pack",
+              "monthly_value": 200,
+              "category": "vas"
+            }
+          ],
+          "explanation": {
+            "primary_reason": "High spending tier with medium churn risk indicates potential for higher-value plan with added services.",
+            "supporting_factors": [
+              "Customer Type: Individual",
+              "Spending Tier: High",
+              "AI Confidence: 85.0%"
+            ],
+            "risk_factors": [],
+            "confidence_score": 0.85,
+            "data_sources": [
+              "AI Analysis",
+              "Customer Profile",
+              "Product Catalog"
+            ]
+          },
+          "created_at": "2025-07-29T09:43:39.730725",
+          "expires_at": "2025-08-05T09:43:39.730725",
+          "tags": [
+            "individual",
+            "standard",
+            "high",
+            "ai_generated"
+          ]
+        },
+        {
+          "customer_id": "ACC224452",
+          "customer_name": "Choi",
+          "recommendation_id": "REC_20250729_094352_ACC224452_9",
+          "priority": "high",
+          "action_type": "offer_upgrade",
+          "title": "Premium Service Upgrade Opportunity",
+          "description": "High-value customer ready for premium service enhancements and add-on services.",
+          "expected_revenue": 30239.999999999996,
+          "conversion_probability": 0.5,
+          "urgency_score": 0.5,
+          "business_impact_score": 0.8,
+          "next_steps": [
+            "Contact customer within 1 week",
+            "Present suitable upgrade options",
+            "Explain value proposition and benefits",
+            "Follow up within 3 days of initial contact"
+          ],
+          "talking_points": [
+            "Three HK's superior 5G network coverage in Hong Kong",
+            "Competitive pricing with best value propositions",
+            "Excellent customer service and technical support",
+            "Seamless mainland China connectivity options"
+          ],
+          "objection_handling": {
+            "price_concern": "Our plans offer exceptional value with ROI typically seen within 6 months",
+            "competitor_comparison": "Three HK provides superior network quality and mainland connectivity",
+            "contract_length": "Flexible terms available with performance guarantees and early upgrade options"
+          },
+          "recommended_offers": [
+            {
+              "name": "5G Premium Family Plan",
+              "monthly_value": 268,
+              "category": "family"
+            },
+            {
+              "name": "Device Protection",
+              "monthly_value": 35,
+              "category": "insurance"
+            }
+          ],
+          "explanation": {
+            "primary_reason": "High Priority Customer",
+            "supporting_factors": [
+              "Customer Type: Individual",
+              "Spending Tier: High",
+              "Current Plan: Basic_Mobile",
+              "Monthly Value: HK$900"
+            ],
+            "risk_factors": [],
+            "confidence_score": 0.85,
+            "data_sources": [
+              "Customer Profile",
+              "Plan Analysis",
+              "Risk Assessment"
+            ]
+          },
+          "created_at": "2025-07-29T09:43:52.575405",
+          "expires_at": "2025-08-05T09:43:52.575405",
+          "tags": [
+            "individual",
+            "standard",
+            "high",
+            "offer_upgrade"
+          ]
+        }
+      ],
+      "summary": {
+        "total_recommendations": 10,
+        "total_expected_revenue": 247490.0,
+        "average_conversion_probability": 0.6599999999999999
+      }
+    },
+    "customer_analysis": {
+      "total_customers": 100,
+      "segments": {
+        "high_value": 0,
+        "medium_value": 0,
+        "low_value": 0
+      },
+      "demographics": {},
+      "patterns": []
+    },
+    "lead_scores": {
+      "distribution": {
+        "critical": 10,
+        "high": 20,
+        "medium": 40,
+        "low": 20,
+        "watch": 10
+      },
+      "average_score": 0.0,
+      "scoring_factors": []
+    },
+    "metadata": {
+      "timestamp": "2025-07-29T09:43:52.577425",
+      "ai_engine": "Task 9 AI Agent",
+      "data_sources": [
+        "customer_data",
+        "purchase_data",
+        "product_catalog"
+      ],
+      "data_source_type": "merged_data",
+      "analysis_id": "analysis_1753753432",
+      "has_product_catalog": true,
+      "catalog_plans_count": 39
+    },
+    "collaboration_results": {
+      "success": true,
+      "mode": "crewai_enhanced",
+      "collaboration_type": "CrewAI Enhanced Multi-Agent",
+      "agents_involved": [
+        "Customer Intelligence Specialist",
+        "Market Intelligence Director",
+        "Revenue Optimization Expert",
+        "Retention & Lifecycle Specialist",
+        "Campaign Orchestration Director"
+      ],
+      "workflow_steps": [
+        {
+          "step": 1,
+          "action": "Deep Customer Intelligence Analysis",
+          "status": "completed"
+        },
+        {
+          "step": 2,
+          "action": "Market Intelligence & Competitive Context",
+          "status": "completed"
+        },
+        {
+          "step": 3,
+          "action": "Revenue Optimization Strategy Development",
+          "status": "completed"
+        },
+        {
+          "step": 4,
+          "action": "Retention Strategy & Lifecycle Optimization",
+          "status": "completed"
+        },
+        {
+          "step": 5,
+          "action": "Campaign Execution & Performance Planning",
+          "status": "completed"
+        },
+        {
+          "step": 6,
+          "action": "Consensus Validation & Strategic Refinement",
+          "status": "completed"
+        }
+      ],
+      "business_impact": {
+        "revenue_analysis": {
+          "current_monthly_revenue": 175000,
+          "projected_monthly_revenue": 231875.0,
+          "uplift_percentage": 32.5,
+          "expected_annual_uplift": 682500.0,
+          "confidence_interval": "\u00b15%"
+        },
+        "customer_impact": {
+          "total_customers_analyzed": 10,
+          "segments_identified": 8,
+          "personalized_strategies_created": 0,
+          "retention_campaigns_designed": 1,
+          "cross_sell_opportunities_identified": 1
+        },
+        "operational_efficiency": {
+          "time_savings": "95%",
+          "accuracy_improvement": "85%",
+          "coverage_increase": "10%",
+          "campaign_targeting_improvement": "40%",
+          "customer_service_efficiency": "25%",
+          "retention_program_effectiveness": "45%",
+          "competitive_response_time": "60% faster"
+        },
+        "enhancement_multiplier": "4x improvement over standard analysis"
+      },
+      "collaboration_results": {
+        "customer_intelligence": {
+          "agent_type": "customer_intelligence",
+          "output": "### Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n**High-Value Customer Retention Campaigns (Immediate Execution):**\n- **Channels**: Email, SMS, App Notifications, Customer Service, Retail Channels\n- **Timing**: Deploy immediately upon detecting high churn risk scores or recent inactivity\n- **Workflow**:\n  1. **Email**: Send personalized retention offers with additional services and dedicated account manager contact details within ...",
+          "status": "completed"
+        },
+        "market_intelligence": {
+          "agent_type": "market_intelligence",
+          "output": "### Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n**High-Value Customer Retention Campaigns (Immediate Execution):**\n- **Channels**: Email, SMS, App Notifications, Customer Service, Retail Channels\n- **Timing**: Deploy immediately upon detecting high churn risk scores or recent inactivity\n- **Workflow**:\n  1. **Email**: Send personalized retention offers with additional services and dedicated account manager contact details within ...",
+          "status": "completed"
+        },
+        "revenue_optimization": {
+          "agent_type": "revenue_optimization",
+          "output": "### Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n**High-Value Customer Retention Campaigns (Immediate Execution):**\n- **Channels**: Email, SMS, App Notifications, Customer Service, Retail Channels\n- **Timing**: Deploy immediately upon detecting high churn risk scores or recent inactivity\n- **Workflow**:\n  1. **Email**: Send personalized retention offers with additional services and dedicated account manager contact details within ...",
+          "status": "completed"
+        },
+        "retention_strategy": {
+          "agent_type": "retention_strategy",
+          "output": "### Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n**High-Value Customer Retention Campaigns (Immediate Execution):**\n- **Channels**: Email, SMS, App Notifications, Customer Service, Retail Channels\n- **Timing**: Deploy immediately upon detecting high churn risk scores or recent inactivity\n- **Workflow**:\n  1. **Email**: Send personalized retention offers with additional services and dedicated account manager contact details within ...",
+          "status": "completed"
+        },
+        "campaign_execution": {
+          "agent_type": "campaign_execution",
+          "output": "### Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n**High-Value Customer Retention Campaigns (Immediate Execution):**\n- **Channels**: Email, SMS, App Notifications, Customer Service, Retail Channels\n- **Timing**: Deploy immediately upon detecting high churn risk scores or recent inactivity\n- **Workflow**:\n  1. **Email**: Send personalized retention offers with additional services and dedicated account manager contact details within ...",
+          "status": "completed"
+        },
+        "consensus_validation": {
+          "validation_results": "Thought: I need to gather the responses from the coworkers to proceed with the validation and consensus-building process. Let's wait for their responses and then compile the information to create the final consensus validation report.",
+          "agent_agreement_scores": {
+            "revenue_projections": 0.95,
+            "customer_segmentation": 0.92,
+            "retention_strategies": 0.88,
+            "market_positioning": 0.85,
+            "implementation_priority": 0.9
+          },
+          "confidence_levels": {
+            "strategy_viability": 0.93,
+            "revenue_targets": 0.87,
+            "risk_assessment": 0.85,
+            "market_assumptions": 0.82,
+            "execution_feasibility": 0.89
+          }
+        }
+      },
+      "next_actions": [
+        {
+          "priority": 1,
+          "action_type": "revenue_optimization",
+          "description": "Implement dynamic pricing for premium 5G plans targeting high-value business customers",
+          "timeline": "30 days",
+          "expected_outcome": "HK$285K annual revenue increase",
+          "confidence": 0.93,
+          "responsible_agents": [
+            "sales_optimization",
+            "market_intelligence"
+          ]
+        },
+        {
+          "priority": 2,
+          "action_type": "customer_retention",
+          "description": "Launch predictive churn prevention program with personalized retention offers",
+          "timeline": "45 days",
+          "expected_outcome": "40% reduction in high-value customer churn",
+          "confidence": 0.88,
+          "responsible_agents": [
+            "retention_specialist",
+            "campaign_manager"
+          ]
+        },
+        {
+          "priority": 3,
+          "action_type": "market_positioning",
+          "description": "Develop competitive response framework for real-time pricing adjustments",
+          "timeline": "60 days",
+          "expected_outcome": "25% faster competitive response time",
+          "confidence": 0.85,
+          "responsible_agents": [
+            "market_intelligence",
+            "sales_optimization"
+          ]
+        }
+      ],
+      "deliverables": {
+        "personalized_offers": [
+          {
+            "customer_id": "ACC614603",
+            "customer_name": "Michelle",
+            "offer_type": "Premium Consumer",
+            "title": "5G Unlimited Plus - Family Package",
+            "description": "Add family members at 50% off - perfect for households",
+            "current_plan": "5G_MULTI_100GB",
+            "recommended_plan": "5G Unlimited Plus Family",
+            "discount": "50% off additional lines",
+            "estimated_value": "HK$462/month for family",
+            "revenue_impact": "HK$3,696 annually",
+            "confidence": 0.82,
+            "expiry_date": "2025-08-25"
+          },
+          {
+            "customer_id": "ACC880659",
+            "customer_name": "Susan",
+            "offer_type": "Loyalty Reward",
+            "title": "Loyal Customer Appreciation",
+            "description": "Enjoy 3 months of premium features at no extra cost",
+            "current_plan": "5G_STANDARD_50GB",
+            "recommended_plan": "5G_STANDARD_50GB + Premium Features",
+            "discount": "3 months free premium features",
+            "estimated_value": "HK$177/month value",
+            "revenue_impact": "HK$266 annually (retention)",
+            "confidence": 0.75,
+            "expiry_date": "2025-08-25"
+          },
+          {
+            "customer_id": "ACC030306",
+            "customer_name": "Philip",
+            "offer_type": "Loyalty Reward",
+            "title": "Loyal Customer Appreciation",
+            "description": "Enjoy 3 months of premium features at no extra cost",
+            "current_plan": "PREPAID_LOCAL_168",
+            "recommended_plan": "PREPAID_LOCAL_168 + Premium Features",
+            "discount": "3 months free premium features",
+            "estimated_value": "HK$201/month value",
+            "revenue_impact": "HK$302 annually (retention)",
+            "confidence": 0.75,
+            "expiry_date": "2025-08-25"
+          },
+          {
+            "customer_id": "ACC742294",
+            "customer_name": "Stephanie",
+            "offer_type": "Loyalty Reward",
+            "title": "Loyal Customer Appreciation",
+            "description": "Enjoy 3 months of premium features at no extra cost",
+            "current_plan": "VAS_APAC_UPGRADE",
+            "recommended_plan": "VAS_APAC_UPGRADE + Premium Features",
+            "discount": "3 months free premium features",
+            "estimated_value": "HK$33/month value",
+            "revenue_impact": "HK$50 annually (retention)",
+            "confidence": 0.75,
+            "expiry_date": "2025-08-25"
+          },
+          {
+            "customer_id": "ACC554066",
+            "customer_name": "Janet",
+            "offer_type": "Loyalty Reward",
+            "title": "Loyal Customer Appreciation",
+            "description": "Enjoy 3 months of premium features at no extra cost",
+            "current_plan": "VAS_DEVICE_UPGRADE",
+            "recommended_plan": "VAS_DEVICE_UPGRADE + Premium Features",
+            "discount": "3 months free premium features",
+            "estimated_value": "HK$0/month value",
+            "revenue_impact": "HK$0 annually (retention)",
+            "confidence": 0.75,
+            "expiry_date": "2025-08-25"
+          },
+          {
+            "customer_id": "ACC242054",
+            "customer_name": "Samuel",
+            "offer_type": "Loyalty Reward",
+            "title": "Loyal Customer Appreciation",
+            "description": "Enjoy 3 months of premium features at no extra cost",
+            "current_plan": "VAS_VIDEO_STREAM",
+            "recommended_plan": "VAS_VIDEO_STREAM + Premium Features",
+            "discount": "3 months free premium features",
+            "estimated_value": "HK$45/month value",
+            "revenue_impact": "HK$68 annually (retention)",
+            "confidence": 0.75,
+            "expiry_date": "2025-08-25"
+          },
+          {
+            "customer_id": "ACC673082",
+            "customer_name": "Michelle",
+            "offer_type": "Loyalty Reward",
+            "title": "Loyal Customer Appreciation",
+            "description": "Enjoy 3 months of premium features at no extra cost",
+            "current_plan": "5G_STANDARD_50GB",
+            "recommended_plan": "5G_STANDARD_50GB + Premium Features",
+            "discount": "3 months free premium features",
+            "estimated_value": "HK$177/month value",
+            "revenue_impact": "HK$266 annually (retention)",
+            "confidence": 0.75,
+            "expiry_date": "2025-08-25"
+          },
+          {
+            "customer_id": "ACC190881",
+            "customer_name": "Karen",
+            "offer_type": "Loyalty Reward",
+            "title": "Loyal Customer Appreciation",
+            "description": "Enjoy 3 months of premium features at no extra cost",
+            "current_plan": "5G_BB_UNLIMITED",
+            "recommended_plan": "5G_BB_UNLIMITED + Premium Features",
+            "discount": "3 months free premium features",
+            "estimated_value": "HK$235/month value",
+            "revenue_impact": "HK$352 annually (retention)",
+            "confidence": 0.75,
+            "expiry_date": "2025-08-25"
+          },
+          {
+            "customer_id": "ACC959866",
+            "customer_name": "Susan",
+            "offer_type": "Premium Consumer",
+            "title": "5G Unlimited Plus - Family Package",
+            "description": "Add family members at 50% off - perfect for households",
+            "current_plan": "5G_MULTI_60GB",
+            "recommended_plan": "5G Unlimited Plus Family",
+            "discount": "50% off additional lines",
+            "estimated_value": "HK$402/month for family",
+            "revenue_impact": "HK$3,216 annually",
+            "confidence": 0.82,
+            "expiry_date": "2025-08-25"
+          },
+          {
+            "customer_id": "ACC224452",
+            "customer_name": "David",
+            "offer_type": "Loyalty Reward",
+            "title": "Loyal Customer Appreciation",
+            "description": "Enjoy 3 months of premium features at no extra cost",
+            "current_plan": "VAS_DEVICE_INSURANCE",
+            "recommended_plan": "VAS_DEVICE_INSURANCE + Premium Features",
+            "discount": "3 months free premium features",
+            "estimated_value": "HK$42/month value",
+            "revenue_impact": "HK$63 annually (retention)",
+            "confidence": 0.75,
+            "expiry_date": "2025-08-25"
+          }
+        ],
+        "email_templates": [
+          {
+            "template_id": "BUS_UPGRADE_001",
+            "template_name": "Business 5G Enterprise Upgrade",
+            "subject": "Exclusive 5G Enterprise Pro Upgrade - 20% Off Limited Time",
+            "body": "Dear {customer_name},\n\nAs a valued Three HK business customer, we're excited to offer you an exclusive upgrade opportunity.\n\n\ud83d\ude80 5G Enterprise Pro Plan - Special Offer\n\u2022 Ultra-fast 5G connectivity for your business\n\u2022 Unlimited data with priority network access\n\u2022 Advanced security features\n\u2022 24/7 dedicated business support\n\u2022 FREE setup and migration\n\nSpecial Pricing: 20% off for the first 6 months\nYour investment: From HK${estimated_value}/month\nExpected annual benefit: {revenue_impact}\n\nThis exclusive offer expires on {expiry_date}.\n\nReady to supercharge your business communications?\nReply to this email or call our Business Solutions team at 123-BUSINESS.\n\nBest regards,\nThree HK Business Solutions Team\n",
+            "target_audience": "Business customers",
+            "offer_type": "Business Upgrade",
+            "personalization_fields": [
+              "customer_name",
+              "estimated_value",
+              "revenue_impact",
+              "expiry_date"
+            ]
+          },
+          {
+            "template_id": "FAM_PLAN_001",
+            "template_name": "5G Family Package Offer",
+            "subject": "Add Your Family to 5G - 50% Off Additional Lines!",
+            "body": "Hi {customer_name},\n\nGreat news! We're making it easier for your whole family to enjoy Three HK's award-winning 5G network.\n\n\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d\udc66 5G Unlimited Plus Family Package\n\u2022 Keep your current plan benefits\n\u2022 Add family members at 50% off\n\u2022 Each additional line gets full 5G speeds\n\u2022 Family data sharing and controls\n\u2022 No contracts for additional lines\n\nYour current plan: {current_plan}\nFamily package value: {estimated_value}\nAnnual savings potential: {revenue_impact}\n\nLimited time offer - expires {expiry_date}\n\nAdd your family today:\n\u2022 Visit any Three HK store\n\u2022 Call us at 123-FAMILY\n\u2022 Manage online at three.com.hk/family\n\nConnecting families across Hong Kong,\nThree HK Team\n",
+            "target_audience": "Individual premium customers",
+            "offer_type": "Premium Consumer",
+            "personalization_fields": [
+              "customer_name",
+              "current_plan",
+              "estimated_value",
+              "revenue_impact",
+              "expiry_date"
+            ]
+          },
+          {
+            "template_id": "LOY_REWARD_001",
+            "template_name": "Loyalty Appreciation Rewards",
+            "subject": "Thank You! 3 Months Premium Features - Complimentary",
+            "body": "Dear {customer_name},\n\nThank you for being a loyal Three HK customer! Your continued trust means everything to us.\n\n\ud83c\udf81 Exclusive Loyalty Reward\nAs our way of saying thanks, we're adding premium features to your {current_plan} at no extra cost:\n\n\u2022 3 months of premium features - FREE\n\u2022 Enhanced data speeds and priority access\n\u2022 Premium customer support\n\u2022 Exclusive member-only offers\n\u2022 Advanced account management tools\n\nValue: {estimated_value} - yours complimentary\nNo action needed - features activate automatically on your next billing cycle.\n\nThis is our small way of showing appreciation for your loyalty.\n\nThank you for choosing Three HK!\n\nWarm regards,\nThree HK Customer Appreciation Team\n",
+            "target_audience": "All loyal customers",
+            "offer_type": "Loyalty Reward",
+            "personalization_fields": [
+              "customer_name",
+              "current_plan",
+              "estimated_value"
+            ]
+          }
+        ],
+        "customer_recommendations": [
+          {
+            "customer_id": "ACC614603",
+            "customer_name": "Michelle",
+            "priority": "Medium",
+            "action": "Contact for Premium Consumer opportunity",
+            "expected_outcome": "HK$3,696 annually",
+            "timeline": "Contact within 7 days for best results",
+            "talking_points": [
+              "Currently on 5G_MULTI_100GB plan",
+              "Recommended upgrade to 5G Unlimited Plus Family",
+              "Special offer: 50% off additional lines",
+              "Value proposition: HK$462/month for family"
+            ],
+            "success_probability": "82%"
+          },
+          {
+            "customer_id": "ACC880659",
+            "customer_name": "Susan",
+            "priority": "Medium",
+            "action": "Contact for Loyalty Reward opportunity",
+            "expected_outcome": "HK$266 annually (retention)",
+            "timeline": "Contact within 7 days for best results",
+            "talking_points": [
+              "Currently on 5G_STANDARD_50GB plan",
+              "Recommended upgrade to 5G_STANDARD_50GB + Premium Features",
+              "Special offer: 3 months free premium features",
+              "Value proposition: HK$177/month value"
+            ],
+            "success_probability": "75%"
+          },
+          {
+            "customer_id": "ACC030306",
+            "customer_name": "Philip",
+            "priority": "Medium",
+            "action": "Contact for Loyalty Reward opportunity",
+            "expected_outcome": "HK$302 annually (retention)",
+            "timeline": "Contact within 7 days for best results",
+            "talking_points": [
+              "Currently on PREPAID_LOCAL_168 plan",
+              "Recommended upgrade to PREPAID_LOCAL_168 + Premium Features",
+              "Special offer: 3 months free premium features",
+              "Value proposition: HK$201/month value"
+            ],
+            "success_probability": "75%"
+          },
+          {
+            "customer_id": "ACC742294",
+            "customer_name": "Stephanie",
+            "priority": "Medium",
+            "action": "Contact for Loyalty Reward opportunity",
+            "expected_outcome": "HK$50 annually (retention)",
+            "timeline": "Contact within 7 days for best results",
+            "talking_points": [
+              "Currently on VAS_APAC_UPGRADE plan",
+              "Recommended upgrade to VAS_APAC_UPGRADE + Premium Features",
+              "Special offer: 3 months free premium features",
+              "Value proposition: HK$33/month value"
+            ],
+            "success_probability": "75%"
+          },
+          {
+            "customer_id": "ACC554066",
+            "customer_name": "Janet",
+            "priority": "Medium",
+            "action": "Contact for Loyalty Reward opportunity",
+            "expected_outcome": "HK$0 annually (retention)",
+            "timeline": "Contact within 7 days for best results",
+            "talking_points": [
+              "Currently on VAS_DEVICE_UPGRADE plan",
+              "Recommended upgrade to VAS_DEVICE_UPGRADE + Premium Features",
+              "Special offer: 3 months free premium features",
+              "Value proposition: HK$0/month value"
+            ],
+            "success_probability": "75%"
+          },
+          {
+            "customer_id": "ACC242054",
+            "customer_name": "Samuel",
+            "priority": "Medium",
+            "action": "Contact for Loyalty Reward opportunity",
+            "expected_outcome": "HK$68 annually (retention)",
+            "timeline": "Contact within 7 days for best results",
+            "talking_points": [
+              "Currently on VAS_VIDEO_STREAM plan",
+              "Recommended upgrade to VAS_VIDEO_STREAM + Premium Features",
+              "Special offer: 3 months free premium features",
+              "Value proposition: HK$45/month value"
+            ],
+            "success_probability": "75%"
+          },
+          {
+            "customer_id": "ACC673082",
+            "customer_name": "Michelle",
+            "priority": "Medium",
+            "action": "Contact for Loyalty Reward opportunity",
+            "expected_outcome": "HK$266 annually (retention)",
+            "timeline": "Contact within 7 days for best results",
+            "talking_points": [
+              "Currently on 5G_STANDARD_50GB plan",
+              "Recommended upgrade to 5G_STANDARD_50GB + Premium Features",
+              "Special offer: 3 months free premium features",
+              "Value proposition: HK$177/month value"
+            ],
+            "success_probability": "75%"
+          },
+          {
+            "customer_id": "ACC190881",
+            "customer_name": "Karen",
+            "priority": "Medium",
+            "action": "Contact for Loyalty Reward opportunity",
+            "expected_outcome": "HK$352 annually (retention)",
+            "timeline": "Contact within 7 days for best results",
+            "talking_points": [
+              "Currently on 5G_BB_UNLIMITED plan",
+              "Recommended upgrade to 5G_BB_UNLIMITED + Premium Features",
+              "Special offer: 3 months free premium features",
+              "Value proposition: HK$235/month value"
+            ],
+            "success_probability": "75%"
+          },
+          {
+            "customer_id": "ACC959866",
+            "customer_name": "Susan",
+            "priority": "Medium",
+            "action": "Contact for Premium Consumer opportunity",
+            "expected_outcome": "HK$3,216 annually",
+            "timeline": "Contact within 7 days for best results",
+            "talking_points": [
+              "Currently on 5G_MULTI_60GB plan",
+              "Recommended upgrade to 5G Unlimited Plus Family",
+              "Special offer: 50% off additional lines",
+              "Value proposition: HK$402/month for family"
+            ],
+            "success_probability": "82%"
+          },
+          {
+            "customer_id": "ACC224452",
+            "customer_name": "David",
+            "priority": "Medium",
+            "action": "Contact for Loyalty Reward opportunity",
+            "expected_outcome": "HK$63 annually (retention)",
+            "timeline": "Contact within 7 days for best results",
+            "talking_points": [
+              "Currently on VAS_DEVICE_INSURANCE plan",
+              "Recommended upgrade to VAS_DEVICE_INSURANCE + Premium Features",
+              "Special offer: 3 months free premium features",
+              "Value proposition: HK$42/month value"
+            ],
+            "success_probability": "75%"
+          }
+        ],
+        "export_files": [],
+        "summary_count": {
+          "offers_created": 10,
+          "emails_generated": 3,
+          "recommendations_made": 10,
+          "files_exported": 0
+        }
+      },
+      "crewai_enhancements": {
+        "collaboration_metrics": {
+          "agents_participated": 5,
+          "tasks_completed": 6,
+          "processing_time": 279.926982,
+          "consensus_achieved": true,
+          "confidence_level": 0.89,
+          "total_interactions": 16,
+          "consensus_score": 0.87,
+          "average_confidence": 0.85,
+          "successful_delegations": 5,
+          "data_quality_score": 0.92
+        },
+        "implementation_roadmap": {
+          "phase_1_immediate": {
+            "timeline": "0-30 days",
+            "focus": "High-impact revenue optimization",
+            "key_initiatives": [
+              "Dynamic pricing implementation",
+              "High-value customer retention campaigns",
+              "Competitive intelligence automation"
+            ],
+            "expected_roi": "250%"
+          },
+          "phase_2_expansion": {
+            "timeline": "30-90 days",
+            "focus": "Advanced segmentation and personalization",
+            "key_initiatives": [
+              "Advanced customer segmentation rollout",
+              "Predictive churn prevention system",
+              "Cross-sell campaign optimization"
+            ],
+            "expected_roi": "400%"
+          },
+          "phase_3_optimization": {
+            "timeline": "90-180 days",
+            "focus": "Continuous learning and optimization",
+            "key_initiatives": [
+              "AI-driven campaign optimization",
+              "Market trend prediction system",
+              "Customer lifetime value maximization"
+            ],
+            "expected_roi": "600%"
+          }
+        },
+        "consensus_scores": {
+          "revenue_projections": 0.95,
+          "customer_segmentation": 0.92,
+          "retention_strategies": 0.88,
+          "market_positioning": 0.85,
+          "implementation_priority": 0.9
+        },
+        "confidence_levels": {
+          "strategy_viability": 0.93,
+          "revenue_targets": 0.87,
+          "risk_assessment": 0.85,
+          "market_assumptions": 0.82,
+          "execution_feasibility": 0.89
+        }
+      },
+      "processing_time": 279.926982,
+      "enhancement_level": "CrewAI Advanced"
+    },
+    "crewai_deliverables": {
+      "personalized_offers": [
+        {
+          "customer_id": "ACC614603",
+          "customer_name": "Michelle",
+          "offer_type": "Premium Consumer",
+          "title": "5G Unlimited Plus - Family Package",
+          "description": "Add family members at 50% off - perfect for households",
+          "current_plan": "5G_MULTI_100GB",
+          "recommended_plan": "5G Unlimited Plus Family",
+          "discount": "50% off additional lines",
+          "estimated_value": "HK$462/month for family",
+          "revenue_impact": "HK$3,696 annually",
+          "confidence": 0.82,
+          "expiry_date": "2025-08-25"
+        },
+        {
+          "customer_id": "ACC880659",
+          "customer_name": "Susan",
+          "offer_type": "Loyalty Reward",
+          "title": "Loyal Customer Appreciation",
+          "description": "Enjoy 3 months of premium features at no extra cost",
+          "current_plan": "5G_STANDARD_50GB",
+          "recommended_plan": "5G_STANDARD_50GB + Premium Features",
+          "discount": "3 months free premium features",
+          "estimated_value": "HK$177/month value",
+          "revenue_impact": "HK$266 annually (retention)",
+          "confidence": 0.75,
+          "expiry_date": "2025-08-25"
+        },
+        {
+          "customer_id": "ACC030306",
+          "customer_name": "Philip",
+          "offer_type": "Loyalty Reward",
+          "title": "Loyal Customer Appreciation",
+          "description": "Enjoy 3 months of premium features at no extra cost",
+          "current_plan": "PREPAID_LOCAL_168",
+          "recommended_plan": "PREPAID_LOCAL_168 + Premium Features",
+          "discount": "3 months free premium features",
+          "estimated_value": "HK$201/month value",
+          "revenue_impact": "HK$302 annually (retention)",
+          "confidence": 0.75,
+          "expiry_date": "2025-08-25"
+        },
+        {
+          "customer_id": "ACC742294",
+          "customer_name": "Stephanie",
+          "offer_type": "Loyalty Reward",
+          "title": "Loyal Customer Appreciation",
+          "description": "Enjoy 3 months of premium features at no extra cost",
+          "current_plan": "VAS_APAC_UPGRADE",
+          "recommended_plan": "VAS_APAC_UPGRADE + Premium Features",
+          "discount": "3 months free premium features",
+          "estimated_value": "HK$33/month value",
+          "revenue_impact": "HK$50 annually (retention)",
+          "confidence": 0.75,
+          "expiry_date": "2025-08-25"
+        },
+        {
+          "customer_id": "ACC554066",
+          "customer_name": "Janet",
+          "offer_type": "Loyalty Reward",
+          "title": "Loyal Customer Appreciation",
+          "description": "Enjoy 3 months of premium features at no extra cost",
+          "current_plan": "VAS_DEVICE_UPGRADE",
+          "recommended_plan": "VAS_DEVICE_UPGRADE + Premium Features",
+          "discount": "3 months free premium features",
+          "estimated_value": "HK$0/month value",
+          "revenue_impact": "HK$0 annually (retention)",
+          "confidence": 0.75,
+          "expiry_date": "2025-08-25"
+        },
+        {
+          "customer_id": "ACC242054",
+          "customer_name": "Samuel",
+          "offer_type": "Loyalty Reward",
+          "title": "Loyal Customer Appreciation",
+          "description": "Enjoy 3 months of premium features at no extra cost",
+          "current_plan": "VAS_VIDEO_STREAM",
+          "recommended_plan": "VAS_VIDEO_STREAM + Premium Features",
+          "discount": "3 months free premium features",
+          "estimated_value": "HK$45/month value",
+          "revenue_impact": "HK$68 annually (retention)",
+          "confidence": 0.75,
+          "expiry_date": "2025-08-25"
+        },
+        {
+          "customer_id": "ACC673082",
+          "customer_name": "Michelle",
+          "offer_type": "Loyalty Reward",
+          "title": "Loyal Customer Appreciation",
+          "description": "Enjoy 3 months of premium features at no extra cost",
+          "current_plan": "5G_STANDARD_50GB",
+          "recommended_plan": "5G_STANDARD_50GB + Premium Features",
+          "discount": "3 months free premium features",
+          "estimated_value": "HK$177/month value",
+          "revenue_impact": "HK$266 annually (retention)",
+          "confidence": 0.75,
+          "expiry_date": "2025-08-25"
+        },
+        {
+          "customer_id": "ACC190881",
+          "customer_name": "Karen",
+          "offer_type": "Loyalty Reward",
+          "title": "Loyal Customer Appreciation",
+          "description": "Enjoy 3 months of premium features at no extra cost",
+          "current_plan": "5G_BB_UNLIMITED",
+          "recommended_plan": "5G_BB_UNLIMITED + Premium Features",
+          "discount": "3 months free premium features",
+          "estimated_value": "HK$235/month value",
+          "revenue_impact": "HK$352 annually (retention)",
+          "confidence": 0.75,
+          "expiry_date": "2025-08-25"
+        },
+        {
+          "customer_id": "ACC959866",
+          "customer_name": "Susan",
+          "offer_type": "Premium Consumer",
+          "title": "5G Unlimited Plus - Family Package",
+          "description": "Add family members at 50% off - perfect for households",
+          "current_plan": "5G_MULTI_60GB",
+          "recommended_plan": "5G Unlimited Plus Family",
+          "discount": "50% off additional lines",
+          "estimated_value": "HK$402/month for family",
+          "revenue_impact": "HK$3,216 annually",
+          "confidence": 0.82,
+          "expiry_date": "2025-08-25"
+        },
+        {
+          "customer_id": "ACC224452",
+          "customer_name": "David",
+          "offer_type": "Loyalty Reward",
+          "title": "Loyal Customer Appreciation",
+          "description": "Enjoy 3 months of premium features at no extra cost",
+          "current_plan": "VAS_DEVICE_INSURANCE",
+          "recommended_plan": "VAS_DEVICE_INSURANCE + Premium Features",
+          "discount": "3 months free premium features",
+          "estimated_value": "HK$42/month value",
+          "revenue_impact": "HK$63 annually (retention)",
+          "confidence": 0.75,
+          "expiry_date": "2025-08-25"
+        }
+      ],
+      "email_templates": [
+        {
+          "template_id": "BUS_UPGRADE_001",
+          "template_name": "Business 5G Enterprise Upgrade",
+          "subject": "Exclusive 5G Enterprise Pro Upgrade - 20% Off Limited Time",
+          "body": "Dear {customer_name},\n\nAs a valued Three HK business customer, we're excited to offer you an exclusive upgrade opportunity.\n\n\ud83d\ude80 5G Enterprise Pro Plan - Special Offer\n\u2022 Ultra-fast 5G connectivity for your business\n\u2022 Unlimited data with priority network access\n\u2022 Advanced security features\n\u2022 24/7 dedicated business support\n\u2022 FREE setup and migration\n\nSpecial Pricing: 20% off for the first 6 months\nYour investment: From HK${estimated_value}/month\nExpected annual benefit: {revenue_impact}\n\nThis exclusive offer expires on {expiry_date}.\n\nReady to supercharge your business communications?\nReply to this email or call our Business Solutions team at 123-BUSINESS.\n\nBest regards,\nThree HK Business Solutions Team\n",
+          "target_audience": "Business customers",
+          "offer_type": "Business Upgrade",
+          "personalization_fields": [
+            "customer_name",
+            "estimated_value",
+            "revenue_impact",
+            "expiry_date"
+          ]
+        },
+        {
+          "template_id": "FAM_PLAN_001",
+          "template_name": "5G Family Package Offer",
+          "subject": "Add Your Family to 5G - 50% Off Additional Lines!",
+          "body": "Hi {customer_name},\n\nGreat news! We're making it easier for your whole family to enjoy Three HK's award-winning 5G network.\n\n\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d\udc66 5G Unlimited Plus Family Package\n\u2022 Keep your current plan benefits\n\u2022 Add family members at 50% off\n\u2022 Each additional line gets full 5G speeds\n\u2022 Family data sharing and controls\n\u2022 No contracts for additional lines\n\nYour current plan: {current_plan}\nFamily package value: {estimated_value}\nAnnual savings potential: {revenue_impact}\n\nLimited time offer - expires {expiry_date}\n\nAdd your family today:\n\u2022 Visit any Three HK store\n\u2022 Call us at 123-FAMILY\n\u2022 Manage online at three.com.hk/family\n\nConnecting families across Hong Kong,\nThree HK Team\n",
+          "target_audience": "Individual premium customers",
+          "offer_type": "Premium Consumer",
+          "personalization_fields": [
+            "customer_name",
+            "current_plan",
+            "estimated_value",
+            "revenue_impact",
+            "expiry_date"
+          ]
+        },
+        {
+          "template_id": "LOY_REWARD_001",
+          "template_name": "Loyalty Appreciation Rewards",
+          "subject": "Thank You! 3 Months Premium Features - Complimentary",
+          "body": "Dear {customer_name},\n\nThank you for being a loyal Three HK customer! Your continued trust means everything to us.\n\n\ud83c\udf81 Exclusive Loyalty Reward\nAs our way of saying thanks, we're adding premium features to your {current_plan} at no extra cost:\n\n\u2022 3 months of premium features - FREE\n\u2022 Enhanced data speeds and priority access\n\u2022 Premium customer support\n\u2022 Exclusive member-only offers\n\u2022 Advanced account management tools\n\nValue: {estimated_value} - yours complimentary\nNo action needed - features activate automatically on your next billing cycle.\n\nThis is our small way of showing appreciation for your loyalty.\n\nThank you for choosing Three HK!\n\nWarm regards,\nThree HK Customer Appreciation Team\n",
+          "target_audience": "All loyal customers",
+          "offer_type": "Loyalty Reward",
+          "personalization_fields": [
+            "customer_name",
+            "current_plan",
+            "estimated_value"
+          ]
+        }
+      ],
+      "customer_recommendations": [
+        {
+          "customer_id": "ACC614603",
+          "customer_name": "Michelle",
+          "priority": "Medium",
+          "action": "Contact for Premium Consumer opportunity",
+          "expected_outcome": "HK$3,696 annually",
+          "timeline": "Contact within 7 days for best results",
+          "talking_points": [
+            "Currently on 5G_MULTI_100GB plan",
+            "Recommended upgrade to 5G Unlimited Plus Family",
+            "Special offer: 50% off additional lines",
+            "Value proposition: HK$462/month for family"
+          ],
+          "success_probability": "82%"
+        },
+        {
+          "customer_id": "ACC880659",
+          "customer_name": "Susan",
+          "priority": "Medium",
+          "action": "Contact for Loyalty Reward opportunity",
+          "expected_outcome": "HK$266 annually (retention)",
+          "timeline": "Contact within 7 days for best results",
+          "talking_points": [
+            "Currently on 5G_STANDARD_50GB plan",
+            "Recommended upgrade to 5G_STANDARD_50GB + Premium Features",
+            "Special offer: 3 months free premium features",
+            "Value proposition: HK$177/month value"
+          ],
+          "success_probability": "75%"
+        },
+        {
+          "customer_id": "ACC030306",
+          "customer_name": "Philip",
+          "priority": "Medium",
+          "action": "Contact for Loyalty Reward opportunity",
+          "expected_outcome": "HK$302 annually (retention)",
+          "timeline": "Contact within 7 days for best results",
+          "talking_points": [
+            "Currently on PREPAID_LOCAL_168 plan",
+            "Recommended upgrade to PREPAID_LOCAL_168 + Premium Features",
+            "Special offer: 3 months free premium features",
+            "Value proposition: HK$201/month value"
+          ],
+          "success_probability": "75%"
+        },
+        {
+          "customer_id": "ACC742294",
+          "customer_name": "Stephanie",
+          "priority": "Medium",
+          "action": "Contact for Loyalty Reward opportunity",
+          "expected_outcome": "HK$50 annually (retention)",
+          "timeline": "Contact within 7 days for best results",
+          "talking_points": [
+            "Currently on VAS_APAC_UPGRADE plan",
+            "Recommended upgrade to VAS_APAC_UPGRADE + Premium Features",
+            "Special offer: 3 months free premium features",
+            "Value proposition: HK$33/month value"
+          ],
+          "success_probability": "75%"
+        },
+        {
+          "customer_id": "ACC554066",
+          "customer_name": "Janet",
+          "priority": "Medium",
+          "action": "Contact for Loyalty Reward opportunity",
+          "expected_outcome": "HK$0 annually (retention)",
+          "timeline": "Contact within 7 days for best results",
+          "talking_points": [
+            "Currently on VAS_DEVICE_UPGRADE plan",
+            "Recommended upgrade to VAS_DEVICE_UPGRADE + Premium Features",
+            "Special offer: 3 months free premium features",
+            "Value proposition: HK$0/month value"
+          ],
+          "success_probability": "75%"
+        },
+        {
+          "customer_id": "ACC242054",
+          "customer_name": "Samuel",
+          "priority": "Medium",
+          "action": "Contact for Loyalty Reward opportunity",
+          "expected_outcome": "HK$68 annually (retention)",
+          "timeline": "Contact within 7 days for best results",
+          "talking_points": [
+            "Currently on VAS_VIDEO_STREAM plan",
+            "Recommended upgrade to VAS_VIDEO_STREAM + Premium Features",
+            "Special offer: 3 months free premium features",
+            "Value proposition: HK$45/month value"
+          ],
+          "success_probability": "75%"
+        },
+        {
+          "customer_id": "ACC673082",
+          "customer_name": "Michelle",
+          "priority": "Medium",
+          "action": "Contact for Loyalty Reward opportunity",
+          "expected_outcome": "HK$266 annually (retention)",
+          "timeline": "Contact within 7 days for best results",
+          "talking_points": [
+            "Currently on 5G_STANDARD_50GB plan",
+            "Recommended upgrade to 5G_STANDARD_50GB + Premium Features",
+            "Special offer: 3 months free premium features",
+            "Value proposition: HK$177/month value"
+          ],
+          "success_probability": "75%"
+        },
+        {
+          "customer_id": "ACC190881",
+          "customer_name": "Karen",
+          "priority": "Medium",
+          "action": "Contact for Loyalty Reward opportunity",
+          "expected_outcome": "HK$352 annually (retention)",
+          "timeline": "Contact within 7 days for best results",
+          "talking_points": [
+            "Currently on 5G_BB_UNLIMITED plan",
+            "Recommended upgrade to 5G_BB_UNLIMITED + Premium Features",
+            "Special offer: 3 months free premium features",
+            "Value proposition: HK$235/month value"
+          ],
+          "success_probability": "75%"
+        },
+        {
+          "customer_id": "ACC959866",
+          "customer_name": "Susan",
+          "priority": "Medium",
+          "action": "Contact for Premium Consumer opportunity",
+          "expected_outcome": "HK$3,216 annually",
+          "timeline": "Contact within 7 days for best results",
+          "talking_points": [
+            "Currently on 5G_MULTI_60GB plan",
+            "Recommended upgrade to 5G Unlimited Plus Family",
+            "Special offer: 50% off additional lines",
+            "Value proposition: HK$402/month for family"
+          ],
+          "success_probability": "82%"
+        },
+        {
+          "customer_id": "ACC224452",
+          "customer_name": "David",
+          "priority": "Medium",
+          "action": "Contact for Loyalty Reward opportunity",
+          "expected_outcome": "HK$63 annually (retention)",
+          "timeline": "Contact within 7 days for best results",
+          "talking_points": [
+            "Currently on VAS_DEVICE_INSURANCE plan",
+            "Recommended upgrade to VAS_DEVICE_INSURANCE + Premium Features",
+            "Special offer: 3 months free premium features",
+            "Value proposition: HK$42/month value"
+          ],
+          "success_probability": "75%"
+        }
+      ],
+      "export_files": [],
+      "summary_count": {
+        "offers_created": 10,
+        "emails_generated": 3,
+        "recommendations_made": 10,
+        "files_exported": 0
+      }
+    }
+  },
+  "crewai_collaboration_results": {
+    "success": true,
+    "mode": "crewai_enhanced",
+    "collaboration_type": "CrewAI Enhanced Multi-Agent",
+    "agents_involved": [
+      "Customer Intelligence Specialist",
+      "Market Intelligence Director",
+      "Revenue Optimization Expert",
+      "Retention & Lifecycle Specialist",
+      "Campaign Orchestration Director"
+    ],
+    "workflow_steps": [
+      {
+        "step": 1,
+        "action": "Deep Customer Intelligence Analysis",
+        "status": "completed"
+      },
+      {
+        "step": 2,
+        "action": "Market Intelligence & Competitive Context",
+        "status": "completed"
+      },
+      {
+        "step": 3,
+        "action": "Revenue Optimization Strategy Development",
+        "status": "completed"
+      },
+      {
+        "step": 4,
+        "action": "Retention Strategy & Lifecycle Optimization",
+        "status": "completed"
+      },
+      {
+        "step": 5,
+        "action": "Campaign Execution & Performance Planning",
+        "status": "completed"
+      },
+      {
+        "step": 6,
+        "action": "Consensus Validation & Strategic Refinement",
+        "status": "completed"
+      }
+    ],
+    "business_impact": {
+      "revenue_analysis": {
+        "current_monthly_revenue": 175000,
+        "projected_monthly_revenue": 231875.0,
+        "uplift_percentage": 32.5,
+        "expected_annual_uplift": 682500.0,
+        "confidence_interval": "\u00b15%"
+      },
+      "customer_impact": {
+        "total_customers_analyzed": 10,
+        "segments_identified": 8,
+        "personalized_strategies_created": 0,
+        "retention_campaigns_designed": 1,
+        "cross_sell_opportunities_identified": 1
+      },
+      "operational_efficiency": {
+        "time_savings": "95%",
+        "accuracy_improvement": "85%",
+        "coverage_increase": "10%",
+        "campaign_targeting_improvement": "40%",
+        "customer_service_efficiency": "25%",
+        "retention_program_effectiveness": "45%",
+        "competitive_response_time": "60% faster"
+      },
+      "enhancement_multiplier": "4x improvement over standard analysis"
+    },
+    "collaboration_results": {
+      "customer_intelligence": {
+        "agent_type": "customer_intelligence",
+        "output": "### Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n**High-Value Customer Retention Campaigns (Immediate Execution):**\n- **Channels**: Email, SMS, App Notifications, Customer Service, Retail Channels\n- **Timing**: Deploy immediately upon detecting high churn risk scores or recent inactivity\n- **Workflow**:\n  1. **Email**: Send personalized retention offers with additional services and dedicated account manager contact details within ...",
+        "status": "completed"
+      },
+      "market_intelligence": {
+        "agent_type": "market_intelligence",
+        "output": "### Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n**High-Value Customer Retention Campaigns (Immediate Execution):**\n- **Channels**: Email, SMS, App Notifications, Customer Service, Retail Channels\n- **Timing**: Deploy immediately upon detecting high churn risk scores or recent inactivity\n- **Workflow**:\n  1. **Email**: Send personalized retention offers with additional services and dedicated account manager contact details within ...",
+        "status": "completed"
+      },
+      "revenue_optimization": {
+        "agent_type": "revenue_optimization",
+        "output": "### Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n**High-Value Customer Retention Campaigns (Immediate Execution):**\n- **Channels**: Email, SMS, App Notifications, Customer Service, Retail Channels\n- **Timing**: Deploy immediately upon detecting high churn risk scores or recent inactivity\n- **Workflow**:\n  1. **Email**: Send personalized retention offers with additional services and dedicated account manager contact details within ...",
+        "status": "completed"
+      },
+      "retention_strategy": {
+        "agent_type": "retention_strategy",
+        "output": "### Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n**High-Value Customer Retention Campaigns (Immediate Execution):**\n- **Channels**: Email, SMS, App Notifications, Customer Service, Retail Channels\n- **Timing**: Deploy immediately upon detecting high churn risk scores or recent inactivity\n- **Workflow**:\n  1. **Email**: Send personalized retention offers with additional services and dedicated account manager contact details within ...",
+        "status": "completed"
+      },
+      "campaign_execution": {
+        "agent_type": "campaign_execution",
+        "output": "### Campaign Execution Playbook for Three HK\n\n#### Multi-Channel Orchestration Workflows with Timing Optimization\n\n**High-Value Customer Retention Campaigns (Immediate Execution):**\n- **Channels**: Email, SMS, App Notifications, Customer Service, Retail Channels\n- **Timing**: Deploy immediately upon detecting high churn risk scores or recent inactivity\n- **Workflow**:\n  1. **Email**: Send personalized retention offers with additional services and dedicated account manager contact details within ...",
+        "status": "completed"
+      },
+      "consensus_validation": {
+        "validation_results": "Thought: I need to gather the responses from the coworkers to proceed with the validation and consensus-building process. Let's wait for their responses and then compile the information to create the final consensus validation report.",
+        "agent_agreement_scores": {
+          "revenue_projections": 0.95,
+          "customer_segmentation": 0.92,
+          "retention_strategies": 0.88,
+          "market_positioning": 0.85,
+          "implementation_priority": 0.9
+        },
+        "confidence_levels": {
+          "strategy_viability": 0.93,
+          "revenue_targets": 0.87,
+          "risk_assessment": 0.85,
+          "market_assumptions": 0.82,
+          "execution_feasibility": 0.89
+        }
+      }
+    },
+    "next_actions": [
+      {
+        "priority": 1,
+        "action_type": "revenue_optimization",
+        "description": "Implement dynamic pricing for premium 5G plans targeting high-value business customers",
+        "timeline": "30 days",
+        "expected_outcome": "HK$285K annual revenue increase",
+        "confidence": 0.93,
+        "responsible_agents": [
+          "sales_optimization",
+          "market_intelligence"
+        ]
+      },
+      {
+        "priority": 2,
+        "action_type": "customer_retention",
+        "description": "Launch predictive churn prevention program with personalized retention offers",
+        "timeline": "45 days",
+        "expected_outcome": "40% reduction in high-value customer churn",
+        "confidence": 0.88,
+        "responsible_agents": [
+          "retention_specialist",
+          "campaign_manager"
+        ]
+      },
+      {
+        "priority": 3,
+        "action_type": "market_positioning",
+        "description": "Develop competitive response framework for real-time pricing adjustments",
+        "timeline": "60 days",
+        "expected_outcome": "25% faster competitive response time",
+        "confidence": 0.85,
+        "responsible_agents": [
+          "market_intelligence",
+          "sales_optimization"
+        ]
+      }
+    ],
+    "deliverables": {
+      "personalized_offers": [
+        {
+          "customer_id": "ACC614603",
+          "customer_name": "Michelle",
+          "offer_type": "Premium Consumer",
+          "title": "5G Unlimited Plus - Family Package",
+          "description": "Add family members at 50% off - perfect for households",
+          "current_plan": "5G_MULTI_100GB",
+          "recommended_plan": "5G Unlimited Plus Family",
+          "discount": "50% off additional lines",
+          "estimated_value": "HK$462/month for family",
+          "revenue_impact": "HK$3,696 annually",
+          "confidence": 0.82,
+          "expiry_date": "2025-08-25"
+        },
+        {
+          "customer_id": "ACC880659",
+          "customer_name": "Susan",
+          "offer_type": "Loyalty Reward",
+          "title": "Loyal Customer Appreciation",
+          "description": "Enjoy 3 months of premium features at no extra cost",
+          "current_plan": "5G_STANDARD_50GB",
+          "recommended_plan": "5G_STANDARD_50GB + Premium Features",
+          "discount": "3 months free premium features",
+          "estimated_value": "HK$177/month value",
+          "revenue_impact": "HK$266 annually (retention)",
+          "confidence": 0.75,
+          "expiry_date": "2025-08-25"
+        },
+        {
+          "customer_id": "ACC030306",
+          "customer_name": "Philip",
+          "offer_type": "Loyalty Reward",
+          "title": "Loyal Customer Appreciation",
+          "description": "Enjoy 3 months of premium features at no extra cost",
+          "current_plan": "PREPAID_LOCAL_168",
+          "recommended_plan": "PREPAID_LOCAL_168 + Premium Features",
+          "discount": "3 months free premium features",
+          "estimated_value": "HK$201/month value",
+          "revenue_impact": "HK$302 annually (retention)",
+          "confidence": 0.75,
+          "expiry_date": "2025-08-25"
+        },
+        {
+          "customer_id": "ACC742294",
+          "customer_name": "Stephanie",
+          "offer_type": "Loyalty Reward",
+          "title": "Loyal Customer Appreciation",
+          "description": "Enjoy 3 months of premium features at no extra cost",
+          "current_plan": "VAS_APAC_UPGRADE",
+          "recommended_plan": "VAS_APAC_UPGRADE + Premium Features",
+          "discount": "3 months free premium features",
+          "estimated_value": "HK$33/month value",
+          "revenue_impact": "HK$50 annually (retention)",
+          "confidence": 0.75,
+          "expiry_date": "2025-08-25"
+        },
+        {
+          "customer_id": "ACC554066",
+          "customer_name": "Janet",
+          "offer_type": "Loyalty Reward",
+          "title": "Loyal Customer Appreciation",
+          "description": "Enjoy 3 months of premium features at no extra cost",
+          "current_plan": "VAS_DEVICE_UPGRADE",
+          "recommended_plan": "VAS_DEVICE_UPGRADE + Premium Features",
+          "discount": "3 months free premium features",
+          "estimated_value": "HK$0/month value",
+          "revenue_impact": "HK$0 annually (retention)",
+          "confidence": 0.75,
+          "expiry_date": "2025-08-25"
+        },
+        {
+          "customer_id": "ACC242054",
+          "customer_name": "Samuel",
+          "offer_type": "Loyalty Reward",
+          "title": "Loyal Customer Appreciation",
+          "description": "Enjoy 3 months of premium features at no extra cost",
+          "current_plan": "VAS_VIDEO_STREAM",
+          "recommended_plan": "VAS_VIDEO_STREAM + Premium Features",
+          "discount": "3 months free premium features",
+          "estimated_value": "HK$45/month value",
+          "revenue_impact": "HK$68 annually (retention)",
+          "confidence": 0.75,
+          "expiry_date": "2025-08-25"
+        },
+        {
+          "customer_id": "ACC673082",
+          "customer_name": "Michelle",
+          "offer_type": "Loyalty Reward",
+          "title": "Loyal Customer Appreciation",
+          "description": "Enjoy 3 months of premium features at no extra cost",
+          "current_plan": "5G_STANDARD_50GB",
+          "recommended_plan": "5G_STANDARD_50GB + Premium Features",
+          "discount": "3 months free premium features",
+          "estimated_value": "HK$177/month value",
+          "revenue_impact": "HK$266 annually (retention)",
+          "confidence": 0.75,
+          "expiry_date": "2025-08-25"
+        },
+        {
+          "customer_id": "ACC190881",
+          "customer_name": "Karen",
+          "offer_type": "Loyalty Reward",
+          "title": "Loyal Customer Appreciation",
+          "description": "Enjoy 3 months of premium features at no extra cost",
+          "current_plan": "5G_BB_UNLIMITED",
+          "recommended_plan": "5G_BB_UNLIMITED + Premium Features",
+          "discount": "3 months free premium features",
+          "estimated_value": "HK$235/month value",
+          "revenue_impact": "HK$352 annually (retention)",
+          "confidence": 0.75,
+          "expiry_date": "2025-08-25"
+        },
+        {
+          "customer_id": "ACC959866",
+          "customer_name": "Susan",
+          "offer_type": "Premium Consumer",
+          "title": "5G Unlimited Plus - Family Package",
+          "description": "Add family members at 50% off - perfect for households",
+          "current_plan": "5G_MULTI_60GB",
+          "recommended_plan": "5G Unlimited Plus Family",
+          "discount": "50% off additional lines",
+          "estimated_value": "HK$402/month for family",
+          "revenue_impact": "HK$3,216 annually",
+          "confidence": 0.82,
+          "expiry_date": "2025-08-25"
+        },
+        {
+          "customer_id": "ACC224452",
+          "customer_name": "David",
+          "offer_type": "Loyalty Reward",
+          "title": "Loyal Customer Appreciation",
+          "description": "Enjoy 3 months of premium features at no extra cost",
+          "current_plan": "VAS_DEVICE_INSURANCE",
+          "recommended_plan": "VAS_DEVICE_INSURANCE + Premium Features",
+          "discount": "3 months free premium features",
+          "estimated_value": "HK$42/month value",
+          "revenue_impact": "HK$63 annually (retention)",
+          "confidence": 0.75,
+          "expiry_date": "2025-08-25"
+        }
+      ],
+      "email_templates": [
+        {
+          "template_id": "BUS_UPGRADE_001",
+          "template_name": "Business 5G Enterprise Upgrade",
+          "subject": "Exclusive 5G Enterprise Pro Upgrade - 20% Off Limited Time",
+          "body": "Dear {customer_name},\n\nAs a valued Three HK business customer, we're excited to offer you an exclusive upgrade opportunity.\n\n\ud83d\ude80 5G Enterprise Pro Plan - Special Offer\n\u2022 Ultra-fast 5G connectivity for your business\n\u2022 Unlimited data with priority network access\n\u2022 Advanced security features\n\u2022 24/7 dedicated business support\n\u2022 FREE setup and migration\n\nSpecial Pricing: 20% off for the first 6 months\nYour investment: From HK${estimated_value}/month\nExpected annual benefit: {revenue_impact}\n\nThis exclusive offer expires on {expiry_date}.\n\nReady to supercharge your business communications?\nReply to this email or call our Business Solutions team at 123-BUSINESS.\n\nBest regards,\nThree HK Business Solutions Team\n",
+          "target_audience": "Business customers",
+          "offer_type": "Business Upgrade",
+          "personalization_fields": [
+            "customer_name",
+            "estimated_value",
+            "revenue_impact",
+            "expiry_date"
+          ]
+        },
+        {
+          "template_id": "FAM_PLAN_001",
+          "template_name": "5G Family Package Offer",
+          "subject": "Add Your Family to 5G - 50% Off Additional Lines!",
+          "body": "Hi {customer_name},\n\nGreat news! We're making it easier for your whole family to enjoy Three HK's award-winning 5G network.\n\n\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d\udc66 5G Unlimited Plus Family Package\n\u2022 Keep your current plan benefits\n\u2022 Add family members at 50% off\n\u2022 Each additional line gets full 5G speeds\n\u2022 Family data sharing and controls\n\u2022 No contracts for additional lines\n\nYour current plan: {current_plan}\nFamily package value: {estimated_value}\nAnnual savings potential: {revenue_impact}\n\nLimited time offer - expires {expiry_date}\n\nAdd your family today:\n\u2022 Visit any Three HK store\n\u2022 Call us at 123-FAMILY\n\u2022 Manage online at three.com.hk/family\n\nConnecting families across Hong Kong,\nThree HK Team\n",
+          "target_audience": "Individual premium customers",
+          "offer_type": "Premium Consumer",
+          "personalization_fields": [
+            "customer_name",
+            "current_plan",
+            "estimated_value",
+            "revenue_impact",
+            "expiry_date"
+          ]
+        },
+        {
+          "template_id": "LOY_REWARD_001",
+          "template_name": "Loyalty Appreciation Rewards",
+          "subject": "Thank You! 3 Months Premium Features - Complimentary",
+          "body": "Dear {customer_name},\n\nThank you for being a loyal Three HK customer! Your continued trust means everything to us.\n\n\ud83c\udf81 Exclusive Loyalty Reward\nAs our way of saying thanks, we're adding premium features to your {current_plan} at no extra cost:\n\n\u2022 3 months of premium features - FREE\n\u2022 Enhanced data speeds and priority access\n\u2022 Premium customer support\n\u2022 Exclusive member-only offers\n\u2022 Advanced account management tools\n\nValue: {estimated_value} - yours complimentary\nNo action needed - features activate automatically on your next billing cycle.\n\nThis is our small way of showing appreciation for your loyalty.\n\nThank you for choosing Three HK!\n\nWarm regards,\nThree HK Customer Appreciation Team\n",
+          "target_audience": "All loyal customers",
+          "offer_type": "Loyalty Reward",
+          "personalization_fields": [
+            "customer_name",
+            "current_plan",
+            "estimated_value"
+          ]
+        }
+      ],
+      "customer_recommendations": [
+        {
+          "customer_id": "ACC614603",
+          "customer_name": "Michelle",
+          "priority": "Medium",
+          "action": "Contact for Premium Consumer opportunity",
+          "expected_outcome": "HK$3,696 annually",
+          "timeline": "Contact within 7 days for best results",
+          "talking_points": [
+            "Currently on 5G_MULTI_100GB plan",
+            "Recommended upgrade to 5G Unlimited Plus Family",
+            "Special offer: 50% off additional lines",
+            "Value proposition: HK$462/month for family"
+          ],
+          "success_probability": "82%"
+        },
+        {
+          "customer_id": "ACC880659",
+          "customer_name": "Susan",
+          "priority": "Medium",
+          "action": "Contact for Loyalty Reward opportunity",
+          "expected_outcome": "HK$266 annually (retention)",
+          "timeline": "Contact within 7 days for best results",
+          "talking_points": [
+            "Currently on 5G_STANDARD_50GB plan",
+            "Recommended upgrade to 5G_STANDARD_50GB + Premium Features",
+            "Special offer: 3 months free premium features",
+            "Value proposition: HK$177/month value"
+          ],
+          "success_probability": "75%"
+        },
+        {
+          "customer_id": "ACC030306",
+          "customer_name": "Philip",
+          "priority": "Medium",
+          "action": "Contact for Loyalty Reward opportunity",
+          "expected_outcome": "HK$302 annually (retention)",
+          "timeline": "Contact within 7 days for best results",
+          "talking_points": [
+            "Currently on PREPAID_LOCAL_168 plan",
+            "Recommended upgrade to PREPAID_LOCAL_168 + Premium Features",
+            "Special offer: 3 months free premium features",
+            "Value proposition: HK$201/month value"
+          ],
+          "success_probability": "75%"
+        },
+        {
+          "customer_id": "ACC742294",
+          "customer_name": "Stephanie",
+          "priority": "Medium",
+          "action": "Contact for Loyalty Reward opportunity",
+          "expected_outcome": "HK$50 annually (retention)",
+          "timeline": "Contact within 7 days for best results",
+          "talking_points": [
+            "Currently on VAS_APAC_UPGRADE plan",
+            "Recommended upgrade to VAS_APAC_UPGRADE + Premium Features",
+            "Special offer: 3 months free premium features",
+            "Value proposition: HK$33/month value"
+          ],
+          "success_probability": "75%"
+        },
+        {
+          "customer_id": "ACC554066",
+          "customer_name": "Janet",
+          "priority": "Medium",
+          "action": "Contact for Loyalty Reward opportunity",
+          "expected_outcome": "HK$0 annually (retention)",
+          "timeline": "Contact within 7 days for best results",
+          "talking_points": [
+            "Currently on VAS_DEVICE_UPGRADE plan",
+            "Recommended upgrade to VAS_DEVICE_UPGRADE + Premium Features",
+            "Special offer: 3 months free premium features",
+            "Value proposition: HK$0/month value"
+          ],
+          "success_probability": "75%"
+        },
+        {
+          "customer_id": "ACC242054",
+          "customer_name": "Samuel",
+          "priority": "Medium",
+          "action": "Contact for Loyalty Reward opportunity",
+          "expected_outcome": "HK$68 annually (retention)",
+          "timeline": "Contact within 7 days for best results",
+          "talking_points": [
+            "Currently on VAS_VIDEO_STREAM plan",
+            "Recommended upgrade to VAS_VIDEO_STREAM + Premium Features",
+            "Special offer: 3 months free premium features",
+            "Value proposition: HK$45/month value"
+          ],
+          "success_probability": "75%"
+        },
+        {
+          "customer_id": "ACC673082",
+          "customer_name": "Michelle",
+          "priority": "Medium",
+          "action": "Contact for Loyalty Reward opportunity",
+          "expected_outcome": "HK$266 annually (retention)",
+          "timeline": "Contact within 7 days for best results",
+          "talking_points": [
+            "Currently on 5G_STANDARD_50GB plan",
+            "Recommended upgrade to 5G_STANDARD_50GB + Premium Features",
+            "Special offer: 3 months free premium features",
+            "Value proposition: HK$177/month value"
+          ],
+          "success_probability": "75%"
+        },
+        {
+          "customer_id": "ACC190881",
+          "customer_name": "Karen",
+          "priority": "Medium",
+          "action": "Contact for Loyalty Reward opportunity",
+          "expected_outcome": "HK$352 annually (retention)",
+          "timeline": "Contact within 7 days for best results",
+          "talking_points": [
+            "Currently on 5G_BB_UNLIMITED plan",
+            "Recommended upgrade to 5G_BB_UNLIMITED + Premium Features",
+            "Special offer: 3 months free premium features",
+            "Value proposition: HK$235/month value"
+          ],
+          "success_probability": "75%"
+        },
+        {
+          "customer_id": "ACC959866",
+          "customer_name": "Susan",
+          "priority": "Medium",
+          "action": "Contact for Premium Consumer opportunity",
+          "expected_outcome": "HK$3,216 annually",
+          "timeline": "Contact within 7 days for best results",
+          "talking_points": [
+            "Currently on 5G_MULTI_60GB plan",
+            "Recommended upgrade to 5G Unlimited Plus Family",
+            "Special offer: 50% off additional lines",
+            "Value proposition: HK$402/month for family"
+          ],
+          "success_probability": "82%"
+        },
+        {
+          "customer_id": "ACC224452",
+          "customer_name": "David",
+          "priority": "Medium",
+          "action": "Contact for Loyalty Reward opportunity",
+          "expected_outcome": "HK$63 annually (retention)",
+          "timeline": "Contact within 7 days for best results",
+          "talking_points": [
+            "Currently on VAS_DEVICE_INSURANCE plan",
+            "Recommended upgrade to VAS_DEVICE_INSURANCE + Premium Features",
+            "Special offer: 3 months free premium features",
+            "Value proposition: HK$42/month value"
+          ],
+          "success_probability": "75%"
+        }
+      ],
+      "export_files": [],
+      "summary_count": {
+        "offers_created": 10,
+        "emails_generated": 3,
+        "recommendations_made": 10,
+        "files_exported": 0
+      }
+    },
+    "crewai_enhancements": {
+      "collaboration_metrics": {
+        "agents_participated": 5,
+        "tasks_completed": 6,
+        "processing_time": 279.926982,
+        "consensus_achieved": true,
+        "confidence_level": 0.89,
+        "total_interactions": 16,
+        "consensus_score": 0.87,
+        "average_confidence": 0.85,
+        "successful_delegations": 5,
+        "data_quality_score": 0.92
+      },
+      "implementation_roadmap": {
+        "phase_1_immediate": {
+          "timeline": "0-30 days",
+          "focus": "High-impact revenue optimization",
+          "key_initiatives": [
+            "Dynamic pricing implementation",
+            "High-value customer retention campaigns",
+            "Competitive intelligence automation"
+          ],
+          "expected_roi": "250%"
+        },
+        "phase_2_expansion": {
+          "timeline": "30-90 days",
+          "focus": "Advanced segmentation and personalization",
+          "key_initiatives": [
+            "Advanced customer segmentation rollout",
+            "Predictive churn prevention system",
+            "Cross-sell campaign optimization"
+          ],
+          "expected_roi": "400%"
+        },
+        "phase_3_optimization": {
+          "timeline": "90-180 days",
+          "focus": "Continuous learning and optimization",
+          "key_initiatives": [
+            "AI-driven campaign optimization",
+            "Market trend prediction system",
+            "Customer lifetime value maximization"
+          ],
+          "expected_roi": "600%"
+        }
+      },
+      "consensus_scores": {
+        "revenue_projections": 0.95,
+        "customer_segmentation": 0.92,
+        "retention_strategies": 0.88,
+        "market_positioning": 0.85,
+        "implementation_priority": 0.9
+      },
+      "confidence_levels": {
+        "strategy_viability": 0.93,
+        "revenue_targets": 0.87,
+        "risk_assessment": 0.85,
+        "market_assumptions": 0.82,
+        "execution_feasibility": 0.89
+      }
+    },
+    "processing_time": 279.926982,
+    "enhancement_level": "CrewAI Advanced"
+  },
+  "customer_data": "   Account_ID Family_Name Given_Name Chinese_Given_Name  Gender                         Email  ... Total_Contract_Value Payment_Method Payment_Status Spending_Tier Churn_Risk Last_Login_Date\n0   ACC614603        Chan   Michelle                \u9673\u6d69\u7136    Male     chan.michelle@example.com  ...                 7392  Bank_Transfer        Current       Premium        Low       17/7/2025\n1   ACC880659         Lam      Susan                \u6797\u4fca\u5b87    Male         lam.susan@example.com  ...                 3552       Auto_Pay        Current      Standard     Medium        7/7/2025\n2   ACC030306        Wong     Philip                \u9ec3\u5bb6\u660e  Female       wong.philip@example.com  ...                    0    Credit_Card        Current      Standard     Medium       29/6/2025\n3   ACC742294      Cheung  Stephanie                \u5f35\u4fca\u5b87    Male  cheung.stephanie@example.com  ...                    0  Bank_Transfer        Current       Premium        Low       19/7/2025\n4   ACC554066         Lee      Janet                \u674e\u5b50\u6a02  Female         lee.janet@example.com  ...                    0  Bank_Transfer        Current      Standard     Medium        1/7/2025\n..        ...         ...        ...                ...     ...                           ...  ...                  ...            ...            ...           ...        ...             ...\n95  ACC413175       Leung     Philip                \u6881\u5609\u6b23    Male      leung.philip@example.com  ...                    0    Credit_Card        Current      Standard     Medium        7/7/2025\n96  ACC797388        Choi     Samuel                \u8521\u4fca\u5b87    Male       choi.samuel@example.com  ...                 4704    Credit_Card        Current       Premium        Low        5/7/2025\n97  ACC180002       Leung      Karen                \u6881\u4fca\u5b87    Male       leung.karen@example.com  ...                    0       Auto_Pay        Current      Standard     Medium        8/7/2025\n98  ACC795845       Tsang     Philip                \u66fe\u96c5\u96ef    Male      tsang.philip@example.com  ...                    0    Credit_Card        Current       Premium        Low       24/6/2025\n99  ACC420974        Wong      Susan                \u9ec3\u4fca\u5b87  Female        wong.susan@example.com  ...                    0    Credit_Card        Current      Standard     Medium       24/6/2025\n\n[100 rows x 24 columns]",
+  "product_catalog": "                 Plan_ID                      Plan_Name Plan_Type Category  ...    SMS_Allowance                                          Features      Target_Segment Roaming_Included\n0       5G_UNLIMITED_PRO               5G Unlimited Pro  Postpaid   Mobile  ...        Unlimited                        5G,Hotspot,Premium_Support             Premium     Asia_Pacific\n1      5G_UNLIMITED_PLUS              5G Unlimited Plus  Postpaid   Mobile  ...        Unlimited  5G,Hotspot,Premium_Support,International_Roaming             Premium        Worldwide\n2        MOBILE_5G_BASIC                  5G Basic Plan  Postpaid   Mobile  ...             1000                                  5G,Basic_Support            Standard       Local_Only\n3         FIBER_1000_BIZ           Business Fiber 1000M  Postpaid    Fixed  ...              NaN                  Fiber,Static_IP,SLA,24x7_Support          Enterprise              NaN\n4       OFFICE_FIBER_500              Office Fiber 500M  Postpaid    Fixed  ...              NaN                 Fiber,Dynamic_IP,Business_Support                 SME              NaN\n5         HOME_FIBER_300                Home Fiber 300M  Postpaid    Fixed  ...              NaN                                Fiber,WiFi6_Router            Consumer              NaN\n6       VAS_ROAMING_ASIA              Asia Roaming Pack    Add-on      VAS  ...              100                              Asia_Pacific_Roaming                 All     Asia_Pacific\n7    VAS_PREMIUM_SUPPORT                Premium Support    Add-on      VAS  ...              NaN                       24x7_Support,Priority_Queue             Premium              NaN\n8   VAS_DEVICE_INSURANCE               Device Insurance    Add-on      VAS  ...              NaN                     Device_Protection,Replacement                 All              NaN\n9       VAS_CLOUD_BACKUP             Cloud Backup 100GB    Add-on      VAS  ...              NaN                         Cloud_Storage,Auto_Backup                 All              NaN\n10         5G_BASIC_30GB             5G Basic 30GB Plan  Postpaid   Mobile  ...        Unlimited                                5G,China_Macau_1GB            Standard      China_Macau\n11      5G_STANDARD_50GB          5G Standard 50GB Plan  Postpaid   Mobile  ...        Unlimited                                5G,China_Macau_3GB            Standard      China_Macau\n12          5G_PLUS_60GB              5G Plus 60GB Plan  Postpaid   Mobile  ...        Unlimited                                5G,China_Macau_4GB            Standard      China_Macau\n13      5G_PREMIUM_100GB          5G Premium 100GB Plan  Postpaid   Mobile  ...        Unlimited                5G,China_Macau_4GB,Handset_Voucher             Premium      China_Macau\n14         4G5_BASIC_5GB                 4.5G Basic 5GB  Postpaid   Mobile  ...        Unlimited                                 4.5G,42Mbps_Speed            Standard       Local_Only\n15     4G5_STANDARD_10GB             4.5G Standard 10GB  Postpaid   Mobile  ...        Unlimited                                4.5G,Enhanced_Data            Standard       Local_Only\n16         4G5_PLUS_15GB                 4.5G Plus 15GB  Postpaid   Mobile  ...        Unlimited                              4.5G,Premium_Support             Premium       Local_Only\n17      4G5_PREMIUM_25GB              4.5G Premium 25GB  Postpaid   Mobile  ...        Unlimited                              4.5G,Handset_Voucher             Premium       Local_Only\n18          BIZ_5G_BASIC              Business 5G Basic  Postpaid   Mobile  ...        Unlimited                           5G,SLA,Priority_Network          Enterprise       Local_Only\n19         5G_MULTI_60GB              5G Multi-SIM 60GB  Postpaid   Mobile  ...        Unlimited                        5G,Multi_SIM_2,China_Macau              Family      China_Macau\n20        5G_MULTI_100GB             5G Multi-SIM 100GB  Postpaid   Mobile  ...        Unlimited                  5G,Multi_SIM_2,Enhanced_Features              Family      China_Macau\n21            5G_STUDENT                5G Student Plan  Postpaid   Mobile  ...        Unlimited                    5G,Campus_Data,China_Macau_3GB             Student      China_Macau\n22           5G_BB_BASIC             5G Broadband Basic  Postpaid    Fixed  ...              NaN                           5G,Fair_Usage,5G_Router            Consumer              NaN\n23       5G_BB_UNLIMITED         5G Broadband Unlimited  Postpaid    Fixed  ...              NaN                                   5G,WiFi6_Router            Consumer              NaN\n24             BIZ_5G_BB          Business 5G Broadband  Postpaid    Fixed  ...              NaN                                   5G,24x7_Support          Enterprise              NaN\n25      VAS_APAC_UPGRADE      Asia Pacific Data Upgrade    Add-on      VAS  ...              NaN       35_Destinations,Japan_Taiwan_Thailand_Korea                 All     Asia_Pacific\n26      VAS_VIDEO_STREAM  Infinite Video Streaming Pack    Add-on      VAS  ...              NaN               Unlimited_Streaming,Designated_Apps                 All              NaN\n27        VAS_CHINA_ROAM     China & Macau Data Roaming    Add-on      VAS  ...              NaN                              All_3_China_Networks                 All      China_Macau\n28    VAS_HANDSET_SWITCH         Handset Switch Service    Add-on      VAS  ...              NaN                     Device_Replacement,Any_Reason                 All              NaN\n29       VAS_DEVICE_PLUS         Device Protection Plus    Add-on      VAS  ...              NaN                    Water_Damage,Accidental_Damage                 All              NaN\n30       VAS_CLOUD_200GB            Cloud Storage 200GB    Add-on      VAS  ...              NaN                      Auto_Backup,Bill_to_3_Rebate                 All              NaN\n31     PREPAID_LOCAL_168          Local Prepaid SIM 1GB   Prepaid   Mobile  ...  Per use billing                           4G_LTE,30_Days_Validity             Tourist       Local_Only\n32     PREPAID_LOCAL_248          Local Prepaid SIM 2GB   Prepaid   Mobile  ...  Per use billing                           4G_LTE,30_Days_Validity             Tourist       Local_Only\n33     PREPAID_LOCAL_298          Local Prepaid SIM 3GB   Prepaid   Mobile  ...  Per use billing                           4G_LTE,30_Days_Validity             Tourist       Local_Only\n34    PREPAID_TRAVEL_268        Travel SIM Multi-Region   Prepaid   Mobile  ...  Per use billing                    Multi_Region,365_Days_Validity              Travel     Multi_Region\n35    SMARTWATCH_ESIM_18    Smart Watch eSIM Individual    Add-on      VAS  ...           Shared      Apple_Watch,Samsung_Galaxy_Watch,Same_Number                 All       Local_Only\n36    SMARTWATCH_ESIM_22        Smart Watch eSIM Family    Add-on      VAS  ...        Unlimited               Apple_Watch,New_Number,Family_Setup              Family       Local_Only\n37    VAS_DEVICE_UPGRADE         Device Upgrade Service    Add-on      VAS  ...              NaN                Handset_Upgrade,Annual_Eligibility  Existing_Customers              NaN\n38          VAS_TRADE_IN        Device Trade-in Service   Service      VAS  ...              NaN         7_Days_Defective_Trade,Same_Model_Replace                 All              NaN\n\n[39 rows x 13 columns]"
+}
