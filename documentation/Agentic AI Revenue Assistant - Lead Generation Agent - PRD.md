@@ -1,9 +1,9 @@
 # Product Requirements Document (PRD)  
-## Agentic AI Revenue Assistant ¡V Minimal Viable Demo
+## Agentic AI Revenue Assistant ï¿½V Minimal Viable Demo
 
 ### 1. Elevator Pitch
 
-Agentic AI Revenue Assistant is a privacy-first, autonomous lead prioritization and sales suggestion tool for Hong Kong telecom companies. It enables business teams to securely upload customer and purchase data, automatically pseudonymizes sensitive information, analyzes purchase and engagement patterns, and outputs actionable, prioritized sales recommendations¡Xall within an intuitive Streamlit dashboard styled in the Three HK color scheme. This demo showcases agentic AI autonomy, actionable business value, and strict data privacy, serving as a foundation for future multi-agent expansion.
+Agentic AI Revenue Assistant is a privacy-first, autonomous lead prioritization and sales suggestion tool for Hong Kong telecom companies. It enables business teams to securely upload customer and purchase data, automatically pseudonymizes sensitive information, analyzes purchase and engagement patterns, and outputs actionable, prioritized sales recommendationsï¿½Xall within an intuitive Streamlit dashboard styled in the Three HK color scheme. This demo showcases agentic AI autonomy, actionable business value, and strict data privacy, serving as a foundation for future multi-agent expansion.
 
 ### 2. Who is this app for
 
@@ -52,6 +52,10 @@ Agentic AI Revenue Assistant is a privacy-first, autonomous lead prioritization 
 | FR17 | System shall support extension to multi-agent workflows.                    | Low        |
 | FR18 | System shall allow for manual override or approval of agent recommendations.| Low        |
 | FR19 | System shall integrate with external APIs (CRM, email, etc.).               | Low        |
+| FR20 | System shall implement learning mechanisms for continuous improvement.       | Medium     |
+| FR21 | System shall track offer acceptance rates and customer engagement outcomes.  | Medium     |
+| FR22 | System shall adapt recommendations based on historical success patterns.     | Medium     |
+| FR23 | System shall build knowledge base of effective customer patterns.           | Low        |
 
 ### 4. User Stories
 
@@ -60,6 +64,8 @@ Agentic AI Revenue Assistant is a privacy-first, autonomous lead prioritization 
 | US1 | Sales Manager     | As a sales manager, I want to upload a customer list and get prioritized leads with suggestions so I can focus my outreach. | Can upload CSVs, view anonymized prioritized leads, see clear suggestions, and export results. |
 | US2 | Developer         | As a developer, I want clear demo requirements and priorities so I can focus on critical features. | Highest priority requirements are implemented and stable.         |
 | US3 | Security Officer  | As a security officer, I want all sensitive data pseudonymized before analysis.             | No raw PII is transmitted or displayed in the UI.                 |
+| US4 | Business Analyst  | As a business analyst, I want the system to learn from campaign outcomes to improve future recommendations. | System tracks offer acceptance rates and adapts strategies based on feedback. |
+| US5 | Executive         | As an executive, I want to see continuous improvement in AI recommendations over time.      | System demonstrates measurable improvement in recommendation accuracy and business outcomes. |
 
 ### 5. User Interface
 
@@ -75,7 +81,7 @@ Agentic AI Revenue Assistant is a privacy-first, autonomous lead prioritization 
   - Table with columns: Anonymized ID, Last Purchase, Engagement Summary, Suggested Action, Lead Priority Score.
   - Export button to download anonymized results (CSV).
   - Simple explanations/tooltips for each column.
-  - Visuals and color palette consistent with Three HK¡¦s branding (white, black, green, and accent colors).
+  - Visuals and color palette consistent with Three HKï¿½ï¿½s branding (white, black, green, and accent colors).
 
 - **Privacy Notice:**  
   - Banner or modal explaining how data is protected and pseudonymized.
@@ -93,7 +99,7 @@ Agentic AI Revenue Assistant is a privacy-first, autonomous lead prioritization 
 - Smartwatch Plan
 - Prepaid SIM Switch
 - Loyalty Discount or Early Renewal Incentive
-- Limited-Time Promotion (e.g., ¡§Upgrade in 7 days for 20% off¡¨)
+- Limited-Time Promotion (e.g., ï¿½ï¿½Upgrade in 7 days for 20% offï¿½ï¿½)
 - Referral Reward Program
 - Retention Campaign (bonus data, bill waiver, free add-on)
 - Personalized Re-engagement Offer
@@ -108,6 +114,10 @@ Agentic AI Revenue Assistant is a privacy-first, autonomous lead prioritization 
   - Loads merged, anonymized data into a JSON structure (in-memory or local file).
 - **Agentic AI Layer:**  
   - Operates strictly on the unified, pseudonymized JSON data, using DeepSeek via OpenRouter.
+- **Learning & Adaptation Layer (Future):**  
+  - Tracks recommendation outcomes and customer feedback for continuous improvement.
+  - Builds knowledge base of successful patterns and market trends.
+  - Adapts AI model selection based on performance history and use case optimization.
 - **Presentation Layer:**  
   - Streamlit dashboard for visualization and interaction.
 - **Security Layer:**  
@@ -143,19 +153,25 @@ Agentic AI Revenue Assistant is a privacy-first, autonomous lead prioritization 
 |------------------------------|--------------------------------------------------|
 | Data leakage of sensitive info | Implement strong pseudonymization and audit logging |
 | LLM performance limitations   | Use open-source LLMs optimized for business context |
-| Demo scope creep              | Strictly focus on ¡§Highest¡¨ priority features      |
+| Demo scope creep              | Strictly focus on ï¿½ï¿½Highestï¿½ï¿½ priority features      |
 
 ### 11. Future Enhancements
 
 - Add multi-agent orchestration (lead, sales, retention, market insights)
+- **Implement Learning & Adaptation Engine for continuous business intelligence improvement**
+  - Outcome tracking system for offer acceptance rates and customer engagement metrics
+  - Feedback integration to learn from successful vs. failed strategies
+  - Business intelligence memory for building knowledge base of effective patterns
+  - Adaptive model selection based on performance history and use case optimization
+  - Agent performance learning to improve multi-agent collaboration over time
 - Role-based access and advanced dashboard features
 - Integration with real CRM, email, and marketing APIs
 - Real-time social media sentiment analysis
 - Advanced cryptographic privacy methods
 
 **Note:**  
-All requirements marked **¡§Highest¡¨** are mandatory for the demo. Other requirements should be deferred unless time permits.  
-LLM handling, privacy, and result export are explicitly detailed and prioritized as per the product owner¡¦s idea document and the latest attachments.  
+All requirements marked **ï¿½ï¿½Highestï¿½ï¿½** are mandatory for the demo. Other requirements should be deferred unless time permits.  
+LLM handling, privacy, and result export are explicitly detailed and prioritized as per the product ownerï¿½ï¿½s idea document and the latest attachments.  
 This PRD is ready for use by developers, architects, and project managers to deliver a focused, high-impact demo aligned with product owner goals and telecom industry best practices.
 
 [1] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/9841353/1137b99b-7467-4f78-aee4-3b582892cecb/product-owner-ideas-document-v0.2.docx
